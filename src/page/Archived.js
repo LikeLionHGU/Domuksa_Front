@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
-import img from "../img/testimg.png";
-import styles from "./Archive.module.css";
+import img from "../asset/testimg.png";
+import styles from "../CSS/Archive.module.css";
 
 function Archived() {
   const [isHost, setIshost] = useState(false);
