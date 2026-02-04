@@ -1,10 +1,14 @@
-
 import Chat from "./Chat";
-import Meet from "./page/Meet";
+import Home from "./page/Home";
+import Archived from "./page/Archived";
+import { Route, Routes } from "react-router-dom";
+
 function App() {
   return (
-    // <Chat/>
-    <Meet/>
+    <Routes>
+      <Route path="/" element= {<Home />} />
+      <Route path="/archived" element={<Archived />} />
+    </Routes>
   );
 }
 
