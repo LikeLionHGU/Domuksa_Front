@@ -1,28 +1,85 @@
 .body {
-    z-index: 5;
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
+  z-index: 5;
+  position: fixed;
+  width: 100vw;
+  height: 100vh;
 
-    display: flex;
-    justify-content: right;
+  display: flex;
+  justify-content: right;
 }
 
 .main {
-    margin-top: 79px;
-    margin-right: 36px;
+  margin-top: 79px;
+  margin-right: 36px;
+
+  width: 219px;
+  height: 149px;
+  border-radius: 20px;
+
+  background-color: #666666;
+
+  position: fixed;
+
+  
+}
+
+
+.info {
+  display: flex;
+  margin: 15px 40px 17px 20px;
+
+  .modalImg {
+    margin-right: 20px;
+    width: 40px;
+    height: 40px;
+    border-radius: 100px;
+  }
+  
+}
+
+.text{
+    width: 103px;
+    height:33px;
+    margin: 0;
+
+    .name{
+        font-size: 14px;
+        color: black;
+    }
+    .email{
+        font-size: 10px;
+        color: #908F8F;
+    }
+}
+
+.button{
+    margin: 0px 20px;
+}
+
+
+.setting {
+    width: 179px;
+    height: 32px;
+
+    margin-bottom: 5px;
+
+    background-color: #C89D9D;
+    border-radius: 30px;
+
+    text-align: center;
+    color: white;
     
-    width: 219px;
-    height: 149px;
-    border-radius: 20px;
+}
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.exit {
+    width: 179px;
+    height: 32px;
 
-    background-color: #666666;
+    margin-bottom: 15px;
 
-    color: blue;
-    
-    position: fixed;
+    background-color: #EB9E9E;
+    border-radius: 30px;
+
+    text-align: center;
+    color: white;
 }
