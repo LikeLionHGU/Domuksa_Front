@@ -33,14 +33,17 @@ function Home() {
           <img className={styles.logoImg} src={img} />
           <p>Emmm</p>
         </div>
+        <div></div>
         <div className={styles.profile} onClick={isOpen}>
-          <img className={styles.homeImg} src={img} />
+          <img className={styles.prifileImg} src={img} />
           {open === true ? <Profile /> : null}
         </div>
       </div>
 
       <div className={styles.menu}>
-        <div className={styles.left} onClick={goNew}>+</div>
+        <div className={styles.left} onClick={goNew}>
+          +
+        </div>
         <div className={styles.right}>
           <div className={styles.join}>
             Enter Code to Join Meeting
