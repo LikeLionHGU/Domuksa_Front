@@ -1,33 +1,40 @@
 import { useState } from "react";
 import styles from "../CSS/Home.module.css";
 import img from "../asset/testimg.png";
+import Profile from "../component/Profile";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
-  const [isHost, setIshost] = useState(false);
   const navigate = useNavigate();
+
+  const [open, setOpen] = useState(false);
+  function isOpen() {
+    if (open == true) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
+  }
 
   function goArchived() {
     navigate("/archived");
   }
 
-  function onProfile(){
+  console.log(open);
 
-  }
-
-  return isHost ? (
-    <div>hello</div>
-  ) : (
+  return (
     <div>
       <div className={styles.header}>
         <div className={styles.logo}>
           <img src={img} />
           <p>Emmm</p>
         </div>
-        <div className={styles.profile} onClick={onProfile}>
+        <div className={styles.profile} onClick={isOpen}>
           <img src={img} />
+          {open === true ? <Profile /> : null}
         </div>
       </div>
+
       <div className={styles.menu}>
         <div className={styles.left}>+</div>
         <div className={styles.right}>

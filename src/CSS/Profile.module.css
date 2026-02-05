@@ -1,0 +1,28 @@
+.body {
+    z-index: 5;
+    position: fixed;
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: right;
+}
+
+.main {
+    margin-top: 79px;
+    margin-right: 36px;
+    
+    width: 219px;
+    height: 149px;
+    border-radius: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #666666;
+
+    color: blue;
+    
+    position: fixed;
+}
