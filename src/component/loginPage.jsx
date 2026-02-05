@@ -1,6 +1,6 @@
 import React from "react";
-import styled from "styled-components";
-import GoogleLoginBtn from "../asset/GoogleLoginBtn.svg";
+import styles from "../CSS/LoginButton.module.css"
+import logoImg from "../asset/googleLogo.png"
 
 const GoogleLogin = () => {
   const handleGoogleLogin = () => {
@@ -8,20 +8,14 @@ const GoogleLogin = () => {
   };
 
   return (
-    <Wrapper>
-      <LoginBtn src={GoogleLoginBtn} alt="" onClick={handleGoogleLogin} />
-    </Wrapper>
+    <div>
+      <div className={styles.loginButton} alt="" onClick={handleGoogleLogin}>
+        <img className={styles.logo} src={logoImg}/>
+      로그인
+      </div>
+      
+    </div>
   );
 };
 
 export default GoogleLogin;
-
-const Wrapper = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const LoginBtn = styled.img`
-  cursor: pointer;
-`;
