@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import GoogleLogin from "../component/loginPage";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Landing() {
+  const navigate = useNavigate();
   const [logined, setLogined] = useState(false);
   const [name, setName] = useState(null);
   const [picture, setPicture] = useState(null);
@@ -31,8 +33,13 @@ function Landing() {
       });
   }, []);
 
+  function goHome (){
+    navigate("/home");
+  }
+
   return (
     <>
+    <div onClick={goHome}>홈으로 가기 임시 버튼</div>
       <GoogleLogin />
     </>
   );

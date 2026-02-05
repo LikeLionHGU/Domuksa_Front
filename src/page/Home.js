@@ -24,13 +24,17 @@ function Home() {
     navigate("/meet");
   }
 
+  function goLanding(){
+    navigate("/");
+  }
+
   console.log(open);
 
   return (
     <div>
       <div className={styles.header}>
         <div className={styles.logo}>
-          <img className={styles.logoImg} src={img} />
+          <img className={styles.logoImg} src={img} onClick={goLanding} />
           <p>Emmm</p>
         </div>
         <div></div>
