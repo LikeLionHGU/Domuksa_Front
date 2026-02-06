@@ -3,18 +3,20 @@
 import style from "../CSS/File.module.css";
 import { useEffect, useRef, useState } from "react";
 import { PDFViewer } from '@embedpdf/react-pdf-viewer';
+import dlt from "../asset/icon-delete.png";
 
-function File() {
+function File({onChange}) {
 
     return (
         <div className={style.Maindiv}>
             <div className={style.Maintitle}>
                 <h3>파일</h3>
+                <img src={dlt} onClick={() => onChange("basic")} />
             </div>
             <div className={style.Viewer}>
                 <PDFViewer
-                    config={{ src: "../asset/test.pdf" }}
-                    style={{ height: '612px'}}
+                    config={{ src: "/1.pdf" }}
+                    style={{ width: "100%", height: "100%" }}
                     onReady={(registry) => {
                         console.log('PDF viewer ready!', registry);
                     }}

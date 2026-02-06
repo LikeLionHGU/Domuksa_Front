@@ -6,10 +6,22 @@
     background-color: rgb(255, 255, 255);
     overflow: hidden;
 }
-
-.Maintitle h3 {
-
-    font-size: 20px;
+.Maintitle {
+    display: flex;
     margin-left: 40px;
     margin-top: 40px;
+    margin-right: 40px;
+
+    h3 {
+
+        font-size: 20px;
+
+
+    }
+
+    img {
+        margin-left: auto;
+        width: 18px;
+        height: 18px;
+    }
 }

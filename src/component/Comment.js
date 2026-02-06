@@ -5,13 +5,15 @@
 import style from "../CSS/Comment.module.css";
 import { useEffect, useRef, useState } from "react";
 import { PDFViewer } from '@embedpdf/react-pdf-viewer';
+import dlt from "../asset/icon-delete.png";
 
-function Comment() {
+function Comment({onChange}) {
 
     return (
         <div className={style.Maindiv}>
             <div className={style.Maintitle}>
                 <h3>코멘트</h3>
+                <img src={dlt} onClick={()=> onChange("basic")}/>
             </div>
             <div className={style.Subdiv}>
 
@@ -26,7 +28,7 @@ function Comment() {
                         <button>보내기</button>
                     </label>
                 </form>
-                <div className="">
+                <div className={style.Chat}>
                     <hr/>
                     <p>
                         <span>5초전</span><br />

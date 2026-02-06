@@ -36,10 +36,10 @@ function RightList() {
           </div>
         </div>
       </>,
-    File:<File/>,
-    Comment:<Comment/>,
-    Vote:<Vote/>,
-    AI:<AI/>
+    File:<File onChange ={setMode}/>,
+    Comment:<Comment onChange ={setMode}/>,
+    Vote:<Vote onChange ={setMode}/>,
+    AI:<AI onChange ={setMode}/>
   };
   return Mode[mode];
 }
