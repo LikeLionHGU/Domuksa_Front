@@ -29,8 +29,8 @@ hr {
     }
 }
 
-.End{
-    margin-top:auto;
+.End {
+    margin-top: auto;
 }
 
 
@@ -39,8 +39,6 @@ hr {
 .Agenda {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
 
     .List {
         margin-top: 40px;
@@ -100,7 +98,9 @@ hr {
             }
         }
     }
+
     .Add {
+        margin-left: 64px;
         color: #B4B3B3;
         font-size: 14px;
 

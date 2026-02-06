@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@embedpdf/react-pdf-viewer": "^2.4.1",
+    "@pdf-viewer/react": "^1.17.0",
     "@react-pdf-viewer/core": "^3.12.0",
     "@react-pdf-viewer/default-layout": "^3.12.0",
     "@react-pdf/renderer": "^4.3.2",
