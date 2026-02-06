@@ -1,0 +1,90 @@
+.Maindiv {
+    width: 1045px;
+    height: 726px;
+
+    border-radius: 20px;
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+
+    h3 {
+        font-size: 20px;
+        margin-left: 40px;
+        margin-top: 40px;
+    }
+}
+
+.Subdiv {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    label {
+        display: flex;
+    }
+
+    form {
+        padding: 20px;
+        background-color: #F8FBFC;
+        border: 1px solid #B4B3B3;
+        border-radius: 20px;
+    }
+
+    h3{
+        justify-content: flex-start;
+    }
+
+    textarea {
+        width: 500px;
+        height: 96px;
+        border: none;
+        background-color: #F8FBFC;
+        font-size: 12px;
+        resize: none;
+    }
+
+    button {
+        margin-top: auto;
+        width: 77px;
+        height: 34px;
+
+        color: white;
+        border-radius: 15px;
+        background-color: #5043E7;
+    }
+
+    p {
+        width: 600px;
+    }
+
+    .Subtitle{
+        width: 623px;
+        display:flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        margin-top:59px;
+        margin-bottom: 10px;
+        
+        h3{
+            margin:0 0;
+            font-size: 16px;
+            margin-right:8px;
+        }
+        .number{
+            color:white;
+            font-size: 14px;
+
+            width:40px;
+            height:20px;
+            border-radius: 15px;
+            background-color: #5043E7;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+    
+}
