@@ -1,6 +1,8 @@
 import { useState } from "react";
 import styles from "../CSS/Home.module.css";
-import img from "../asset/testimg.png";
+import logoImg from "../asset/icon-logo.png";
+import profileImg from "../asset/profile-test.png"
+import completeImg from "../asset/icon-complete.png"
 import Profile from "../component/Profile";
 import { useNavigate } from "react-router-dom";
 
@@ -33,13 +35,11 @@ function Home() {
   return (
     <div>
       <div className={styles.header}>
-        <div className={styles.logo}>
-          <img className={styles.logoImg} src={img} onClick={goLanding} />
-          <p>Emmm</p>
-        </div>
+        <img className={styles.logo} src={logoImg} onClick={goLanding} />
+
         <div></div>
         <div className={styles.profile} onClick={isOpen}>
-          <img className={styles.prifileImg} src={img} />
+          <img className={styles.prifileImg} src={profileImg} />
           {open === true ? <Profile /> : null}
         </div>
       </div>
@@ -55,12 +55,13 @@ function Home() {
         </div>
       </div>
       <div className={styles.process}>
-        진행중인 회의
-        <input></input>
+        <div>진행중인 회의</div>
+        <input placeholder="검색"></input>
       </div>
       <div className={styles.rooms}>
         <div className={styles.archive} onClick={goArchived}>
-          archived
+          <img className={styles.completeImg} src={completeImg} />
+          <div className={styles.complete}>완료됨</div>
         </div>
       </div>
     </div>
