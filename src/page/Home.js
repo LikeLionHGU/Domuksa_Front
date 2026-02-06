@@ -67,6 +67,14 @@ function Home() {
               <img className={styles.completeImg} src={completeImg} />
               <div className={styles.complete}>완료됨</div>
             </div>
+            <div className={styles.room}></div>
+            <div className={styles.room}></div>
+            <div className={styles.room}></div>
+            <div className={styles.room}></div>
+            <div className={styles.room}></div>
+            <div className={styles.room}></div>
+            <div className={styles.room}></div>
+            
           </div>
         </div>
       </div>

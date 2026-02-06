@@ -106,10 +106,11 @@
   margin-left: 138px;
   margin-right: 138px;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  row-gap: 21px;
+  column-gap: 20px;
 }
 
 .archive {
-  margin-top: 9px;
   display: grid;
   justify-content: center;
 
@@ -134,4 +135,11 @@
     height: auto;
     margin: 51px 93px 14px 92px;
   }
+}
+
+.room{
+  width: 217px;
+  height: 157px;
+  background-color: #FFFFFF;
+  border-radius: 15px;
 }
