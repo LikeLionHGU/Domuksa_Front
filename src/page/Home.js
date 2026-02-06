@@ -58,10 +58,11 @@ function Home() {
           </div>
         </div>
       </div>
-      <div>
+      <div className={styles.process}>
         In Process
         <input></input>
       </div>
+      <div className={styles.rooms}></div>
     </div>
   );
 }
