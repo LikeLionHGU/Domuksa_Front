@@ -26,7 +26,7 @@ function Comment() {
                         <button>보내기</button>
                     </label>
                 </form>
-                <div>
+                <div className="">
                     <hr/>
                     <p>
                         <span>5초전</span><br />
