@@ -1,6 +1,7 @@
+import { useEffect, useRef, useState } from "react";
 
 import style from "../CSS/Right.module.css";
-import { useEffect, useRef, useState } from "react";
+
 import File from "../component/File";
 import Comment from "../component/Comment";
 import Vote from "../component/Vote";

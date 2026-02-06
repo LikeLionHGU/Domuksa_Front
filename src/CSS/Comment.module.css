@@ -31,7 +31,7 @@
         border-radius: 20px;
     }
 
-    h3{
+    h3 {
         justify-content: flex-start;
     }
 
@@ -55,29 +55,39 @@
     }
 
     p {
-        width: 600px;
+        margin-top:15px;
+        margin-bottom:15px;
+
+        width: 571px;
+        font-size: 12px;
+        color: #333333;
     }
 
-    .Subtitle{
+    span {
+        color: #EDEDED;
+    }
+
+    .Subtitle {
         width: 623px;
-        display:flex;
+        display: flex;
         justify-content: flex-start;
         align-items: center;
 
-        margin-top:59px;
+        margin-top: 59px;
         margin-bottom: 10px;
-        
-        h3{
-            margin:0 0;
+
+        h3 {
+            margin: 0 0;
             font-size: 16px;
-            margin-right:8px;
+            margin-right: 8px;
         }
-        .number{
-            color:white;
+
+        .number {
+            color: white;
             font-size: 14px;
 
-            width:40px;
-            height:20px;
+            width: 40px;
+            height: 20px;
             border-radius: 15px;
             background-color: #5043E7;
 
@@ -86,5 +96,5 @@
             align-items: center;
         }
     }
-    
+
 }
