@@ -1,35 +1,53 @@
 import { useState } from "react";
 import styles from "../CSS/Home.module.css";
 import img from "../asset/testimg.png";
+import Profile from "../component/Profile";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
-  const [isHost, setIshost] = useState(false);
   const navigate = useNavigate();
+
+  const [open, setOpen] = useState(false);
+  function isOpen() {
+    if (open == true) {
+      setOpen(false);
+    } else {
+      setOpen(true);
+    }
+  }
 
   function goArchived() {
     navigate("/archived");
   }
 
-  function onProfile(){
-
+  function goNew() {
+    navigate("/meet");
   }
 
-  return isHost ? (
-    <div>hello</div>
-  ) : (
+  function goLanding(){
+    navigate("/");
+  }
+
+  console.log(open);
+
+  return (
     <div>
       <div className={styles.header}>
         <div className={styles.logo}>
-          <img src={img} />
+          <img className={styles.logoImg} src={img} onClick={goLanding} />
           <p>Emmm</p>
         </div>
-        <div className={styles.profile} onClick={onProfile}>
-          <img src={img} />
+        <div></div>
+        <div className={styles.profile} onClick={isOpen}>
+          <img className={styles.prifileImg} src={img} />
+          {open === true ? <Profile /> : null}
         </div>
       </div>
+
       <div className={styles.menu}>
-        <div className={styles.left}>+</div>
+        <div className={styles.left} onClick={goNew}>
+          +
+        </div>
         <div className={styles.right}>
           <div className={styles.join}>
             Enter Code to Join Meeting
