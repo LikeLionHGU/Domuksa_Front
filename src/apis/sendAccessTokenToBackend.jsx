@@ -2,13 +2,15 @@ import axios from "axios";
 
 const sendAccessTokenToBackend = async (code) => {
   try {
+    console.log("a");
     // ✅ 엔드포인트 고정: /user/google
     // ✅ 프론트 방식 유지: code를 그대로 백엔드로 보냄
     const response = await axios.post(
-      `${process.env.REACT_APP_HOST_URL}/user/google`,
-      { code }
+      `${process.env.REACT_APP_HOST_URL}/auth/google`,
+      { code },
     );
 
+    console.log("b");
     console.log("Login successful with server response:", response.data);
 
     // ✅ 명세/백엔드 응답: accessToken
@@ -23,7 +25,10 @@ const sendAccessTokenToBackend = async (code) => {
       console.log("userInfo 저장 완료!");
 
       // 프론트 기존 로직 유지 위해 memberId도 같이 저장
-      if (response.data.user.id !== undefined && response.data.user.id !== null) {
+      if (
+        response.data.user.id !== undefined &&
+        response.data.user.id !== null
+      ) {
         localStorage.setItem("memberId", String(response.data.user.id));
         console.log("memberId 저장 완료!");
       }
@@ -33,10 +38,7 @@ const sendAccessTokenToBackend = async (code) => {
 
     return response.data;
   } catch (error) {
-    console.error(
-      "Login failed with error:",
-      error?.response?.data || error
-    );
+    console.error("Login failed with error:", error?.response?.data || error);
     throw error;
   }
 };
