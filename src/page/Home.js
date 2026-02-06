@@ -24,7 +24,7 @@ function Home() {
     navigate("/meet");
   }
 
-  function goLanding(){
+  function goLanding() {
     navigate("/");
   }
 
@@ -45,24 +45,24 @@ function Home() {
       </div>
 
       <div className={styles.menu}>
-        <div className={styles.left} onClick={goNew}>
+        <div className={styles.new} onClick={goNew}>
           +
         </div>
-        <div className={styles.right}>
-          <div className={styles.join}>
-            Enter Code to Join Meeting
-            <input></input>
-          </div>
-          <div className={styles.archive} onClick={goArchived}>
-            archived
-          </div>
+
+        <div className={styles.join}>
+          회의 참여를 위해 코드를 입력해 주세요
+          <input></input>
         </div>
       </div>
       <div className={styles.process}>
-        In Process
+        진행중인 회의
         <input></input>
       </div>
-      <div className={styles.rooms}></div>
+      <div className={styles.rooms}>
+        <div className={styles.archive} onClick={goArchived}>
+          archived
+        </div>
+      </div>
     </div>
   );
 }
