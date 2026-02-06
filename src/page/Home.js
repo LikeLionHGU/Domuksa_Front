@@ -59,7 +59,7 @@ function Home() {
 
           <div className={styles.process}>
             <div>진행중인 회의</div>
-            <input placeholder="검색"></input>
+            <input placeholder="🔍︎ 검색"></input>
           </div>
 
           <div className={styles.rooms}>
@@ -74,7 +74,7 @@ function Home() {
             <div className={styles.room}></div>
             <div className={styles.room}></div>
             <div className={styles.room}></div>
-            
+
           </div>
         </div>
       </div>
