@@ -1,14 +1,13 @@
 .extradiv {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .Maindiv {
-
-    width: 1440px;
-    height: 872px;
+  width: 1440px;
+  height: 872px;
 }
 
 .header {
@@ -90,24 +89,28 @@
   font-size: 20px;
   font-weight: 900;
 
-  input{
+  input {
     width: 379px;
     height: 36px;
 
     padding-left: 15px;
 
     border-radius: 30px;
-    border: #DCDDDF;
+    border: #dcdddf;
   }
 }
 
 .rooms {
   display: grid;
+  height: 335px;
   margin-left: 138px;
   margin-right: 138px;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   row-gap: 21px;
   column-gap: 20px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .archive {
@@ -119,27 +122,45 @@
   width: 217px;
   height: 157px;
 
-  background-color: #FFFFFF;
+  background-color: #ffffff;
 
   text-align: center;
-  color: #5043E7;
+  color: #5043e7;
   font-size: 14px;
 
-  border: #DCDDDF;
+  border: #dcdddf;
   border-radius: 15px;
 
   font-size: 14px;
 
-  .completeImg{
+  .completeImg {
     width: 32px;
     height: auto;
     margin: 51px 93px 14px 92px;
   }
 }
 
-.room{
+.room {
+  display: grid;
+  grid-row: 1fr 1fr;
+  justify-content: center;
+
   width: 217px;
   height: 157px;
-  background-color: #FFFFFF;
+  background-color: #ffffff;
   border-radius: 15px;
+
+  .roomImg {
+    width: 70px;
+    height: 35px;
+
+    margin: 40px 73px 48px 74px;
+  }
+
+  .roomName {
+    font-size: 14px;
+    margin-bottom: 18px;
+    text-align: center;
+
+  }
 }

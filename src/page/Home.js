@@ -3,6 +3,7 @@ import styles from "../CSS/Home.module.css";
 import logoImg from "../asset/icon-logo.png";
 import profileImg from "../asset/profile-test.png";
 import completeImg from "../asset/icon-complete.png";
+import roomImg from "../asset/icon-meetingroom.png"
 import Profile from "../component/Profile";
 import { useNavigate } from "react-router-dom";
 
@@ -67,13 +68,46 @@ function Home() {
               <img className={styles.completeImg} src={completeImg} />
               <div className={styles.complete}>완료됨</div>
             </div>
-            <div className={styles.room}></div>
-            <div className={styles.room}></div>
-            <div className={styles.room}></div>
-            <div className={styles.room}></div>
-            <div className={styles.room}></div>
-            <div className={styles.room}></div>
-            <div className={styles.room}></div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg}/>
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg}/>
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg}/>
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg}/>
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg}/>
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg}/>
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg}/>
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg}/>
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg}/>
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg}/>
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
 
           </div>
         </div>
