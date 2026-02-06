@@ -1,12 +1,25 @@
+.extradiv {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.Maindiv {
+
+    width: 1440px;
+    height: 872px;
+}
+
 .header {
   display: grid;
   grid-template-columns: auto 1fr auto;
 
   .logo {
     margin-left: 20px;
-    margin-top: 29px;
-    width: 171px;
-    height: auto;
+    margin-top: 20px;
+    width: 170px;
+    height: 53px;
   }
   .profile {
     display: flex;
