@@ -4,12 +4,14 @@
 
     background-color: #ffffff;
     border-radius: 20px;
-    border:1px solid #f5f5f5;;
+    border: 1px solid #f5f5f5;
 }
-hr{
-    color:#ededed48;
+
+hr {
+    color: #ededed48;
 }
-.RoomName {
+
+.Head {
     font-size: 18px;
     font-weight: bold;
     margin-top: 20px;
@@ -19,67 +21,92 @@ hr{
     /* justify-content: center; */
     align-items: center;
     padding: 0 30px;
+
+    img {
+        margin-left: auto;
+        width: 20px;
+        height: 20px;
+    }
 }
 
-.RoomName img {
-    margin-left: auto;
-    width: 20px;
-    height: 20px;
+.End{
+    margin-top:auto;
 }
 
-.List {
-    margin-top: 40px;
-    margin-bottom: 40px;
+
+
+
+.Agenda {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
 
-    gap: 15px;
-    height: 347px;
-    overflow: scroll;
-}
+    .List {
+        margin-top: 40px;
+        margin-bottom: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
-.Block {
-    width: 210px;
-    height: 50px;
-    /* flex때문에 자식요소height도 줄어드는 이유 */
-    flex-shrink: 0;
+        gap: 15px;
+        height: auto;
+        overflow: scroll;
 
-    background-color: #ffffff;
-    border-radius: 20px;
+        .Block {
+            width: 210px;
+            height: 50px;
+            /* flex때문에 자식요소height도 줄어드는 이유 */
+            flex-shrink: 0;
 
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
+            background-color: #ffffff;
+            border-radius: 20px;
 
-    color:#5a5a5a;
-}
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
 
-.ChosenBlock {
-    width: 210px;
-    height: 50px;
-    /* flex때문에 자식요소height도 줄어드는 이유 */
-    flex-shrink: 0;
+            color: #5a5a5a;
 
-    background-color: #ffffff;
-    border-radius: 20px;
+            img {
+                margin-left: auto;
+                width: 3px;
+                height: auto;
+            }
+        }
 
-    display: flex;
-    align-items: center;
-    padding: 0 20px;
+        .ChosenBlock {
+            width: 210px;
+            height: 50px;
+            /* flex때문에 자식요소height도 줄어드는 이유 */
+            flex-shrink: 0;
 
-    color:#5043E7;
-    border:1px solid;
-    border-color: #5043E7;
-    font-weight: bold;
-}
-.Block img {
-    margin-left: auto;
-    width: 3px;
-    height: auto;
-}
-.ChosenBlock img {
-    margin-left: auto;
-    width: 3px;
-    height: auto;
+            background-color: #ffffff;
+            border-radius: 20px;
+
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+
+            color: #5043E7;
+            border: 1px solid;
+            border-color: #5043E7;
+            font-weight: bold;
+
+            img {
+                margin-left: auto;
+                width: 3px;
+                height: auto;
+            }
+        }
+    }
+    .Add {
+        color: #B4B3B3;
+        font-size: 14px;
+
+        img {
+            width: 14px;
+            height: auto;
+        }
+    }
 }
