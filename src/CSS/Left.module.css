@@ -9,13 +9,14 @@
 
 hr {
     color: #ededed48;
+    margin: 0;
 }
 
 .Head {
     font-size: 18px;
     font-weight: bold;
-    margin-top: 20px;
-    margin-bottom: 20px;
+    margin-top: 30px;
+    margin-bottom: 30px;
     /* 텍스트 중간 위치 */
     display: flex;
     /* justify-content: center; */
@@ -29,27 +30,24 @@ hr {
     }
 }
 
-.End {
-    margin-top: auto;
-}
-
 
 
 
 .Agenda {
     display: flex;
     flex-direction: column;
+    height: 450px;
+    overflow: scroll;
 
     .List {
-        margin-top: 40px;
-        margin-bottom: 40px;
+        margin-top: 50px;
         display: flex;
         flex-direction: column;
         align-items: center;
 
         gap: 15px;
         height: auto;
-        overflow: scroll;
+
 
         .Block {
             width: 210px;
@@ -58,7 +56,6 @@ hr {
             flex-shrink: 0;
 
             background-color: #ffffff;
-            border-radius: 20px;
 
             display: flex;
             align-items: center;
@@ -70,6 +67,19 @@ hr {
                 margin-left: auto;
                 width: 3px;
                 height: auto;
+            }
+
+            .Text {
+                display: flex;
+                align-items: center;
+
+                font-size: 16px;
+                color: #111111;
+                font-weight: bold;
+
+                span {
+                    font-size: 30px;
+                }
             }
         }
 
@@ -86,20 +96,33 @@ hr {
             align-items: center;
             padding: 0 20px;
 
-            color: #5043E7;
-            border: 1px solid;
-            border-color: #5043E7;
             font-weight: bold;
+            border: 1px solid #5043E7;
 
             img {
                 margin-left: auto;
                 width: 3px;
                 height: auto;
             }
+
+            .Text {
+                display: flex;
+                align-items: center;
+
+                font-size: 16px;
+                color: #5043E7;
+                font-weight: bold;
+
+                span {
+                    font-size: 30px;
+                }
+            }
         }
     }
 
     .Add {
+        margin-top: 20px;
+        margin-bottom: 30px;
         margin-left: 64px;
         color: #B4B3B3;
         font-size: 14px;
