@@ -1,0 +1,22 @@
+.Maindiv {
+    width: 1045px;
+    height: 726px;
+    border-radius: 20px;
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+}
+
+.Maintitle h3 {
+
+    font-size: 20px;
+    margin-left: 40px;
+    margin-top: 40px;
+}
+
+.Subdiv {
+    height: 68px;
+}
+
+.Viewer {
+    position: relative;
+}
