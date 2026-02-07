@@ -2,18 +2,24 @@
 
 import styles from "../CSS/Profile.module.css";
 import profileImg from "../asset/profile-test.png";
-import deleteIcon from "../asset/icon-delete.png"
+import deleteIcon from "../asset/icon-delete.png";
 
-function Profile( {onChange}) {
+function Profile({ onChange }) {
   return (
-    <div className={styles.body}>
-      <div className={styles.main}>
-        <img className={styles.deleteIcon} src={deleteIcon} onClick={() => onChange(false)} />
-        <div className={styles.info}>
-          <img className={styles.modalImg} src={profileImg} />
-          <div className={styles.text}>
-            <div className={styles.name}>대표 김진성</div>
-            <div className={styles.email}>email@email.com</div>
+    <div className={styles.extradiv}>
+      <div className={styles.maindiv}>
+        <div className={styles.body}>
+          <img
+            className={styles.deleteIcon}
+            src={deleteIcon}
+            onClick={() => onChange(false)}
+          />
+          <div className={styles.info}>
+            <img className={styles.modalImg} src={profileImg} />
+            <div className={styles.text}>
+              <div className={styles.name}>대표 김진성</div>
+              <div className={styles.email}>email@email.com</div>
+            </div>
           </div>
         </div>
       </div>

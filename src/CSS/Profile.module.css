@@ -1,12 +1,19 @@
-/* .body {
-  z-index: 5;
+.extradiv {
   position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
 
-  width: 100vw;
-  height: 100vh;
-} */
+.maindiv {
+  width: 1440px;
+  height: 872px;
 
-.main {
+  position: relative;
+}
+
+.body {
   position: absolute;
   top: 77px;
   right: 47px;
@@ -18,9 +25,9 @@
   height: 66px;
   border-radius: 20px;
 
-  background-color: #FFFFFF;
-  border: #EDEDED;
-  
+  background-color: #ffffff;
+  border: #ededed;
+
   .deleteIcon {
     position: absolute;
     top: 10px;
@@ -56,34 +63,4 @@
     font-size: 10px;
     color: #908f8f;
   }
-}
-
-.button {
-  margin: 0px 20px;
-}
-
-.setting {
-  width: 179px;
-  height: 32px;
-
-  margin-bottom: 5px;
-
-  background-color: #c89d9d;
-  border-radius: 30px;
-
-  text-align: center;
-  color: white;
-}
-
-.exit {
-  width: 179px;
-  height: 32px;
-
-  margin-bottom: 15px;
-
-  background-color: #eb9e9e;
-  border-radius: 30px;
-
-  text-align: center;
-  color: white;
 }
