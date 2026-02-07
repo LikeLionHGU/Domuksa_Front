@@ -21,6 +21,7 @@ function Profile({ onChange }) {
               <div className={styles.email}>email@email.com</div>
             </div>
           </div>
+          <div className={styles.logout}></div>
         </div>
       </div>
     </div>

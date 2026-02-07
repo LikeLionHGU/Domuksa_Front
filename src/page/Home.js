@@ -11,10 +11,9 @@ function Home() {
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
+
   function isOpen() {
-    if (open == true) {
-      setOpen(false);
-    } else {
+    if (open == false) {
       setOpen(true);
     }
   }
