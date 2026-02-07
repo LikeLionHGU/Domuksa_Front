@@ -3,6 +3,7 @@
 import styles from "../CSS/Profile.module.css";
 import profileImg from "../asset/profile-test.png";
 import deleteIcon from "../asset/icon-delete.png";
+import logoutIcon from "../asset/icon-logout.png";
 
 function Profile({ onChange }) {
   return (
@@ -21,7 +22,10 @@ function Profile({ onChange }) {
               <div className={styles.email}>email@email.com</div>
             </div>
           </div>
-          <div className={styles.logout}></div>
+          <div className={styles.logout}>
+            <img className={styles.logoutIcon} src={logoutIcon}/>
+            로그아웃
+          </div>
         </div>
       </div>
     </div>

@@ -17,12 +17,11 @@
   position: absolute;
   top: 77px;
   right: 47px;
-  display: flex;
+  display: grid;
   justify-content: center;
-  align-items: center;
 
   width: 219px;
-  height: 66px;
+  height: 123px;
   border-radius: 20px;
 
   background-color: #ffffff;
@@ -35,32 +34,53 @@
     width: 12px;
     height: 12px;
   }
-}
+  .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-.info {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+    margin-top: 12px;
 
-  .modalImg {
-    margin-right: 20px;
-    width: 43px;
-    height: 43px;
-    border-radius: 100px;
+    .modalImg {
+      margin-right: 20px;
+      width: 43px;
+      height: 43px;
+      border-radius: 100px;
+    }
+    .text {
+      width: 103px;
+      height: 33px;
+      margin: 0;
+
+      .name {
+        font-size: 14px;
+        color: black;
+      }
+      .email {
+        font-size: 10px;
+        color: #908f8f;
+      }
+    }
   }
-}
 
-.text {
-  width: 103px;
-  height: 33px;
-  margin: 0;
+  .logout{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-  .name {
-    font-size: 14px;
-    color: black;
-  }
-  .email {
-    font-size: 10px;
-    color: #908f8f;
+    width: 179px;
+    height: 36px;
+    background-color: #FF7373;
+    border-radius: 15px;
+
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 700;
+
+    .logoutIcon{
+      width: 12px;
+      height: 12px;
+      margin-right: 4px;
+    }
   }
 }
