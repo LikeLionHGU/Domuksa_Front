@@ -11,10 +11,9 @@ function Home() {
   const navigate = useNavigate();
 
   const [open, setOpen] = useState(false);
+
   function isOpen() {
-    if (open == true) {
-      setOpen(false);
-    } else {
+    if (open == false) {
       setOpen(true);
     }
   }
@@ -41,9 +40,9 @@ function Home() {
             <img className={styles.logo} src={logoImg} onClick={goLanding} />
 
             <div></div>
-            <div className={styles.profile} onClick={isOpen}>
-              <img className={styles.prifileImg} src={profileImg} />
-              {open === true ? <Profile /> : null}
+            <div className={styles.profile} >
+              <img className={styles.prifileImg} src={profileImg} onClick={isOpen} />
+              {open === true ? <Profile onChange ={setOpen} /> : null}
             </div>
           </div>
 
