@@ -4,11 +4,11 @@ import styles from "../CSS/Profile.module.css";
 import profileImg from "../asset/profile-test.png";
 import deleteIcon from "../asset/icon-delete.png"
 
-function Profile() {
+function Profile( {onChange}) {
   return (
     <div className={styles.body}>
       <div className={styles.main}>
-        <img className={styles.deleteIcon} src={deleteIcon} />
+        <img className={styles.deleteIcon} src={deleteIcon} onClick={() => onChange(false)} />
         <div className={styles.info}>
           <img className={styles.modalImg} src={profileImg} />
           <div className={styles.text}>
