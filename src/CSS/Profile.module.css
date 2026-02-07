@@ -1,85 +1,89 @@
 .body {
   z-index: 5;
-  position: fixed;
+  position: absolute;
+
   width: 100vw;
   height: 100vh;
-
-  display: flex;
-  justify-content: right;
 }
 
 .main {
-  margin-top: 79px;
-  margin-right: 36px;
+  position: absolute;
+  top: 77px;
+  right: 47px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   width: 219px;
-  height: 149px;
+  height: 66px;
   border-radius: 20px;
 
-  background-color: #666666;
-
-  position: fixed;
-
+  background-color: #FFFFFF;
+  border: #EDEDED;
   
+  .deleteIcon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 12px;
+    height: 12px;
+  }
 }
-
 
 .info {
   display: flex;
-  margin: 15px 40px 17px 20px;
+  justify-content: center;
+  align-items: center;
 
   .modalImg {
     margin-right: 20px;
-    width: 40px;
-    height: 40px;
+    width: 43px;
+    height: 43px;
     border-radius: 100px;
   }
-  
 }
 
-.text{
-    width: 103px;
-    height:33px;
-    margin: 0;
+.text {
+  width: 103px;
+  height: 33px;
+  margin: 0;
 
-    .name{
-        font-size: 14px;
-        color: black;
-    }
-    .email{
-        font-size: 10px;
-        color: #908F8F;
-    }
+  .name {
+    font-size: 14px;
+    color: black;
+  }
+  .email {
+    font-size: 10px;
+    color: #908f8f;
+  }
 }
 
-.button{
-    margin: 0px 20px;
+.button {
+  margin: 0px 20px;
 }
-
 
 .setting {
-    width: 179px;
-    height: 32px;
+  width: 179px;
+  height: 32px;
 
-    margin-bottom: 5px;
+  margin-bottom: 5px;
 
-    background-color: #C89D9D;
-    border-radius: 30px;
+  background-color: #c89d9d;
+  border-radius: 30px;
 
-    text-align: center;
-    color: white;
-    
+  text-align: center;
+  color: white;
 }
 
 .exit {
-    width: 179px;
-    height: 32px;
+  width: 179px;
+  height: 32px;
 
-    margin-bottom: 15px;
+  margin-bottom: 15px;
 
-    background-color: #EB9E9E;
-    border-radius: 30px;
+  background-color: #eb9e9e;
+  border-radius: 30px;
 
-    text-align: center;
-    color: white;
+  text-align: center;
+  color: white;
 }
