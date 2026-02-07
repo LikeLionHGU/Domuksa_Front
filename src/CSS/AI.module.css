@@ -1,0 +1,27 @@
+.Maindiv {
+    width:1045px;
+    height:726px;
+
+    border-radius: 20px;
+    background-color: rgb(255, 255, 255);
+    overflow: hidden;
+}
+.Maintitle {
+    display: flex;
+    margin-left: 40px;
+    margin-top: 40px;
+    margin-right: 40px;
+
+    h3 {
+
+        font-size: 20px;
+
+
+    }
+
+    img {
+        margin-left: auto;
+        width: 18px;
+        height: 18px;
+    }
+}

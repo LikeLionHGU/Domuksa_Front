@@ -1,31 +1,135 @@
 .Maindiv {
-    flex: 1;
-    display: block;
-    height: 100%;
+    width: 335px;
+    height: 726px;
 
-    background-color: #d9d9d9;
-    border-radius: 15px;
+    background-color: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #f5f5f5;
 }
-.Maindiv h3{
-    margin-left: 1rem;
-    margin-top: 3rem;;
+
+hr {
+    color: #ededed48;
+    margin: 0;
 }
-.Block {
-    width: 23vw;
-    height: 60px;
-    margin: 1rem;
 
-    background-color: #b0A3A3;
-    border-radius: 15px;
-
+.Head {
+    font-size: 18px;
+    font-weight: bold;
+    margin-top: 30px;
+    margin-bottom: 30px;
     /* 텍스트 중간 위치 */
-    display:flex;
-    justify-content: center;
+    display: flex;
+    /* justify-content: center; */
     align-items: center;
+    padding: 0 30px;
 
+    img {
+        margin-left: auto;
+        width: 20px;
+        height: 20px;
+    }
 }
 
-.List {
-    height: 47%;
+
+
+
+.Agenda {
+    display: flex;
+    flex-direction: column;
+    height: 450px;
     overflow: scroll;
+
+    .List {
+        margin-top: 50px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        gap: 15px;
+        height: auto;
+
+
+        .Block {
+            width: 210px;
+            height: 50px;
+            /* flex때문에 자식요소height도 줄어드는 이유 */
+            flex-shrink: 0;
+
+            background-color: #ffffff;
+
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+
+            color: #5a5a5a;
+
+            img {
+                margin-left: auto;
+                width: 3px;
+                height: auto;
+            }
+
+            .Text {
+                display: flex;
+                align-items: center;
+
+                font-size: 16px;
+                color: #111111;
+                font-weight: bold;
+
+                span {
+                    font-size: 30px;
+                }
+            }
+        }
+
+        .ChosenBlock {
+            width: 210px;
+            height: 50px;
+            /* flex때문에 자식요소height도 줄어드는 이유 */
+            flex-shrink: 0;
+
+            background-color: #ffffff;
+            border-radius: 20px;
+
+            display: flex;
+            align-items: center;
+            padding: 0 20px;
+
+            font-weight: bold;
+            border: 1px solid #5043E7;
+
+            img {
+                margin-left: auto;
+                width: 3px;
+                height: auto;
+            }
+
+            .Text {
+                display: flex;
+                align-items: center;
+
+                font-size: 16px;
+                color: #5043E7;
+                font-weight: bold;
+
+                span {
+                    font-size: 30px;
+                }
+            }
+        }
+    }
+
+    .Add {
+        margin-top: 20px;
+        margin-bottom: 30px;
+        margin-left: 64px;
+        color: #B4B3B3;
+        font-size: 14px;
+
+        img {
+            width: 14px;
+            height: auto;
+        }
+    }
 }

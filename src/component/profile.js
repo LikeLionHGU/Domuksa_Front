@@ -5,7 +5,7 @@ import img from "../asset/testimg.png";
 
 function Profile() {
   return (
-    <div className={styles.body}>
+    <div className={styles.extradiv}>
       <div className={styles.main}>
         <div className={styles.info}>
           <img className={styles.modalImg} src={img} />
@@ -13,10 +13,6 @@ function Profile() {
             <div className={styles.name}>대표 김진성</div>
             <div className={styles.email}>email@email.com</div>
           </div>
-        </div>
-        <div className={styles.button}>
-          <div className={styles.setting}>setting</div>
-          <div className={styles.exit}>exit</div>
         </div>
       </div>
     </div>

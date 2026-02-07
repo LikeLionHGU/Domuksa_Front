@@ -2,29 +2,32 @@ import axios from "axios";
 
 const sendAccessTokenToBackend = async (code) => {
   try {
-    console.log("a");
-    // ✅ 엔드포인트 고정: /user/google
-    // ✅ 프론트 방식 유지: code를 그대로 백엔드로 보냄
     const response = await axios.post(
-      `${process.env.REACT_APP_HOST_URL}/auth/google`,
+      `${process.env.REACT_APP_HOST_URL}/user/google`,
       { code },
     );
 
-    console.log("b");
     console.log("Login successful with server response:", response.data);
 
-    // ✅ 명세/백엔드 응답: accessToken
+    // ✅ accessToken 처리
     if (response.data.accessToken) {
-      localStorage.setItem("accessToken", response.data.accessToken);
-      console.log("토큰 저장 완료!");
+      const accessToken = response.data.accessToken;
+
+      // 1️⃣ localStorage 저장
+      localStorage.setItem("accessToken", accessToken);
+      console.log("accessToken 저장 완료!");
+
+      // 2️⃣ axios 기본 Authorization 헤더에 Bearer 설정 (⭐ 핵심)
+      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+    } else {
+      console.warn("응답에 accessToken이 없습니다:", response.data);
     }
 
-    // ✅ 명세/백엔드 응답: user (id, name, email, profileUrl ...)
+    // ✅ user 정보 처리
     if (response.data.user) {
       localStorage.setItem("userInfo", JSON.stringify(response.data.user));
       console.log("userInfo 저장 완료!");
 
-      // 프론트 기존 로직 유지 위해 memberId도 같이 저장
       if (
         response.data.user.id !== undefined &&
         response.data.user.id !== null
