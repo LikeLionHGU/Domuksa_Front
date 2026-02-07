@@ -1,6 +1,7 @@
 //홈페이지 프로필 사진 눌렀을 때 나오는 창
 
 import styles from "../CSS/Profile.module.css";
+
 import profileImg from "../asset/profile-test.png";
 import deleteIcon from "../asset/icon-delete.png";
 import logoutIcon from "../asset/icon-logout.png";
