@@ -1,0 +1,36 @@
+.extradiv {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: none;
+}
+
+.maindiv {
+  backdrop-filter: blur(10px);
+  width: 1440px;
+  height: 872px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: none;
+}
+
+.modal {
+  position: relative;
+  width: 494px;
+  height: 331px;
+
+  background-color: #ffffff;
+
+  border-radius: 20px;
+
+  .deleteIcon {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 14px;
+    height: 14px;
+  }
+}
