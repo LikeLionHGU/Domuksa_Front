@@ -81,7 +81,7 @@ function Home() {
 
             <div className={styles.join}>
               회의 참여를 위해 코드를 입력해 주세요
-              <input></input>
+              <input className={styles.code}></input>
             </div>
           </div>
 
