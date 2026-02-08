@@ -3,6 +3,7 @@ import Meet from "./page/Meet";
 import Archived from "./page/Archived";
 import Landing from "./page/Landing";
 import { Route, Routes } from "react-router-dom";
+import Loading from "./component/loading";
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
       <Route path="/home" element= {<Home />} />
       <Route path="/meet" element= {<Meet />} />
       <Route path="/archived" element={<Archived />} />
+      <Route path="/loading" element={<Loading />} />
     </Routes>
   );
 }

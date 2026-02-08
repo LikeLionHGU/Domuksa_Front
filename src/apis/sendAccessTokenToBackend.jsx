@@ -18,7 +18,7 @@ const sendAccessTokenToBackend = async (code) => {
     }
 
     // ✅ 명세/백엔드 응답: user (id, name, email, profileUrl ...)
-    if (response.data.user) {
+    if (response.data.userInfo) {
       localStorage.setItem("userInfo", JSON.stringify(response.data.user));
       console.log("userInfo 저장 완료!");
 

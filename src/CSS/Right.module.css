@@ -1,6 +1,6 @@
 .Maindiv {
-    width:1045px;
-    height:726px;
+    width: 1045px;
+    height: 726px;
     border-radius: 20px;
     display: grid;
     gap: 20px;
@@ -12,6 +12,8 @@
 }
 
 .Block {
+    box-shadow: 2px 2px #dbdbdb;
+
     width: 335px;
     height: 343px;
 
@@ -22,16 +24,31 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-.Block h3{
-    font-size: 24px;
-    margin-top: 275px;
-    margin-left: 40px;
-    align-self: flex-start;
-}
 
+    h3 {
+        font-size: 24px;
+        margin: auto auto 40px 40px;
+    }
+
+    .imgFile {
+        margin-top: 93px;
+
+        width: 111px;
+        height: 138.75px;
+    }
+
+    .imgComment {
+        margin-top: 100px;
+
+        width: 147.09px;
+        height: 126.63px;
+    }
+
+}
 
 .BigBlock {
+    box-shadow: 2px 2px #dbdbdb;
+
     width: 690px;
     height: 363px;
 
@@ -42,11 +59,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
 
-.BigBlock h3{
-    font-size: 24px;
-    margin-top: 275px;
-    margin-left: 40px;
-    align-self: flex-start;
+    h3 {
+        font-size: 24px;
+        margin: auto auto 40px 40px;
+    }
 }
