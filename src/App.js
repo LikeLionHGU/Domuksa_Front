@@ -4,6 +4,7 @@ import Archived from "./page/Archived";
 import Landing from "./page/Landing";
 import Loading from "./component/loading";
 import { Route, Routes } from "react-router-dom";
+import Loading from "./component/loading";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
       <Route path="/meet" element= {<Meet />} />
       <Route path="/loading" element= {<Loading />} />
       <Route path="/archived" element={<Archived />} />
+      <Route path="/loading" element={<Loading />} />
     </Routes>
   );
 }
