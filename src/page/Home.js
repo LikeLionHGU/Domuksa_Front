@@ -16,6 +16,11 @@ function Home() {
     if (open == false) {
       setOpen(true);
     }
+    else if (open == true) {
+      setOpen(false);
+    }
+
+    
   }
 
   function goArchived() {
