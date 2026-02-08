@@ -1,85 +1,87 @@
-.body {
-  z-index: 5;
-  position: fixed;
-  width: 100vw;
-  height: 100vh;
-
+.extradiv {
+  position: absolute;
   display: flex;
-  justify-content: right;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.main {
-  margin-top: 79px;
-  margin-right: 36px;
+.maindiv {
+  width: 1440px;
+  height: 872px;
+
+  position: relative;
+}
+
+.profilePopup {
+  z-index: 5;
+  position: absolute;
+  top: 77px;
+  right: 47px;
+  display: grid;
+  justify-content: center;
 
   width: 219px;
-  height: 149px;
+  height: 123px;
   border-radius: 20px;
 
-  background-color: #666666;
+  background-color: #ffffff;
+  border: #ededed;
 
-  position: fixed;
-
-  
-}
-
-
-.info {
-  display: flex;
-  margin: 15px 40px 17px 20px;
-
-  .modalImg {
-    margin-right: 20px;
-    width: 40px;
-    height: 40px;
-    border-radius: 100px;
+  .deleteIcon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 12px;
+    height: 12px;
   }
-  
-}
+  .info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-.text{
-    width: 103px;
-    height:33px;
-    margin: 0;
+    margin-top: 12px;
 
-    .name{
+    .modalImg {
+      margin-right: 20px;
+      width: 43px;
+      height: 43px;
+      border-radius: 100px;
+    }
+    .text {
+      width: 103px;
+      height: 33px;
+      margin: 0;
+
+      .name {
         font-size: 14px;
         color: black;
-    }
-    .email{
+      }
+      .email {
         font-size: 10px;
-        color: #908F8F;
+        color: #908f8f;
+      }
     }
-}
+  }
 
-.button{
-    margin: 0px 20px;
-}
+  .logout{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-
-.setting {
     width: 179px;
-    height: 32px;
+    height: 36px;
+    background-color: #FF7373;
+    border-radius: 15px;
 
-    margin-bottom: 5px;
+    color: #FFFFFF;
+    font-size: 12px;
+    font-weight: 700;
 
-    background-color: #C89D9D;
-    border-radius: 30px;
-
-    text-align: center;
-    color: white;
-    
-}
-
-.exit {
-    width: 179px;
-    height: 32px;
-
-    margin-bottom: 15px;
-
-    background-color: #EB9E9E;
-    border-radius: 30px;
-
-    text-align: center;
-    color: white;
+    .logoutIcon{
+      width: 12px;
+      height: 12px;
+      margin-right: 4px;
+    }
+  }
 }
