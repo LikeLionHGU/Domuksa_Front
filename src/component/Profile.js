@@ -11,7 +11,6 @@ function Profile({ onChange }) {
   const popup = useRef();
 
   useEffect(() => {
-    // 모달이 열려 있고 모달의 바깥쪽을 눌렀을 때 창 닫기
     const clickOutside = (e) => {
       if (onChange && !popup.current.contains(e.target)) {
         onChange(false);
@@ -20,7 +19,6 @@ function Profile({ onChange }) {
     document.addEventListener("mousedown", clickOutside);
 
     return () => {
-      // Cleanup the event listener
       document.removeEventListener("mousedown", clickOutside);
     };
   }, [onChange]);
