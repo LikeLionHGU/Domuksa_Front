@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import img from "../asset/testimg.png";
+import img from "../asset/icon-logo.png";
 import styles from "../CSS/Archive.module.css";
 
 function Archived() {

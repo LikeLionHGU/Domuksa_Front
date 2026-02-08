@@ -1,9 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "../CSS/Home.module.css";
 import logoImg from "../asset/icon-logo.png";
-import profileImg from "../asset/profile-test.png";
 import completeImg from "../asset/icon-complete.png";
-import roomImg from "../asset/icon-meetingroom.png"
+import roomImg from "../asset/icon-meetingroom.png";
 import Profile from "../component/Profile";
 import { useNavigate } from "react-router-dom";
 
@@ -12,15 +11,18 @@ function Home() {
 
   const [open, setOpen] = useState(false);
 
+  const [picture, setPicture] = useState("");
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+
+  const [room, setRoom] = useState([]);
+
   function isOpen() {
     if (open == false) {
       setOpen(true);
-    }
-    else if (open == true) {
+    } else if (open == true) {
       setOpen(false);
     }
-
-    
   }
 
   function goArchived() {
@@ -35,7 +37,19 @@ function Home() {
     navigate("/");
   }
 
-  console.log(open);
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    if (!token) {
+      return;
+    }
+    if (token) {
+      const user = JSON.parse(localStorage.getItem("userInfo"));
+
+      setName(user.name);
+      setEmail(user.email);
+      setPicture(user.profileUrl);
+    }
+  }, []);
 
   return (
     <div>
@@ -45,9 +59,18 @@ function Home() {
             <img className={styles.logo} src={logoImg} onClick={goLanding} />
 
             <div></div>
-            <div className={styles.profile} >
-              <img className={styles.prifileImg} src={profileImg} onClick={isOpen} />
-              {open === true ? <Profile onChange ={setOpen} /> : null}
+            <div className={styles.profile}>
+              <img
+                className={styles.prifileImg}
+                src={picture}
+                onClick={isOpen}
+              />
+              {open === true ? (
+                <Profile
+                  onChange={setOpen}
+                  user={{ name: name, email: email, picture: picture }}
+                />
+              ) : null}
             </div>
           </div>
 
@@ -73,46 +96,45 @@ function Home() {
               <div className={styles.complete}>완료됨</div>
             </div>
             <div className={styles.room}>
-              <img className={styles.roomImg} src={roomImg}/>
+              <img className={styles.roomImg} src={roomImg} />
               <div className={styles.roomName}>2025 두먹사 회의</div>
             </div>
             <div className={styles.room}>
-              <img className={styles.roomImg} src={roomImg}/>
+              <img className={styles.roomImg} src={roomImg} />
               <div className={styles.roomName}>2025 두먹사 회의</div>
             </div>
             <div className={styles.room}>
-              <img className={styles.roomImg} src={roomImg}/>
+              <img className={styles.roomImg} src={roomImg} />
               <div className={styles.roomName}>2025 두먹사 회의</div>
             </div>
             <div className={styles.room}>
-              <img className={styles.roomImg} src={roomImg}/>
+              <img className={styles.roomImg} src={roomImg} />
               <div className={styles.roomName}>2025 두먹사 회의</div>
             </div>
             <div className={styles.room}>
-              <img className={styles.roomImg} src={roomImg}/>
+              <img className={styles.roomImg} src={roomImg} />
               <div className={styles.roomName}>2025 두먹사 회의</div>
             </div>
             <div className={styles.room}>
-              <img className={styles.roomImg} src={roomImg}/>
+              <img className={styles.roomImg} src={roomImg} />
               <div className={styles.roomName}>2025 두먹사 회의</div>
             </div>
             <div className={styles.room}>
-              <img className={styles.roomImg} src={roomImg}/>
+              <img className={styles.roomImg} src={roomImg} />
               <div className={styles.roomName}>2025 두먹사 회의</div>
             </div>
             <div className={styles.room}>
-              <img className={styles.roomImg} src={roomImg}/>
+              <img className={styles.roomImg} src={roomImg} />
               <div className={styles.roomName}>2025 두먹사 회의</div>
             </div>
             <div className={styles.room}>
-              <img className={styles.roomImg} src={roomImg}/>
+              <img className={styles.roomImg} src={roomImg} />
               <div className={styles.roomName}>2025 두먹사 회의</div>
             </div>
             <div className={styles.room}>
-              <img className={styles.roomImg} src={roomImg}/>
+              <img className={styles.roomImg} src={roomImg} />
               <div className={styles.roomName}>2025 두먹사 회의</div>
             </div>
-
           </div>
         </div>
       </div>

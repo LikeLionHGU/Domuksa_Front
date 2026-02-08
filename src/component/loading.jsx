@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import sendAccessTokenToBackend from "../../apis/sendAccessTokenToBackend";
+import sendAccessTokenToBackend from "../apis/sendAccessTokenToBackend";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 
