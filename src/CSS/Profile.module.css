@@ -1,5 +1,7 @@
 .extradiv {
   position: absolute;
+  top: 0px;
+  left: 0px;
   display: flex;
   flex-direction: column;
   align-items: center;
