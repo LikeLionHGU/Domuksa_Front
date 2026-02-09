@@ -1,4 +1,5 @@
 //홈페이지 프로필 사진 눌렀을 때 나오는 창
+import { useRef, useState } from "react";
 
 import styles from "../CSS/Joinpw.module.css";
 
@@ -6,18 +7,27 @@ import deleteIcon from "../asset/icon-delete.png";
 import logoutIcon from "../asset/icon-logout.png";
 
 function Joinpw({ onChange }) {
+  const inputRef1 = useRef(null);
+  const inputRef2 = useRef(null);
+  const inputRef3 = useRef(null);
+  const inputRef4 = useRef(null);
 
-  function nextPw () {
-    (document).on("keypress keyup keydown", "input[onlyNumber]", function (e) {
-      if (this.value.length >= this.maxLength) {
-        this.value = this.value.slice(0, this.maxLength);
-        if ((this).next("input").length > 0) {
-          (this).next().focus();
-        } else {
-          (this).blur();
-        }
+  function changeInput(e) {
+    if (e.target.value.length === 1) {
+      switch (e.target.name) {
+        case "pw1":
+          inputRef2.current.focus();
+          break;
+        case "pw2":
+          inputRef3.current.focus();
+          break;
+        case "pw3":
+          inputRef4.current.focus();
+          break;
+        default:
+          break;
       }
-    });
+    }
   }
 
   return (
@@ -38,26 +48,35 @@ function Joinpw({ onChange }) {
             <div className={styles.pwInput}>
               <input
                 className={styles.pw}
+                name="pw1"
                 type="password"
                 maxLength="1"
-                onkeyup={nextPw}
+                ref={inputRef1}
+                onChange={changeInput}
               ></input>
               <input
                 className={styles.pw}
+                name="pw2"
                 type="password"
                 maxLength="1"
-                onkeyup={nextPw}
+                ref={inputRef2}
+                onChange={changeInput}
               ></input>
               <input
                 className={styles.pw}
+                name="pw3"
                 type="password"
                 maxLength="1"
-                onkeyup={nextPw}
+                ref={inputRef3}
+                onChange={changeInput}
               ></input>
               <input
                 className={styles.pw}
+                name="pw4"
                 type="password"
                 maxLength="1"
+                ref={inputRef4}
+                onChange={changeInput}
               ></input>
             </div>
             <div className={styles.joinBtn}>입장하기</div>
