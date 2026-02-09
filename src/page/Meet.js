@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
 import Left from "../component/LeftList";
 import Right from "../component/RightList";
 import Header from "../component/Header";
@@ -11,37 +12,96 @@ import visible from "../asset/icon-visible.png";
 
 function Meet() {
 
+  const [roomId, setRoomId] = useState(null);
   const [isHost, setIshost] = useState(true);
-  const [modal, setModal] = useState(false);
+  const [modalChat, setModalChat] = useState(false);
   const [modalNew, setModalNew] = useState(false);
 
-  function handleModal() {
-    if (modal === false) {
-      setModal(true);
-      return;
+  const [MeetName, setMeetName] = useState(null);
+  const [password, setPassword] = useState(null);
+
+  useEffect(() => {
+
+    setRoomId(localStorage.getItem("roomId"));
+    // const user = localStorage.getItem("userInfo");
+
+    if (roomId) {
+      setRoomId(roomId);
+
+      axios
+        .get(`${process.env.REACT_APP_HOST_URL}/room/${roomId}`, {
+        })
+        .then((res) => {
+          console.log(res);
+          if (res.data.role === "host") {
+            setIshost(true);
+          } else {
+            setIshost(false);
+          }
+        })
+        .catch((error) => {
+          console.error("마이페이지 정보 가져오기 실패:", error);
+        });
+    } else {
+      setModalNew(true);
     }
-    setModal(false);
+  }, []);
+
+  //   {
+  // ”roomName”: “두먹사 회의방”
+  // ”password”:”domuksa”
+  // ”role”: “host”
+  // }
+
+  function CreateRoom() {
+    axios
+      .post(`${process.env.REACT_APP_HOST_URL}/room/host`, {
+        params: {
+          roomName: { MeetName },
+          password: { password },
+          role: "host",
+        }
+      })
+      .then((res) => {
+        console.log(res);
+        localStorage.setItem("roomId", res.data.roomId);
+        setRoomId(res.data.roomId);
+      })
+      .catch((error) => {
+        console.error("마이페이지 정보 가져오기 실패:", error);
+      });
   }
+
+
+
   return (
     isHost ?
       <>
         <div className={style.extradiv}>
           <div className={style.Maindiv}>
             <div className={style.Header}>
-              <Header />
+              <Header
+                roomId
+              />
             </div>
             <div className={style.Component}>
-              <Left />
-              <Right />
+              <Left
+                roomId
+              />
+              <Right
+                roomId
+              />
             </div>
-            <div className={style.DM} onClick={() => handleModal()}>
+            <div className={style.DM} onClick={() => setModalChat(true)}>
               <div className={style.DMdiv}>
                 <img alt="DM" src={DM} />
-                {modal && <div className={style.ModalChat}>
+                {modalChat && <div className={style.ModalChat}>
                   <div className={style.Top}>
                     <h3>To.호스트</h3>
-                    <p onClick={() => handleModal()}>+</p>
-
+                    <p onClick={(e) => {
+                      e.stopPropagation();
+                      setModalChat(false);
+                    }}>+</p>
                   </div>
                   <hr />
                   <div className={style.ChatList}>
@@ -89,16 +149,26 @@ function Meet() {
                 <div className={style.ModalDiv}>
                   <h2>+</h2>
                   <h1>환영합니다</h1>
-                  <form>
-                    <label>회의 이름 변경
+                  <form onSubmit={(e) => {
+                    e.preventDefault();
+                    CreateRoom();
+                  }}>
+                    <label>회의 이름
                       <div className={style.Input}>
-                        <input />
+                        <input id="name" onChange={() => {
+                          setMeetName(document.getElementById("name").value);
+                          console.log(MeetName);
+                        }} />
                       </div>
                     </label>
 
-                    <label>방 비밀번호 변경
+                    <label>방 비밀번호
                       <div className={style.Input}>
-                        <input id="password" type="password" />
+                        <input id="password" type="password" onChange={() => {
+                          setPassword(document.getElementById("password").value);
+                          console.log(password);
+                        }}
+                        />
                         <img alt="visible" src={visible} />
                       </div>
                     </label>
@@ -106,7 +176,7 @@ function Meet() {
                       비밀번호를 변경하신 후에는 함께 회의 중인<br />
                       팀원들에게 새 비밀번호를 꼭 공유해 주세요!
                     </div>
-                    <button>변경하기</button>
+                    <button>생성하기</button>
                   </form>
                 </div>
               </div>

@@ -14,6 +14,9 @@ body {
         box-shadow: none;
         border: none;
     }
+    input{
+        outline: none;
+    }
 }
 
 .extradiv {
@@ -233,6 +236,10 @@ body {
                     margin-right: 18px;
                     transform: rotate(45deg);
                     font-size: 14px;
+                    color: #B4B3B3;
+                }
+                p:hover{
+                    color: #111111;
                 }
 
                 h3 {
