@@ -4,44 +4,24 @@ import logoImg from "../asset/icon-logo.png";
 import completeImg from "../asset/icon-complete.png";
 import roomImg from "../asset/icon-meetingroom.png";
 import Profile from "../component/Profile";
-import Joinpw from "../component/Joinpw";
 import { useNavigate } from "react-router-dom";
 
 function Home() {
   const navigate = useNavigate();
 
-  const [profileOpen, setProfileOpen] = useState(false);
-  const [pwOpen, setPwOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   const [picture, setPicture] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
 
-  const [value, setValue] = useState("");
-  const [code, setCode] = useState("");
-
-  const testCode = "1234567890";
-
   const [room, setRoom] = useState([]);
 
-  const activeEnter = (e) => {
-    if (e.key === "Enter") {
-      setCode(value);
-    }
-  };
-
-  function isRightPw() {
-    if (testCode === code) {
-      setPwOpen(true);
-      setCode("");
-    }
-  }
-
-  function isProfileOpen() {
-    if (profileOpen == false) {
-      setProfileOpen(true);
-    } else if (profileOpen == true) {
-      setProfileOpen(false);
+  function isOpen() {
+    if (open == false) {
+      setOpen(true);
+    } else if (open == true) {
+      setOpen(false);
     }
   }
 
@@ -58,7 +38,6 @@ function Home() {
   }
 
   useEffect(() => {
-    isRightPw();
     const token = localStorage.getItem("accessToken");
     if (!token) {
       return;
@@ -70,15 +49,12 @@ function Home() {
       setEmail(user.email);
       setPicture(user.profileUrl);
     }
-  }, [code]);
-
-  console.log(code);
+  }, []);
 
   return (
     <div>
       <div className={styles.extradiv}>
         <div className={styles.Maindiv}>
-          {pwOpen === true ? <Joinpw onChange={setPwOpen} code={code} /> : null}
           <div className={styles.header}>
             <img className={styles.logo} src={logoImg} onClick={goLanding} />
 
@@ -87,11 +63,11 @@ function Home() {
               <img
                 className={styles.prifileImg}
                 src={picture}
-                onClick={isProfileOpen}
+                onClick={isOpen}
               />
-              {profileOpen === true ? (
+              {open === true ? (
                 <Profile
-                  onChange={setProfileOpen}
+                  onChange={setOpen}
                   user={{ name: name, email: email, picture: picture }}
                 />
               ) : null}
@@ -105,11 +81,7 @@ function Home() {
 
             <div className={styles.join}>
               회의 참여를 위해 코드를 입력해 주세요
-              <input
-                className={styles.code}
-                onChange={(e) => setValue(e.target.value)}
-                onKeyDown={(e) => activeEnter(e)}
-              ></input>
+              <input></input>
             </div>
           </div>
 
@@ -122,6 +94,42 @@ function Home() {
             <div className={styles.archive} onClick={goArchived}>
               <img className={styles.completeImg} src={completeImg} />
               <div className={styles.complete}>완료됨</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg} />
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg} />
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg} />
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg} />
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg} />
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg} />
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg} />
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg} />
+              <div className={styles.roomName}>2025 두먹사 회의</div>
+            </div>
+            <div className={styles.room}>
+              <img className={styles.roomImg} src={roomImg} />
+              <div className={styles.roomName}>2025 두먹사 회의</div>
             </div>
             <div className={styles.room}>
               <img className={styles.roomImg} src={roomImg} />
