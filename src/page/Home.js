@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styles from "../CSS/Home.module.css";
 import logoImg from "../asset/icon-logo.png";
 import completeImg from "../asset/icon-complete.png";
+import addImg from "../asset/icon-add_white.png"
 import roomImg from "../asset/icon-meetingroom.png";
 import Profile from "../component/Profile";
 import Joinpw from "../component/Joinpw";
@@ -100,7 +101,7 @@ function Home() {
 
           <div className={styles.menu}>
             <div className={styles.new} onClick={goNew}>
-              +
+              <img className={styles.addBtn} src={addImg}/>
             </div>
 
             <div className={styles.join}>
