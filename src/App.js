@@ -13,7 +13,6 @@ function App() {
       <Route path="/meet" element= {<Meet />} />
       <Route path="/loading" element= {<Loading />} />
       <Route path="/archived" element={<Archived />} />
-      <Route path="/loading" element={<Loading />} />
     </Routes>
   );
 }

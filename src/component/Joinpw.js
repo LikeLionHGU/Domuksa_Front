@@ -6,9 +6,20 @@ import deleteIcon from "../asset/icon-delete.png";
 import logoutIcon from "../asset/icon-logout.png";
 
 function Joinpw({ onChange }) {
-  function goto_next(current_field, next_field) {
-    if (current_field.value.length >= 1) next_field.focus();
+
+  function nextPw () {
+    (document).on("keypress keyup keydown", "input[onlyNumber]", function (e) {
+      if (this.value.length >= this.maxLength) {
+        this.value = this.value.slice(0, this.maxLength);
+        if ((this).next("input").length > 0) {
+          (this).next().focus();
+        } else {
+          (this).blur();
+        }
+      }
+    });
   }
+
   return (
     <div>
       <div className={styles.extradiv}>
@@ -27,28 +38,25 @@ function Joinpw({ onChange }) {
             <div className={styles.pwInput}>
               <input
                 className={styles.pw}
-                name={pw1}
                 type="password"
                 maxLength="1"
-                onkeyup={goto_next(this, pw2)}
-              ></input>
-              <input
-                className={styles.pw}
-                name={pw2}
-                type="password"
-                maxLength="1"
-                onkeyup={goto_next(this, pw3)}
-              ></input>
-              <input
-                className={styles.pw}
-                name="pw3"
-                type="password"
-                maxLength="1"
+                onkeyup={nextPw}
               ></input>
               <input
                 className={styles.pw}
                 type="password"
-                name="pw4"
+                maxLength="1"
+                onkeyup={nextPw}
+              ></input>
+              <input
+                className={styles.pw}
+                type="password"
+                maxLength="1"
+                onkeyup={nextPw}
+              ></input>
+              <input
+                className={styles.pw}
+                type="password"
                 maxLength="1"
               ></input>
             </div>
