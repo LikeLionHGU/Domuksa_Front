@@ -2,14 +2,13 @@
 
 import styles from "../CSS/Profile.module.css";
 
+import profileImg from "../asset/profile-test.png";
 import deleteIcon from "../asset/icon-delete.png";
 import logoutIcon from "../asset/icon-logout.png";
-import { useEffect, useRef, useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
-function Profile({ onChange, user }) {
+function Profile({ onChange }) {
   const popup = useRef();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const clickOutside = (e) => {
@@ -24,13 +23,6 @@ function Profile({ onChange, user }) {
     };
   }, [onChange]);
 
-  function logout() {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("userInfo");
-    localStorage.removeItem("memberId");
-    navigate("/");
-  }
-
   return (
     <div className={styles.extradiv}>
       <div className={styles.maindiv}>
@@ -41,13 +33,13 @@ function Profile({ onChange, user }) {
             onClick={() => onChange(false)}
           />
           <div className={styles.info}>
-            <img className={styles.modalImg} src={user.picture} />
+            <img className={styles.modalImg} src={profileImg} />
             <div className={styles.text}>
-              <div className={styles.name}>{user.name}</div>
-              <div className={styles.email}>{user.email}</div>
+              <div className={styles.name}>대표 김진성</div>
+              <div className={styles.email}>email@email.com</div>
             </div>
           </div>
-          <div className={styles.logout} onClick={logout}>
+          <div className={styles.logout}>
             <img className={styles.logoutIcon} src={logoutIcon} />
             로그아웃
           </div>
