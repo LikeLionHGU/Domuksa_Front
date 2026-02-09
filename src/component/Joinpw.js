@@ -7,28 +7,102 @@ import deleteIcon from "../asset/icon-delete.png";
 import logoutIcon from "../asset/icon-logout.png";
 
 function Joinpw({ onChange }) {
+  const testPw = "1234";
+
   const inputRef1 = useRef(null);
   const inputRef2 = useRef(null);
   const inputRef3 = useRef(null);
   const inputRef4 = useRef(null);
 
-  function changeInput(e) {
+  const [inputNum, setInputNum] = useState([]);
+  const [password, setPassword] = useState("");
+
+  function onDelete(e) {
+    switch (e.target.name) {
+      case "pw1":
+        if (e.keyCode == 8 || e.keyCode == 46) {
+          e.preventDefault();
+          if (e.target.value) e.target.value = "";
+        }
+        break;
+      case "pw2":
+        if (e.keyCode == 8) {
+          e.preventDefault();
+          if (e.target.value) e.target.value = "";
+          inputRef1.current.focus();
+        }
+        break;
+      case "pw3":
+        if (e.keyCode == 8 || e.keyCode == 46) {
+          e.preventDefault();
+          if (e.target.value) e.target.value = "";
+          inputRef2.current.focus();
+        }
+        break;
+      case "pw4":
+        if (e.keyCode == 8 || e.keyCode == 46) {
+          e.preventDefault();
+          if (e.target.value) e.target.value = "";
+          inputRef3.current.focus();
+        }
+        break;
+      default:
+        break;
+    }
+  }
+
+  function onInput(e) {
     if (e.target.value.length === 1) {
+      const value = e.target.value;
+      const cleanedNumber = value.replace(/\D/g, "");
       switch (e.target.name) {
         case "pw1":
+          if (cleanedNumber.length === 0) {
+            e.target.value = "";
+            return;
+          }
+          inputNum[0] = e.target.value;
           inputRef2.current.focus();
           break;
         case "pw2":
+          if (cleanedNumber.length === 0) {
+            e.target.value = "";
+            return;
+          }
+          inputNum[1] = e.target.value;
           inputRef3.current.focus();
           break;
         case "pw3":
+          if (cleanedNumber.length === 0) {
+            e.target.value = "";
+            return;
+          }
+          inputNum[2] = e.target.value;
           inputRef4.current.focus();
+          break;
+        case "pw4":
+          if (cleanedNumber.length === 0) {
+            e.target.value = "";
+            return;
+          }
+          inputNum[3] = e.target.value;
           break;
         default:
           break;
       }
     }
+
+    console.log(inputNum);
+
+    setPassword(inputNum.join(""));
+
+    // if(password !== testPw){
+    //   inputRef1.current.focus();
+    //   setInputNum("");
+    // }
   }
+
+  console.log(password);
 
   return (
     <div>
@@ -52,7 +126,8 @@ function Joinpw({ onChange }) {
                 type="password"
                 maxLength="1"
                 ref={inputRef1}
-                onChange={changeInput}
+                onChange={onInput}
+                onKeyDown={onDelete}
               ></input>
               <input
                 className={styles.pw}
@@ -60,7 +135,8 @@ function Joinpw({ onChange }) {
                 type="password"
                 maxLength="1"
                 ref={inputRef2}
-                onChange={changeInput}
+                onChange={onInput}
+                onKeyDown={onDelete}
               ></input>
               <input
                 className={styles.pw}
@@ -68,7 +144,8 @@ function Joinpw({ onChange }) {
                 type="password"
                 maxLength="1"
                 ref={inputRef3}
-                onChange={changeInput}
+                onChange={onInput}
+                onKeyDown={onDelete}
               ></input>
               <input
                 className={styles.pw}
@@ -76,7 +153,8 @@ function Joinpw({ onChange }) {
                 type="password"
                 maxLength="1"
                 ref={inputRef4}
-                onChange={changeInput}
+                onChange={onInput}
+                onKeyDown={onDelete}
               ></input>
             </div>
             <div className={styles.joinBtn}>입장하기</div>
