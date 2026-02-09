@@ -115,9 +115,9 @@ hr {
         height: 450px;
 
         h2 {
-            font-size: 14px;
+            font-size: 24px;
             color: #B4B3B3;
-            margin-left: 280px;
+            margin-left: 270px;
             transform: rotate(45deg);
         }
         h2:hover{
@@ -146,7 +146,7 @@ hr {
         .Block {
             box-shadow: 2px 2px #dbdbdb;
 
-            width: 210px;
+            width: 230px;
             height: 50px;
             /* flex때문에 자식요소height도 줄어드는 이유 */
             flex-shrink: 0;
@@ -233,7 +233,7 @@ hr {
         .ChosenBlock {
             box-shadow: 2px 2px #dbdbdb;
 
-            width: 210px;
+            width: 230px;
             height: 50px;
             /* flex때문에 자식요소height도 줄어드는 이유 */
             flex-shrink: 0;

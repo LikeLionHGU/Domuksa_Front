@@ -12,8 +12,7 @@ import add from "../asset/icon-add.png";
 
 
 //host는 소켓으로 생성된 요소들 다 서버로 전송 / 사용자는 그저 받기!
-function LeftList() {
-
+function LeftList({ roomId , roomName}) {
 
   const [ModalId, setModalId] = useState(null);
   const ModalRef = useRef(null);
@@ -23,6 +22,7 @@ function LeftList() {
   const [agendas, setAgendas] = useState([]);
   const [Setting, setSetting] = useState(false);
 
+  const [RoomName,setRoomName]=useState(null);
 
   useEffect(() => {
 
@@ -61,6 +61,21 @@ function LeftList() {
   function addAgenda() {
     setAgendas(prev => [...prev, { id: idCounter, name: "안건이름", number: "투표수" }]);
     setIdCounter(prev => prev + 1);
+
+    axios
+      .post(`${process.env.REACT_APP_HOST_URL}/agenda/${roomId}`, {
+        name: "안건 1",
+        sequence: 1
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+
+        console.error("마이페이지 정보 가져오기 실패:", error);
+      });
+
+
   }
 
   function handleSetting() {
@@ -95,11 +110,12 @@ function LeftList() {
     pw.type = "password";
 
   }
+
   return (
     <div className={style.Maindiv}>
       <div className={style.Head}>
         <div className={style.Left}>
-          02/04 두먹사 회의
+          {roomName}
         </div>
         <img alt="setting" src={setting} onClick={() => handleSetting()} />
       </div>
@@ -113,13 +129,20 @@ function LeftList() {
             <form>
               <label>회의 이름 변경
                 <div className={style.Input}>
-                  <input />
+                  <input 
+                    id="newRoomName"
+                    maxLength='12'
+                  />
                 </div>
               </label>
 
               <label>방 비밀번호 변경
                 <div className={style.Input}>
-                  <input id="password" type="password" />
+                  <input 
+                  id="newPassword" 
+                  type="password" 
+                  maxLength='4'
+                  />
                   <img alt="visible" src={visible} onClick={() => handleVisible()} />
                 </div>
               </label>
