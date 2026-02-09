@@ -22,6 +22,8 @@
   width: 494px;
   height: 331px;
 
+  text-align: center;
+
   background-color: #ffffff;
 
   border-radius: 20px;
@@ -33,4 +35,27 @@
     width: 14px;
     height: 14px;
   }
+
+  .joinBtn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 406px;
+    height: 55px;
+    background-color: #5043E7;
+    border-radius: 20px;
+  }
+}
+
+.pwInput{
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  column-gap: 4px;
+  justify-content: center;
+
+  input{
+    width: 99px;
+    height: 119px;
+    border-radius: 30px;
+    }
 }
