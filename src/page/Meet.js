@@ -23,7 +23,7 @@ function Meet() {
   useEffect(() => {
 
     setRoomId(localStorage.getItem("roomId"));
-    const user = localStorage.getItem("userInfo");
+    // const user = localStorage.getItem("userInfo");
 
     if (roomId) {
       setRoomId(roomId);
