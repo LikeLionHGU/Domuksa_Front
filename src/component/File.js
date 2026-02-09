@@ -1,17 +1,15 @@
 //룸에 있는 안건에 있는 파일 불러오기+ 확대
 
 import style from "../CSS/File.module.css";
-import { useEffect, useRef, useState } from "react";
 import { PDFViewer } from '@embedpdf/react-pdf-viewer';
-import dlt from "../asset/icon-delete.png";
 
-function File({onChange}) {
+function File({ onChange }) {
 
     return (
         <div className={style.Maindiv}>
             <div className={style.Maintitle}>
                 <h3>파일</h3>
-                <img src={dlt} onClick={() => onChange("basic")} />
+                <h2 onClick={() => onChange("basic")} >+</h2>
             </div>
             <div className={style.Viewer}>
                 <PDFViewer

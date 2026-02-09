@@ -9,21 +9,23 @@
 
 .Maintitle {
     display: flex;
-    margin-left: 40px;
-    margin-top: 40px;
-    margin-right: 40px;
+    align-items: center;
+    margin: 40px;
 
     h3 {
-
+        margin: 0 auto 0 0;
         font-size: 20px;
-
-
     }
 
-    img {
-        margin-left: auto;
-        width: 18px;
-        height: 18px;
+    h2 {
+        margin: 0 0 0 auto;
+        transform: rotate(45deg);
+        font-size: 26px;
+        color: #B4B3B3;
+    }
+
+    h2:hover {
+        color: #111111;
     }
 }
 .Subdiv {

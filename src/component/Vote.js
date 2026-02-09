@@ -18,7 +18,7 @@ function Vote({ onChange }) {
         <div className={style.Maindiv}>
             <div className={style.Maintitle}>
                 <h3>투표</h3>
-                <img src={dlt} onClick={() => onChange("basic")}  />
+                <h2 onClick={() => onChange("basic")} >+</h2>
             </div>
 
             <div className={style.Subdiv}>
