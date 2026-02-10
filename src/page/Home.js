@@ -25,7 +25,6 @@ function Home() {
   const [userId, setUserId] = useState("");
 
   const [rooms, setRooms] = useState([]);
-  const [thisRoomId, setThisRoomId] = useState("");
 
   const [value, setValue] = useState("");
   const [code, setCode] = useState("");
@@ -88,7 +87,7 @@ function Home() {
 
     isRightPw();
   
-  }, [code, reset, thisRoomId]);
+  }, [code, reset]);
 
   if (!token) {
     navigate("/");
