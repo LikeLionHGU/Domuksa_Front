@@ -6,8 +6,10 @@ import profileImg from "../asset/profile-test.png";
 import deleteIcon from "../asset/icon-delete.png";
 import logoutIcon from "../asset/icon-logout.png";
 import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 function Profile({ onChange, user }) {
+  const navigate = useNavigate();
   const popup = useRef();
 
   function onLogout() {
