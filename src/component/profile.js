@@ -10,6 +10,12 @@ import { useEffect, useRef } from "react";
 function Profile({ onChange, user }) {
   const popup = useRef();
 
+  function onLogout() {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("memberId");
+    localStorage.removeItem("userInfo");
+  }
+
   useEffect(() => {
     const clickOutside = (e) => {
       if (onChange && !popup.current.contains(e.target)) {
@@ -39,7 +45,7 @@ function Profile({ onChange, user }) {
               <div className={styles.email}>{user.email}</div>
             </div>
           </div>
-          <div className={styles.logout}>
+          <div className={styles.logout} onClick={onLogout}>
             <img className={styles.logoutIcon} src={logoutIcon} />
             로그아웃
           </div>

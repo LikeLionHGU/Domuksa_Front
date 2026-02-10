@@ -17,6 +17,7 @@ function Home() {
   const [picture, setPicture] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [token, setToken] = useState("");
   const [userId, setUserId] = useState("");
 
   const [value, setValue] = useState("");
@@ -59,19 +60,22 @@ function Home() {
 
   useEffect(() => {
     isRightPw();
-    const token = localStorage.getItem("accessToken");
+    setToken(localStorage.getItem("accessToken"));
     if (!token) {
       return;
     }
     if (token) {
       const user = JSON.parse(localStorage.getItem("userInfo"));
-
       setUserId(user.id);
       setName(user.name);
       setEmail(user.email);
       setPicture(user.profileUrl);
     }
   }, [code]);
+
+  if (!token) {
+    navigate("/");
+  }
 
   return (
     <div>
@@ -84,7 +88,7 @@ function Home() {
             <div></div>
             <div className={styles.profile}>
               <img
-                className={styles.prifileImg}
+                className={styles.profileImg}
                 src={picture}
                 onClick={isProfileOpen}
               />
