@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 function Landing() {
   const navigate = useNavigate();
 
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("memberId");
+  localStorage.removeItem("userInfo");
+
   function goHome() {
     navigate("/home");
   }
