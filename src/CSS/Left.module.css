@@ -145,7 +145,7 @@ hr {
 
 
         .Block {
-           box-shadow: 2px 2px #dbdbdb;
+            box-shadow: 2px 2px #dbdbdb;
 
             width: 250px;
             height: 50px;
@@ -179,12 +179,25 @@ hr {
                 display: flex;
                 align-items: center;
 
-                font-size: 16px;
-                color: #5a5a5a;
-                font-weight: bold;
-
                 span {
                     font-size: 30px;
+                }
+
+                h1 {
+                    font-size: 16px;
+                    color: #5a5a5a;
+                    font-weight: bold;
+                }
+
+                input {
+                    font-size: 18px;
+                    color: #5a5a5a;
+                    /* font-weight: bold; */
+                    margin: 0;
+                    border: none;
+                    width: 160px;
+                    height: auto;
+                    
                 }
             }
 
@@ -282,12 +295,23 @@ hr {
                 display: flex;
                 align-items: center;
 
-                font-size: 16px;
-                color: #5043E7;
-                font-weight: bold;
-
                 span {
                     font-size: 30px;
+                }
+
+                h1 {
+                    font-size: 16px;
+                    color: #5a5a5a;
+                    font-weight: bold;
+                }
+
+                input {
+                    font-size: 18px;
+                    color: #5a5a5a;
+                    /* font-weight: bold; */
+                    margin: 0;
+                    border: none;
+                    width: 160px;
                 }
             }
 

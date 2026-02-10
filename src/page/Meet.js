@@ -179,6 +179,7 @@ function Meet() {
                         <input
                           id="name"
                           maxLength='12'
+                          required
                           onChange={() => {
                             setRoomName(document.getElementById("name").value);
                           }} />
@@ -191,6 +192,7 @@ function Meet() {
                           id="password"
                           type="password"
                           maxLength='4'
+                          required
                           onChange={() => {
                             setPassword(document.getElementById("password").value);
                           }}
