@@ -19,7 +19,6 @@ function LeftList({ roomId, roomName }) {
   const ModalRef = useRef(null);
 
   const [pre, setPre] = useState(null); //선택된 블럭이 어떤 블럭인지?
-  const [idCounter, setIdCounter] = useState(0);
   const [agendas, setAgendas] = useState([]);
   const [Setting, setSetting] = useState(false);
 
@@ -129,8 +128,21 @@ function LeftList({ roomId, roomName }) {
   function handleAgendaEdit() {
 
   }
-  function deleteAgenda() {
+  function deleteAgenda(id) {
+    axios
+      .delete(`${process.env.REACT_APP_HOST_URL}/agenda/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        // setAgendas(res.data.agendas);
+      })
+      .catch((error) => {
 
+        console.error("마이페이지 정보 가져오기 실패:", error);
+      });
   }
   function handleKeydownEnter(e, id) {
     if (e.key === 'Enter') {
@@ -225,6 +237,7 @@ function LeftList({ roomId, roomName }) {
                       </div>
                       <div className={style.Dlt} onClick={(e) => {
                         setModalId(null);
+                        deleteAgenda(agenda.id);
                         e.stopPropagation();
                       }}>
                         <img alt="bin" src={bin} />
