@@ -58,9 +58,6 @@ function Home() {
     }
   }
 
-  function goArchived() {
-    navigate("/archived");
-  }
 
   useEffect(() => {
     setToken(localStorage.getItem("accessToken"));
@@ -83,7 +80,6 @@ function Home() {
         userId: userId,
       })
       .then((res) => {
-        console.log(res);
         setRooms(res.data);
       })
       .catch((error) => {
@@ -93,8 +89,6 @@ function Home() {
     isRightPw();
   
   }, [code, reset, thisRoomId]);
-
-  console.log(thisRoomId);
 
   if (!token) {
     navigate("/");
@@ -159,6 +153,7 @@ function Home() {
             {rooms.map((rooms) => (
               <div
                 id={rooms.roomId}
+                key={rooms.roomId}
                 className={styles.room}
                 onClick={(e) => getRoomId(e)}
               >
