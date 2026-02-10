@@ -7,18 +7,23 @@ import roomImg from "../asset/icon-meetingroom.png";
 import Profile from "../component/Profile";
 import Joinpw from "../component/Joinpw";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Home() {
   const navigate = useNavigate();
 
+  const [reset, setReset] = useState(false);
+
   const [profileOpen, setProfileOpen] = useState(false);
   const [pwOpen, setPwOpen] = useState(false);
 
-  const [picture, setPicture] = useState("");
+  const [token, setToken] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [token, setToken] = useState("");
+  const [picture, setPicture] = useState("");
   const [userId, setUserId] = useState("");
+
+  const [rooms, setRooms] = useState([]);
 
   const [value, setValue] = useState("");
   const [code, setCode] = useState("");
@@ -39,9 +44,9 @@ function Home() {
   }
 
   function isProfileOpen() {
-    if (profileOpen == false) {
+    if (profileOpen === false) {
       setProfileOpen(true);
-    } else if (profileOpen == true) {
+    } else if (profileOpen === true) {
       setProfileOpen(false);
     }
   }
@@ -59,9 +64,9 @@ function Home() {
   }
 
   useEffect(() => {
-    isRightPw();
     setToken(localStorage.getItem("accessToken"));
     if (!token) {
+      setReset(!reset);
       return;
     }
     if (token) {
@@ -71,7 +76,11 @@ function Home() {
       setEmail(user.email);
       setPicture(user.profileUrl);
     }
-  }, [code]);
+
+    isRightPw();
+  }, [code, reset]);
+
+    
 
   if (!token) {
     navigate("/");
