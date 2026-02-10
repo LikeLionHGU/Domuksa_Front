@@ -4,6 +4,7 @@ import logoImg from "../asset/icon-logo.png";
 import completeImg from "../asset/icon-complete.png";
 import addImg from "../asset/icon-add_white.png";
 import roomImg from "../asset/icon-meetingroom.png";
+import roomHostImg from "../asset/icon-meetinghost.png";
 import Profile from "../component/Profile";
 import Joinpw from "../component/Joinpw";
 import { useNavigate } from "react-router-dom";
@@ -88,7 +89,6 @@ function Home() {
       .then((res) => {
         console.log(res);
         setRooms(res.data);
-        
       })
       .catch((error) => {
         console.error("마이페이지 정보 가져오기 실패:", error);
@@ -154,11 +154,14 @@ function Home() {
             </div>
             {rooms.map((rooms) => (
               <div className={styles.room}>
-              <img className={styles.roomImg} src={roomImg} />
-              <div className={styles.roomName}>{rooms.roomName}</div>
-            </div>
+                {rooms.role === "host" ? (
+                  <img className={styles.roomImg} src={roomHostImg} />
+                ) : (
+                  <img className={styles.roomImg} src={roomImg} />
+                )}
+                <div className={styles.roomName}>{rooms.roomName}</div>
+              </div>
             ))}
-            
           </div>
         </div>
       </div>
