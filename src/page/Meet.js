@@ -28,6 +28,7 @@ function Meet() {
 
   useEffect(() => {
 
+    const token = localStorage.getItem("accessToken");
     setRoomId(localStorage.getItem("roomId"));
     // const user = localStorage.getItem("userInfo");
 
@@ -36,6 +37,9 @@ function Meet() {
 
       axios
         .get(`${process.env.REACT_APP_HOST_URL}/room/${roomId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         })
         .then((res) => {
           console.log(res);
