@@ -14,6 +14,7 @@ import add from "../asset/icon-add.png";
 //host는 소켓으로 생성된 요소들 다 서버로 전송 / 사용자는 그저 받기!
 function LeftList({ roomId, roomName }) {
 
+  const token = localStorage.getItem("accessToken");
   const [ModalId, setModalId] = useState(null);
   const ModalRef = useRef(null);
 
@@ -24,19 +25,19 @@ function LeftList({ roomId, roomName }) {
 
   const [RoomName, setRoomName] = useState(null);
 
+  const [Changed, setChanged] = useState(null);
+
   useEffect(() => {
 
-    const token = localStorage.getItem("accessToken");
-
-    const testNumber1 = 1;
     axios
-      .get(`${process.env.REACT_APP_HOST_URL}/room/${testNumber1}/agenda`, {
+      .get(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/agenda`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
         console.log(res);
+        // setAgendas(res.data.agendas);
       })
       .catch((error) => {
 
@@ -59,8 +60,8 @@ function LeftList({ roomId, roomName }) {
 
 
   function addAgenda() {
-    setAgendas(prev => [...prev, { id: idCounter, name: "안건이름", number: "투표수" }]);
-    setIdCounter(prev => prev + 1);
+    // setAgendas(prev => [...prev, { id: idCounter, name: "안건이름", number: "투표수" }]);
+    // setIdCounter(prev => prev + 1);
 
     axios
       .post(`${process.env.REACT_APP_HOST_URL}/agenda/${roomId}`, {
@@ -69,6 +70,21 @@ function LeftList({ roomId, roomName }) {
       })
       .then((res) => {
         console.log(res);
+      })
+      .catch((error) => {
+
+        console.error("마이페이지 정보 가져오기 실패:", error);
+      });
+
+    axios
+      .get(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/agenda`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+        // setAgendas(res.data.agendas);
       })
       .catch((error) => {
 
@@ -110,8 +126,29 @@ function LeftList({ roomId, roomName }) {
 
   }
 
-  function handleAgendaEdit(){
-    
+  function handleAgendaEdit() {
+
+  }
+  function deleteAgenda() {
+
+  }
+  function handleKeydownEnter(e, id) {
+    if (e.key === 'Enter') {
+      // handleSubmit(e);
+      setChanged(null);
+      console.log(e, id);
+      axios
+        .patch(`${process.env.REACT_APP_HOST_URL}/agenda/${id}`, {
+          name: e.target.value,
+        })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.error("실패:", error);
+        });
+    }
+
   }
   return (
     <div className={style.Maindiv}>
@@ -167,8 +204,8 @@ function LeftList({ roomId, roomName }) {
                 className={style.Block}
                 onClick={(event) => handleBlock(event)}
               >
-                <div className={style.Text}>
-                  <span>•</span> {agenda.name}
+                <div className={style.Text} onDoubleClick={() => setChanged(agenda.id)}>
+                  <span>•</span> {Changed === agenda.id ? <input onKeyDown={(e) => handleKeydownEnter(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.name}</h1>}
                 </div>
                 <h3 alt="option"
                   onClick={(e) => {
@@ -180,6 +217,7 @@ function LeftList({ roomId, roomName }) {
                     <div className={style.Options}>
                       <div className={style.Edit} onClick={(e) => {
                         setModalId(null);
+                        setChanged(agenda.id);
                         e.stopPropagation();
                       }}>
                         <img alt="edit" src={edit} />
