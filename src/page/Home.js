@@ -155,7 +155,7 @@ function Home() {
             {rooms.map((rooms) => (
               <div className={styles.room}>
                 {rooms.role === "host" ? (
-                  <img className={styles.roomImg} src={roomHostImg} />
+                  <img className={styles.roomHostImg} src={roomHostImg} />
                 ) : (
                   <img className={styles.roomImg} src={roomImg} />
                 )}

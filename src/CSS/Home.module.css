@@ -148,24 +148,33 @@
 }
 
 .room {
+  position: relative;
   display: grid;
-  grid-row: 1fr 1fr;
+  grid-row: auto auto;
   justify-content: center;
+  align-items: end;
 
   width: 217px;
   height: 157px;
   background-color: #ffffff;
   border-radius: 15px;
 
+  .roomHostImg {
+    width: 70px;
+    height: auto;
+    margin: 24px 73px 0px 74px;
+  }
+
   .roomImg {
     width: 70px;
     height: auto;
 
-    margin: 40px 73px 48px 74px;
+    margin: 40px 73px 0px 74px;
   }
 
   .roomName {
-    font-size: 14px;
+    font-size: 16px;
+    margin-top: 48px;
     margin-bottom: 18px;
     text-align: center;
   }
