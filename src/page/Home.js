@@ -42,6 +42,12 @@ function Home() {
     setThisRoomId(e.currentTarget.id);
   }
 
+  function isRoomId(){
+    if(thisRoomId !== ""){
+      navigate('/meet');
+    }
+  }
+
   function isRightPw() {
     if (testCode === code) {
       setPwOpen(true);
@@ -100,11 +106,11 @@ function Home() {
       });
 
     isRightPw();
-  }, [code, reset]);
+    localStorage.setItem("roomId", thisRoomId);
+    isRoomId();
+  }, [code, reset, thisRoomId]);
 
-  //console.log("rooms", rooms);
   console.log(thisRoomId);
-  localStorage.setItem("roomId", thisRoomId);
 
   if (!token) {
     navigate("/");
