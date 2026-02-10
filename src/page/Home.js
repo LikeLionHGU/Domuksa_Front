@@ -39,6 +39,7 @@ function Home() {
   }
 
   function getRoomId(e) {
+    console.log(e.target.id);
     setThisRoomId(e.currentTarget.id);
   }
 
@@ -107,6 +108,7 @@ function Home() {
 
     isRightPw();
     localStorage.setItem("roomId", thisRoomId);
+    console.log(thisRoomId);
     isRoomId();
   }, [code, reset, thisRoomId]);
 
