@@ -7,7 +7,7 @@ import deleteIcon from "../asset/icon-delete.png";
 import logoutIcon from "../asset/icon-logout.png";
 import { useEffect, useRef } from "react";
 
-function Profile({ onChange }) {
+function Profile({ onChange, user }) {
   const popup = useRef();
 
   useEffect(() => {
@@ -33,10 +33,10 @@ function Profile({ onChange }) {
             onClick={() => onChange(false)}
           />
           <div className={styles.info}>
-            <img className={styles.modalImg} src={profileImg} />
+            <img className={styles.modalImg} src={user.picture} />
             <div className={styles.text}>
-              <div className={styles.name}>대표 김진성</div>
-              <div className={styles.email}>email@email.com</div>
+              <div className={styles.name}>{user.name}</div>
+              <div className={styles.email}>{user.email}</div>
             </div>
           </div>
           <div className={styles.logout}>

@@ -17,13 +17,12 @@ function Home() {
   const [picture, setPicture] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [userId, setUserId] = useState("");
 
   const [value, setValue] = useState("");
   const [code, setCode] = useState("");
 
   const testCode = "1234567890";
-
-  const [room, setRoom] = useState([]);
 
   const activeEnter = (e) => {
     if (e.key === "Enter") {
@@ -67,13 +66,12 @@ function Home() {
     if (token) {
       const user = JSON.parse(localStorage.getItem("userInfo"));
 
+      setUserId(user.id);
       setName(user.name);
       setEmail(user.email);
       setPicture(user.profileUrl);
     }
   }, [code]);
-
-  console.log(code);
 
   return (
     <div>
