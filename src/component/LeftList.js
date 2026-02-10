@@ -12,7 +12,7 @@ import add from "../asset/icon-add.png";
 
 
 //host는 소켓으로 생성된 요소들 다 서버로 전송 / 사용자는 그저 받기!
-function LeftList({ roomId , roomName}) {
+function LeftList({ roomId, roomName }) {
 
   const [ModalId, setModalId] = useState(null);
   const ModalRef = useRef(null);
@@ -22,7 +22,7 @@ function LeftList({ roomId , roomName}) {
   const [agendas, setAgendas] = useState([]);
   const [Setting, setSetting] = useState(false);
 
-  const [RoomName,setRoomName]=useState(null);
+  const [RoomName, setRoomName] = useState(null);
 
   useEffect(() => {
 
@@ -75,7 +75,6 @@ function LeftList({ roomId , roomName}) {
         console.error("마이페이지 정보 가져오기 실패:", error);
       });
 
-
   }
 
   function handleSetting() {
@@ -111,6 +110,9 @@ function LeftList({ roomId , roomName}) {
 
   }
 
+  function handleAgendaEdit(){
+    
+  }
   return (
     <div className={style.Maindiv}>
       <div className={style.Head}>
@@ -129,7 +131,7 @@ function LeftList({ roomId , roomName}) {
             <form>
               <label>회의 이름 변경
                 <div className={style.Input}>
-                  <input 
+                  <input
                     id="newRoomName"
                     maxLength='12'
                   />
@@ -138,10 +140,10 @@ function LeftList({ roomId , roomName}) {
 
               <label>방 비밀번호 변경
                 <div className={style.Input}>
-                  <input 
-                  id="newPassword" 
-                  type="password" 
-                  maxLength='4'
+                  <input
+                    id="newPassword"
+                    type="password"
+                    maxLength='4'
                   />
                   <img alt="visible" src={visible} onClick={() => handleVisible()} />
                 </div>
@@ -176,11 +178,17 @@ function LeftList({ roomId , roomName}) {
                 {ModalId === agenda.id &&
                   <div className={style.Modal} ref={ModalRef}>
                     <div className={style.Options}>
-                      <div className={style.Edit} >
+                      <div className={style.Edit} onClick={(e) => {
+                        setModalId(null);
+                        e.stopPropagation();
+                      }}>
                         <img alt="edit" src={edit} />
                         이름 변경
                       </div>
-                      <div className={style.Dlt} >
+                      <div className={style.Dlt} onClick={(e) => {
+                        setModalId(null);
+                        e.stopPropagation();
+                      }}>
                         <img alt="bin" src={bin} />
                         삭제
                       </div>
