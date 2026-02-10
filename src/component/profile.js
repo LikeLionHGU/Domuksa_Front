@@ -14,6 +14,7 @@ function Profile({ onChange, user }) {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("memberId");
     localStorage.removeItem("userInfo");
+    navigator('/');
   }
 
   useEffect(() => {
