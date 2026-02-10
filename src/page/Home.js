@@ -4,32 +4,49 @@ import logoImg from "../asset/icon-logo.png";
 import completeImg from "../asset/icon-complete.png";
 import addImg from "../asset/icon-add_white.png";
 import roomImg from "../asset/icon-meetingroom.png";
+import roomHostImg from "../asset/icon-meetinghost.png";
 import Profile from "../component/Profile";
 import Joinpw from "../component/Joinpw";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Home() {
   const navigate = useNavigate();
 
+  const [reset, setReset] = useState(false);
+
   const [profileOpen, setProfileOpen] = useState(false);
   const [pwOpen, setPwOpen] = useState(false);
 
-  const [picture, setPicture] = useState("");
+  const [token, setToken] = useState("");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [token, setToken] = useState("");
+  const [picture, setPicture] = useState("");
   const [userId, setUserId] = useState("");
+
+  const [rooms, setRooms] = useState([]);
+  const [thisRoomId, setThisRoomId] = useState("");
 
   const [value, setValue] = useState("");
   const [code, setCode] = useState("");
 
   const testCode = "1234567890";
 
-  const activeEnter = (e) => {
+  function activeEnter(e) {
     if (e.key === "Enter") {
       setCode(value);
     }
-  };
+  }
+
+  function getRoomId(e) {
+    setThisRoomId(e.currentTarget.id);
+  }
+
+  function isRoomId(){
+    if(thisRoomId !== ""){
+      navigate('/meet');
+    }
+  }
 
   function isRightPw() {
     if (testCode === code) {
@@ -39,9 +56,9 @@ function Home() {
   }
 
   function isProfileOpen() {
-    if (profileOpen == false) {
+    if (profileOpen === false) {
       setProfileOpen(true);
-    } else if (profileOpen == true) {
+    } else if (profileOpen === true) {
       setProfileOpen(false);
     }
   }
@@ -59,19 +76,41 @@ function Home() {
   }
 
   useEffect(() => {
-    isRightPw();
     setToken(localStorage.getItem("accessToken"));
-    if (!token) {
+    const user = JSON.parse(localStorage.getItem("userInfo"));
+    setUserId(user.id);
+    setName(user.name);
+    setEmail(user.email);
+    setPicture(user.profileUrl);
+
+    if (!token || !user) {
+      setReset(!reset);
       return;
     }
-    if (token) {
-      const user = JSON.parse(localStorage.getItem("userInfo"));
-      setUserId(user.id);
-      setName(user.name);
-      setEmail(user.email);
-      setPicture(user.profileUrl);
-    }
-  }, [code]);
+
+    console.log(userId);
+
+    axios
+      .get(`${process.env.REACT_APP_HOST_URL}/user/me/running`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        userId: userId,
+      })
+      .then((res) => {
+        console.log(res);
+        setRooms(res.data);
+      })
+      .catch((error) => {
+        console.error("마이페이지 정보 가져오기 실패:", error);
+      });
+
+    isRightPw();
+    localStorage.setItem("roomId", thisRoomId);
+    isRoomId();
+  }, [code, reset, thisRoomId]);
+
+  console.log(thisRoomId);
 
   if (!token) {
     navigate("/");
@@ -126,10 +165,20 @@ function Home() {
               <img className={styles.completeImg} src={completeImg} />
               <div className={styles.complete}>완료됨</div>
             </div>
-            <div className={styles.room}>
-              <img className={styles.roomImg} src={roomImg} />
-              <div className={styles.roomName}>2025 두먹사 회의</div>
-            </div>
+            {rooms.map((rooms) => (
+              <div
+                id={rooms.roomId}
+                className={styles.room}
+                onClick={(e) => getRoomId(e)}
+              >
+                {rooms.role === "host" ? (
+                  <img className={styles.roomHostImg} src={roomHostImg} />
+                ) : (
+                  <img className={styles.roomImg} src={roomImg} />
+                )}
+                <div className={styles.roomName}>{rooms.roomName}</div>
+              </div>
+            ))}
           </div>
         </div>
       </div>
