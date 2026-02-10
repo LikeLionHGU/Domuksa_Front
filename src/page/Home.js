@@ -73,8 +73,8 @@ function Home() {
     }
   }, [code]);
 
-  if(!token){
-    navigate('/');
+  if (!token) {
+    navigate("/");
   }
 
   return (
@@ -88,7 +88,7 @@ function Home() {
             <div></div>
             <div className={styles.profile}>
               <img
-                className={styles.prifileImg}
+                className={styles.profileImg}
                 src={picture}
                 onClick={isProfileOpen}
               />
