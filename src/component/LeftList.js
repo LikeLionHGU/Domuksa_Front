@@ -168,11 +168,11 @@ function LeftList({ roomId , roomName}) {
                 <div className={style.Text}>
                   <span>•</span> {agenda.name}
                 </div>
-                <img alt="option" src={option}
+                <h3 alt="option"
                   onClick={(e) => {
                     e.stopPropagation();
                     setModalId(agenda.id);
-                  }} />
+                  }} >⋮</h3>
                 {ModalId === agenda.id &&
                   <div className={style.Modal} ref={ModalRef}>
                     <div className={style.Options}>
