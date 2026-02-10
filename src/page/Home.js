@@ -25,17 +25,22 @@ function Home() {
   const [userId, setUserId] = useState("");
 
   const [rooms, setRooms] = useState([]);
+  const [thisRoomId, setThisRoomId] = useState("");
 
   const [value, setValue] = useState("");
   const [code, setCode] = useState("");
 
   const testCode = "1234567890";
 
-  const activeEnter = (e) => {
+  function activeEnter(e) {
     if (e.key === "Enter") {
       setCode(value);
     }
-  };
+  }
+
+  function getRoomId(e) {
+    setThisRoomId(e.currentTarget.id);
+  }
 
   function isRightPw() {
     if (testCode === code) {
@@ -97,7 +102,9 @@ function Home() {
     isRightPw();
   }, [code, reset]);
 
-  console.log("rooms", rooms);
+  //console.log("rooms", rooms);
+  console.log(thisRoomId);
+  localStorage.setItem("roomId", thisRoomId);
 
   if (!token) {
     navigate("/");
@@ -153,7 +160,11 @@ function Home() {
               <div className={styles.complete}>완료됨</div>
             </div>
             {rooms.map((rooms) => (
-              <div className={styles.room}>
+              <div
+                id={rooms.roomId}
+                className={styles.room}
+                onClick={(e) => getRoomId(e)}
+              >
                 {rooms.role === "host" ? (
                   <img className={styles.roomHostImg} src={roomHostImg} />
                 ) : (
