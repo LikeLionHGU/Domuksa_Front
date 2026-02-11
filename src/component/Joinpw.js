@@ -1,13 +1,12 @@
 //홈페이지 프로필 사진 눌렀을 때 나오는 창
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import styles from "../CSS/Joinpw.module.css";
 
 import deleteIcon from "../asset/icon-delete.png";
+import axios from "axios";
 
-function Joinpw({ onChange }) {
-  const testPw = "1234";
-
+function Joinpw({ onChange, code, token, roomId }) {
   const inputRef1 = useRef(null);
   const inputRef2 = useRef(null);
   const inputRef3 = useRef(null);
@@ -117,12 +116,30 @@ function Joinpw({ onChange }) {
       }
     }
 
-    console.log(inputNum);
-
     setPassword(inputNum.join(""));
   }
 
+  function handleJoin() {
+    axios
+      .post(
+        `${process.env.REACT_APP_HOST_URL}/room/${roomId}/member/password`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          password: password,
+        },
+      )
+      .then((res) => {
+        console.log("noid", res);
+      })
+      .catch((error) => {
+        console.error("진행중인 룸 정보 가져오기 실패:", error);
+      });
+  }
+
   console.log(password);
+  console.log("a", roomId);
 
   return (
     <div>
@@ -177,7 +194,9 @@ function Joinpw({ onChange }) {
                 onKeyDown={onDelete}
               ></input>
             </div>
-            <div className={styles.joinBtn}>입장하기</div>
+            <div className={styles.joinBtn} onClick={handleJoin}>
+              입장하기
+            </div>
             <div className={styles.lowText}>
               기분 좋은 회의의 시작, 두먹사가 함께합니다
             </div>

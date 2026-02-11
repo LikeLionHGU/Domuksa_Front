@@ -36,12 +36,29 @@ function Home() {
   function activeEnter(e) {
     if (e.key === "Enter") {
       setCode(value);
+      console.log(code);
       setIsEnter(!isEnter);
     }
   }
 
   function joinRoom() {
-
+    if (isPassword === true) {
+      setPwOpen(true);
+      setIsPassword(!isPassword);
+    } else if (isPassword === false) {
+      axios
+        .post(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/member`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log("noid", res);
+        })
+        .catch((error) => {
+          console.error("진행중인 룸 정보 가져오기 실패:", error);
+        });
+    }
   }
 
   function isProfileOpen() {
@@ -77,33 +94,40 @@ function Home() {
         setProgressRooms(res.data);
       })
       .catch((error) => {
-        console.error("진행중인 룸 정보 가져오기 실패:", error);
+        console.error("룸 상태 정보 가져오기 실패:", error);
       });
   }, [reset]);
 
   useEffect(() => {
-    axios
-      .get(`${process.env.REACT_APP_HOST_URL}/room/code?code=${code}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        code: code,
-      })
-      .then((res) => {
-        setRoomId(res.data.roomId);
-        setIsPassword(res.data.password);
-      })
-      .catch((error) => {
-        console.error("룸 입장 코드 가져오기 실패:", error);
-      });
+    if (code) {
+      axios
+        .get(`${process.env.REACT_APP_HOST_URL}/room/code?code=${code}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          code: code,
+        })
+        .then((res) => {
+          setRoomId(res.data.roomId);
+          setIsPassword(res.data.password);
+        })
+        .catch((error) => {
+          console.error("룸 입장 코드 가져오기 실패:", error);
+        });
+    }
+
+    joinRoom();
   }, [isEnter]);
+
+  console.log(progressRooms);
 
   return (
     <div>
       <div className={styles.extradiv}>
         <div className={styles.Maindiv}>
-          {pwOpen === true ? <Joinpw onChange={setPwOpen} code={code} /> : null}
-          <Joinpw onChange={setPwOpen} code={code} />
+          {pwOpen === true ? (
+            <Joinpw onChange={setPwOpen} code={code} token={token} roomId={roomId} />
+          ) : null}
           <div className={styles.header}>
             <img
               className={styles.logo}
