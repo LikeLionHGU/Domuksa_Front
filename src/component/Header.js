@@ -9,7 +9,7 @@ import logo from "../asset/icon-logo.png";
 import out from "../asset/icon-out.png";
 
 //사이트 메인 아이콘 + 구글 아이콘 + 방번호 + 완료/진행중 상태
-function Header({code}) {
+function Header({ code }) {
 
   const navigate = useNavigate();
   const [name, setName] = useState(null);
@@ -24,6 +24,7 @@ function Header({code}) {
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
     const user = localStorage.getItem("userInfo");
+    const roomId = localStorage.getItem("roomId");
 
     if (token === null && user === null) {
       navigate("/home");
@@ -33,9 +34,8 @@ function Header({code}) {
     setEmail(JSON.parse(user).email);
     setPicture(JSON.parse(user).profileUrl);
 
-    const testNumber1 = 1;
     axios
-      .get(`${process.env.REACT_APP_HOST_URL}/room/${testNumber1}/${testNumber1}`, {
+      .get(`${process.env.REACT_APP_HOST_URL}/room/${roomId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -88,7 +88,7 @@ function Header({code}) {
     <div className={style.Maindiv}>
 
       <div className={style.Left}>
-        <img src={logo} alt="logo" onClick={()=>backtohome()}/>
+        <img src={logo} alt="logo" onClick={() => backtohome()} />
       </div>
 
       <div className={style.Right}>

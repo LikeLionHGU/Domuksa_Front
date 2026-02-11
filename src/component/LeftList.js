@@ -9,10 +9,8 @@ import bin from "../asset/icon-trashbin.png";
 import visible from "../asset/icon-visible.png";
 import add from "../asset/icon-add.png";
 
-
-
 //host는 소켓으로 생성된 요소들 다 서버로 전송 / 사용자는 그저 받기!
-function LeftList({ roomId, roomName }) {
+function LeftList({ roomName }) {
 
   const token = localStorage.getItem("accessToken");
   const [ModalId, setModalId] = useState(null);
@@ -22,26 +20,9 @@ function LeftList({ roomId, roomName }) {
   const [agendas, setAgendas] = useState([]);
   const [Setting, setSetting] = useState(false);
 
-  const [RoomName, setRoomName] = useState(null);
-
   const [Changed, setChanged] = useState(null);
 
   useEffect(() => {
-
-    axios
-      .get(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/agenda`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        // setAgendas(res.data.agendas);
-      })
-      .catch((error) => {
-
-        console.error("마이페이지 정보 가져오기 실패:", error);
-      });
 
 
     function HandClickoutsideofModal(e) {
@@ -54,14 +35,33 @@ function LeftList({ roomId, roomName }) {
     return () => {
       document.removeEventListener("mousedown", HandClickoutsideofModal);
     }
-  }, [ModalId]);
+  }, [ModalId])
+
+  useEffect(() => {
+    const roomId = localStorage.getItem("roomId");
+
+    axios
+      .get(
+        `${process.env.REACT_APP_HOST_URL}/room/${roomId}/agenda`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+      .then((res) => {
+        console.log(res);
+        setAgendas(res.data);
+      })
+      .catch((error) => {
+        console.error("마이페이지 정보 가져오기 실패:", error);
+      });
+
+  }, [agendas.length]);
 
 
 
   function addAgenda() {
-    // setAgendas(prev => [...prev, { id: idCounter, name: "안건이름", number: "투표수" }]);
-    // setIdCounter(prev => prev + 1);
-
+    const roomId = localStorage.getItem("roomId");
     axios
       .post(`${process.env.REACT_APP_HOST_URL}/agenda/${roomId}`, {
         name: "안건 1",
@@ -71,25 +71,8 @@ function LeftList({ roomId, roomName }) {
         console.log(res);
       })
       .catch((error) => {
-
         console.error("마이페이지 정보 가져오기 실패:", error);
       });
-
-    axios
-      .get(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/agenda`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-        // setAgendas(res.data.agendas);
-      })
-      .catch((error) => {
-
-        console.error("마이페이지 정보 가져오기 실패:", error);
-      });
-
   }
 
   function handleSetting() {
@@ -98,7 +81,6 @@ function LeftList({ roomId, roomName }) {
     } else {
       setSetting(true);
     }
-
   }
 
   function handleBlock(e) {
@@ -130,18 +112,15 @@ function LeftList({ roomId, roomName }) {
   }
   function deleteAgenda(id) {
     axios
-      .delete(`${process.env.REACT_APP_HOST_URL}/agenda/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+      .delete(
+        `${process.env.REACT_APP_HOST_URL}/agenda/${id}`,
+        {
+        })
       .then((res) => {
         console.log(res);
-        // setAgendas(res.data.agendas);
       })
       .catch((error) => {
-
-        console.error("마이페이지 정보 가져오기 실패:", error);
+        console.error("실패:", error);
       });
   }
   function handleKeydownEnter(e, id) {
