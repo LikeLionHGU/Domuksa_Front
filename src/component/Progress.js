@@ -6,7 +6,7 @@ import roomHostImg from "../asset/icon-meetinghost.png";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-function Progress({ user, roomList }) {
+function Progress({ progressRoomList, onChange }) {
   const navigate = useNavigate();
 
   // 나중에 검색창 만들때 써야됨
@@ -21,6 +21,10 @@ function Progress({ user, roomList }) {
     navigate("/meet");
   }
 
+  function archiveOpen() {
+    onChange(true);
+  }
+
   return (
     <div>
       <div className={styles.process}>
@@ -29,23 +33,23 @@ function Progress({ user, roomList }) {
       </div>
 
       <div className={styles.rooms}>
-        <div className={styles.archive} onClick={(e) => navigate("/archived")}>
+        <div className={styles.archive} onClick={archiveOpen}>
           <img className={styles.completeImg} src={completeImg} />
           <div className={styles.complete}>완료됨</div>
         </div>
-        {roomList.map((roomList) => (
+        {progressRoomList.map((progressRoomList) => (
           <div
-            id={roomList.roomId}
-            key={roomList.roomId}
+            id={progressRoomList.roomId}
+            key={progressRoomList.roomId}
             className={styles.room}
             onClick={(e) => getRoomId(e)}
           >
-            {roomList.role === "host" ? (
+            {progressRoomList.role === "host" ? (
               <img className={styles.roomHostImg} src={roomHostImg} />
             ) : (
               <img className={styles.roomImg} src={roomImg} />
             )}
-            <div className={styles.roomName}>{roomList.roomName}</div>
+            <div className={styles.roomName}>{progressRoomList.roomName}</div>
           </div>
         ))}
       </div>

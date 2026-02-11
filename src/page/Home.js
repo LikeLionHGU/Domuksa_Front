@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import styles from "../CSS/Home.module.css";
 import logoImg from "../asset/icon-logo.png";
-import completeImg from "../asset/icon-complete.png";
 import addImg from "../asset/icon-add_white.png";
-import roomImg from "../asset/icon-meetingroom.png";
-import roomHostImg from "../asset/icon-meetinghost.png";
 import Profile from "../component/Profile";
 import Progress from "../component/Progress";
 import Joinpw from "../component/Joinpw";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Archived from "../component/Archived";
 
 function Home() {
   const navigate = useNavigate();
@@ -25,7 +23,7 @@ function Home() {
   const [picture, setPicture] = useState("");
   const [userId, setUserId] = useState("");
 
-  const [rooms, setRooms] = useState([]);
+  const [progressRooms, setProgressRooms] = useState([]);
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
 
   const [value, setValue] = useState("");
@@ -38,13 +36,13 @@ function Home() {
   }
 
   function isRightPw() {
-    if (code === rooms.code) {
+    if (code === progressRooms.code) {
       setPwOpen(true);
       setCode("");
     }
 
-    for (let i = 0; i < rooms.length; i++) {
-      if (rooms[i].code === code) {
+    for (let i = 0; i < progressRooms.length; i++) {
+      if (progressRooms[i].code === code) {
         setPwOpen(true);
         setCode("");
       }
@@ -81,7 +79,7 @@ function Home() {
         userId: userId,
       })
       .then((res) => {
-        setRooms(res.data);
+        setProgressRooms(res.data);
       })
       .catch((error) => {
         console.error("마이페이지 정보 가져오기 실패:", error);
@@ -134,10 +132,18 @@ function Home() {
               ></input>
             </div>
           </div>
-          <Progress user={{ token: token, userId: userId }} roomList={rooms} />
-          {/* {isArchiveOpen === false ? (
-            
-          ) : null} */}
+
+          {isArchiveOpen === false ? (
+            <Progress
+              onChange={setIsArchiveOpen}
+              progressRoomList={progressRooms}
+            />
+          ) : (
+            <Archived
+              onChange={setIsArchiveOpen}
+              progressRoomList={progressRooms}
+            />
+          )}
         </div>
       </div>
     </div>

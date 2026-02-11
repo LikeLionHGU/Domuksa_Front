@@ -1,22 +1,50 @@
-import { useEffect, useRef, useState } from "react";
-import img from "../asset/icon-logo.png";
-import styles from "../CSS/Archive.module.css";
+import { useEffect, useState } from "react";
+import styles from "../CSS/Progress.module.css";
+import completeImg from "../asset/icon-complete.png";
+import roomImg from "../asset/icon-meetingroom.png";
+import roomHostImg from "../asset/icon-meetinghost.png";
+import { useNavigate } from "react-router-dom";
 
-function Archived() {
-  const [isHost, setIshost] = useState(false);
+function Archived({ progressRoomList }) {
+  const navigate = useNavigate();
 
-  return isHost ? (
-    <div>{/* 왼쪽 요소+ 오른쪽 요소 */}</div>
-  ) : (
+  // 나중에 검색창 만들때 써야됨
+  //   function activeEnter(e) {
+  //     if (e.key === "Enter") {
+  //       setCode(value);
+  //     }
+  //   }
+
+  function getRoomId(e) {
+    localStorage.setItem("roomId", e.currentTarget.id);
+    navigate("/meet");
+  }
+
+  console.log("a", progressRoomList);
+
+  return (
     <div>
-      <div className={styles.header}>
-        <div className={styles.logo}>
-          <img src={img} />
-          <p>Emmm</p>
-        </div>
-        <div className={styles.profile}>
-          <img src={img} />
-        </div>
+      <div className={styles.process}>
+        <div></div>
+        <input placeholder="🔍︎ 검색"></input>
+      </div>
+
+      <div className={styles.rooms}>
+        {progressRoomList.map((progressRoomList) => (
+          <div
+            id={progressRoomList.roomId}
+            key={progressRoomList.roomId}
+            className={styles.room}
+            onClick={(e) => getRoomId(e)}
+          >
+            {progressRoomList.role === "host" ? (
+              <img className={styles.roomHostImg} src={roomHostImg} />
+            ) : (
+              <img className={styles.roomImg} src={roomImg} />
+            )}
+            <div className={styles.roomName}>{progressRoomList.roomName}</div>
+          </div>
+        ))}
       </div>
     </div>
   );
