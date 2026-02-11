@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import styles from "../CSS/Home.module.css";
 import logoImg from "../asset/icon-logo.png";
-import completeImg from "../asset/icon-complete.png";
 import addImg from "../asset/icon-add_white.png";
-import roomImg from "../asset/icon-meetingroom.png";
-import roomHostImg from "../asset/icon-meetinghost.png";
 import Profile from "../component/Profile";
+import Progress from "../component/Progress";
 import Joinpw from "../component/Joinpw";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Archived from "../component/Archived";
 
 function Home() {
   const navigate = useNavigate();
@@ -24,12 +23,11 @@ function Home() {
   const [picture, setPicture] = useState("");
   const [userId, setUserId] = useState("");
 
-  const [rooms, setRooms] = useState([]);
+  const [progressRooms, setProgressRooms] = useState([]);
+  const [isArchiveOpen, setIsArchiveOpen] = useState(false);
 
   const [value, setValue] = useState("");
   const [code, setCode] = useState("");
-
-  const testCode = "1234567890";
 
   function activeEnter(e) {
     if (e.key === "Enter") {
@@ -37,15 +35,17 @@ function Home() {
     }
   }
 
-  function getRoomId(e) {
-    localStorage.setItem("roomId", e.currentTarget.id);
-    navigate("/meet");
-  }
-
   function isRightPw() {
-    if (testCode === code) {
+    if (code === progressRooms.code) {
       setPwOpen(true);
       setCode("");
+    }
+
+    for (let i = 0; i < progressRooms.length; i++) {
+      if (progressRooms[i].code === code) {
+        setPwOpen(true);
+        setCode("");
+      }
     }
   }
 
@@ -57,8 +57,8 @@ function Home() {
     }
   }
 
-
   useEffect(() => {
+    localStorage.removeItem("roomId");
     setToken(localStorage.getItem("accessToken"));
     const user = JSON.parse(localStorage.getItem("userInfo"));
     setUserId(user.id);
@@ -79,19 +79,18 @@ function Home() {
         userId: userId,
       })
       .then((res) => {
-        setRooms(res.data);
+        setProgressRooms(res.data);
       })
       .catch((error) => {
         console.error("마이페이지 정보 가져오기 실패:", error);
       });
+  }, [reset]);
 
+  useEffect(() => {
     isRightPw();
-  
-  }, [code, reset]);
+  }, [code]);
 
-  if (!token) {
-    navigate("/");
-  }
+  console.log(progressRooms);
 
   return (
     <div>
@@ -121,6 +120,13 @@ function Home() {
             </div>
           </div>
 
+          {isArchiveOpen === true ? (
+            <Archived
+              onChange={setIsArchiveOpen}
+              progressRoomList={progressRooms}
+            />
+          ) : null}
+
           <div className={styles.menu}>
             <div className={styles.new} onClick={(e) => navigate("/meet")}>
               <img className={styles.addBtn} src={addImg} />
@@ -136,35 +142,12 @@ function Home() {
             </div>
           </div>
 
-          <div className={styles.process}>
-            <div>진행중인 회의</div>
-            <input placeholder="🔍︎ 검색"></input>
-          </div>
-
-          <div className={styles.rooms}>
-            <div
-              className={styles.archive}
-              onClick={(e) => navigate("/archived")}
-            >
-              <img className={styles.completeImg} src={completeImg} />
-              <div className={styles.complete}>완료됨</div>
-            </div>
-            {rooms.map((rooms) => (
-              <div
-                id={rooms.roomId}
-                key={rooms.roomId}
-                className={styles.room}
-                onClick={(e) => getRoomId(e)}
-              >
-                {rooms.role === "host" ? (
-                  <img className={styles.roomHostImg} src={roomHostImg} />
-                ) : (
-                  <img className={styles.roomImg} src={roomImg} />
-                )}
-                <div className={styles.roomName}>{rooms.roomName}</div>
-              </div>
-            ))}
-          </div>
+          {isArchiveOpen === false ? (
+            <Progress
+              onChange={setIsArchiveOpen}
+              progressRoomList={progressRooms}
+            />
+          ) : null}
         </div>
       </div>
     </div>

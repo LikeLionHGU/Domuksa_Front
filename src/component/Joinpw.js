@@ -4,7 +4,6 @@ import { useRef, useState } from "react";
 import styles from "../CSS/Joinpw.module.css";
 
 import deleteIcon from "../asset/icon-delete.png";
-import logoutIcon from "../asset/icon-logout.png";
 
 function Joinpw({ onChange }) {
   const testPw = "1234";
