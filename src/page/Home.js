@@ -6,6 +6,7 @@ import addImg from "../asset/icon-add_white.png";
 import roomImg from "../asset/icon-meetingroom.png";
 import roomHostImg from "../asset/icon-meetinghost.png";
 import Profile from "../component/Profile";
+import Progress from "../component/Progress";
 import Joinpw from "../component/Joinpw";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -25,22 +26,15 @@ function Home() {
   const [userId, setUserId] = useState("");
 
   const [rooms, setRooms] = useState([]);
+  const [isArchiveOpen, setIsArchiveOpen] = useState(false);
 
   const [value, setValue] = useState("");
   const [code, setCode] = useState("");
-  const [roomCode, setRoomCode] = useState("");
-
-  const testCode = "1234567890";
 
   function activeEnter(e) {
     if (e.key === "Enter") {
       setCode(value);
     }
-  }
-
-  function getRoomId(e) {
-    localStorage.setItem("roomId", e.currentTarget.id);
-    navigate("/meet");
   }
 
   function isRightPw() {
@@ -93,8 +87,6 @@ function Home() {
       });
   }, [reset]);
 
-  console.log(rooms);
-
   useEffect(() => {
     isRightPw();
   }, [code]);
@@ -141,36 +133,10 @@ function Home() {
               ></input>
             </div>
           </div>
-
-          <div className={styles.process}>
-            <div>진행중인 회의</div>
-            <input placeholder="🔍︎ 검색"></input>
-          </div>
-
-          <div className={styles.rooms}>
-            <div
-              className={styles.archive}
-              onClick={(e) => navigate("/archived")}
-            >
-              <img className={styles.completeImg} src={completeImg} />
-              <div className={styles.complete}>완료됨</div>
-            </div>
-            {rooms.map((rooms) => (
-              <div
-                id={rooms.roomId}
-                key={rooms.roomId}
-                className={styles.room}
-                onClick={(e) => getRoomId(e)}
-              >
-                {rooms.role === "host" ? (
-                  <img className={styles.roomHostImg} src={roomHostImg} />
-                ) : (
-                  <img className={styles.roomImg} src={roomImg} />
-                )}
-                <div className={styles.roomName}>{rooms.roomName}</div>
-              </div>
-            ))}
-          </div>
+          <Progress user={{ token: token, userId: userId }} roomList={rooms} />
+          {/* {isArchiveOpen === false ? (
+            
+          ) : null} */}
         </div>
       </div>
     </div>
