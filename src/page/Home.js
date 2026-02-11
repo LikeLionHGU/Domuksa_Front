@@ -25,7 +25,6 @@ function Home() {
   const [userId, setUserId] = useState("");
 
   const [rooms, setRooms] = useState([]);
-  const [thisRoomId, setThisRoomId] = useState("");
 
   const [value, setValue] = useState("");
   const [code, setCode] = useState("");
@@ -39,13 +38,8 @@ function Home() {
   }
 
   function getRoomId(e) {
-    setThisRoomId(e.currentTarget.id);
-  }
-
-  function isRoomId(){
-    if(thisRoomId !== ""){
-      navigate('/meet');
-    }
+    localStorage.setItem("roomId", e.currentTarget.id);
+    navigate("/meet");
   }
 
   function isRightPw() {
@@ -63,17 +57,6 @@ function Home() {
     }
   }
 
-  function goArchived() {
-    navigate("/archived");
-  }
-
-  function goNew() {
-    navigate("/meet");
-  }
-
-  function goLanding() {
-    navigate("/");
-  }
 
   useEffect(() => {
     setToken(localStorage.getItem("accessToken"));
@@ -88,8 +71,6 @@ function Home() {
       return;
     }
 
-    console.log(userId);
-
     axios
       .get(`${process.env.REACT_APP_HOST_URL}/user/me/running`, {
         headers: {
@@ -98,7 +79,6 @@ function Home() {
         userId: userId,
       })
       .then((res) => {
-        console.log(res);
         setRooms(res.data);
       })
       .catch((error) => {
@@ -106,11 +86,8 @@ function Home() {
       });
 
     isRightPw();
-    localStorage.setItem("roomId", thisRoomId);
-    isRoomId();
-  }, [code, reset, thisRoomId]);
-
-  console.log(thisRoomId);
+  
+  }, [code, reset]);
 
   if (!token) {
     navigate("/");
@@ -122,7 +99,11 @@ function Home() {
         <div className={styles.Maindiv}>
           {pwOpen === true ? <Joinpw onChange={setPwOpen} code={code} /> : null}
           <div className={styles.header}>
-            <img className={styles.logo} src={logoImg} onClick={goLanding} />
+            <img
+              className={styles.logo}
+              src={logoImg}
+              onClick={(e) => navigate("/")}
+            />
 
             <div></div>
             <div className={styles.profile}>
@@ -141,7 +122,7 @@ function Home() {
           </div>
 
           <div className={styles.menu}>
-            <div className={styles.new} onClick={goNew}>
+            <div className={styles.new} onClick={(e) => navigate("/meet")}>
               <img className={styles.addBtn} src={addImg} />
             </div>
 
@@ -161,13 +142,17 @@ function Home() {
           </div>
 
           <div className={styles.rooms}>
-            <div className={styles.archive} onClick={goArchived}>
+            <div
+              className={styles.archive}
+              onClick={(e) => navigate("/archived")}
+            >
               <img className={styles.completeImg} src={completeImg} />
               <div className={styles.complete}>완료됨</div>
             </div>
             {rooms.map((rooms) => (
               <div
                 id={rooms.roomId}
+                key={rooms.roomId}
                 className={styles.room}
                 onClick={(e) => getRoomId(e)}
               >
