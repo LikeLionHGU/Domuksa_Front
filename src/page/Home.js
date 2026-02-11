@@ -4,10 +4,10 @@ import logoImg from "../asset/icon-logo.png";
 import addImg from "../asset/icon-add_white.png";
 import Profile from "../component/Profile";
 import Progress from "../component/Progress";
+import Archived from "../component/Archived";
 import Joinpw from "../component/Joinpw";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Archived from "../component/Archived";
 
 function Home() {
   const navigate = useNavigate();
@@ -25,27 +25,32 @@ function Home() {
 
   const [progressRooms, setProgressRooms] = useState([]);
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
+  const [isEnter, setIsEnter] = useState(false);
 
   const [value, setValue] = useState("");
   const [code, setCode] = useState("");
 
+  const [roomId, setRoomId] = useState("");
+  const [isPassword, setIsPassword] = useState(false);
+
   function activeEnter(e) {
     if (e.key === "Enter") {
       setCode(value);
+      console.log(code);
+      setIsEnter(!isEnter);
     }
   }
 
-  function isRightPw() {
-    if (code === progressRooms.code) {
+  function joinRoom() {
+    if (isPassword === true) {
       setPwOpen(true);
-      setCode("");
-    }
-
-    for (let i = 0; i < progressRooms.length; i++) {
-      if (progressRooms[i].code === code) {
-        setPwOpen(true);
-        setCode("");
-      }
+      setIsPassword(!isPassword);
+    } else if (isPassword === false) {
+      
+      localStorage.setItem("roomId", roomId);
+      const check = localStorage.getItem("roomId");
+      console.log("check", check);
+      if (check) navigate("/meet");
     }
   }
 
@@ -82,13 +87,30 @@ function Home() {
         setProgressRooms(res.data);
       })
       .catch((error) => {
-        console.error("마이페이지 정보 가져오기 실패:", error);
+        console.error("룸 상태 정보 가져오기 실패:", error);
       });
   }, [reset]);
 
   useEffect(() => {
-    isRightPw();
-  }, [code]);
+    if (code) {
+      axios
+        .get(`${process.env.REACT_APP_HOST_URL}/room/code?code=${code}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          code: code,
+        })
+        .then((res) => {
+          setRoomId(res.data.roomId);
+          setIsPassword(res.data.password);
+        })
+        .catch((error) => {
+          console.error("룸 입장 코드 가져오기 실패:", error);
+        });
+    }
+
+    joinRoom();
+  }, [isEnter]);
 
   console.log(progressRooms);
 
@@ -96,7 +118,14 @@ function Home() {
     <div>
       <div className={styles.extradiv}>
         <div className={styles.Maindiv}>
-          {pwOpen === true ? <Joinpw onChange={setPwOpen} code={code} /> : null}
+          {pwOpen === true ? (
+            <Joinpw
+              onChange={setPwOpen}
+              code={code}
+              token={token}
+              roomId={roomId}
+            />
+          ) : null}
           <div className={styles.header}>
             <img
               className={styles.logo}

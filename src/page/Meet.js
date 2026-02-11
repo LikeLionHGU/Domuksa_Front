@@ -200,7 +200,6 @@ return (
                         id="password"
                         type="password"
                         maxLength='4'
-                        required
                         onChange={() => {
                           setPassword(document.getElementById("password").value);
                         }}
