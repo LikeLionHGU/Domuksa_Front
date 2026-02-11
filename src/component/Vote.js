@@ -1,5 +1,5 @@
 //투표 개수/투표 이름
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import style from "../CSS/Vote.module.css";
 import dlt from "../asset/icon-delete.png";
 import addBtn from "../asset/icon-addBtn.png";
@@ -7,12 +7,14 @@ import option from "../asset/icon-option.png";
 
 function Vote({ onChange }) {
 
-    const  [idCounter,setIdCounter]=useState(0);
+    const [idCounter, setIdCounter] = useState(0);
     const [votes, setVotes] = useState([]);
-
+    useEffect(()=>{
+        
+    },[]);
     function addVote() {
         setVotes(prev => [...prev, { id: idCounter, title: "안건이름", number: "투표수", voteStatus: "running" }]);
-        setIdCounter(prev=>prev+1);
+        setIdCounter(prev => prev + 1);
     }
     return (
         <div className={style.Maindiv}>
@@ -24,7 +26,7 @@ function Vote({ onChange }) {
             <div className={style.Subdiv}>
                 <div className={style.Subtitle}>
                     <h3>안건 1에 대한 투표</h3>
-                    <img src={addBtn} onClick={()=>addVote()}/>
+                    <img src={addBtn} onClick={() => addVote()} />
                 </div>
                 <div className={style.Votelist}>
                     {votes.map((vote) => (

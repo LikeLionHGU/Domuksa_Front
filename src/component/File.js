@@ -3,6 +3,8 @@
 import style from "../CSS/File.module.css";
 import { PDFViewer } from '@embedpdf/react-pdf-viewer';
 
+import fileIcon from "../asset/icon-filelist.png";
+
 function File({ onChange }) {
 
     return (
@@ -19,6 +21,12 @@ function File({ onChange }) {
                         console.log('PDF viewer ready!', registry);
                     }}
                 />
+                <div className={style.Filelist}>
+                    <div className={style.Iconbox}><img className={style.ListIcon} src={fileIcon} /></div>
+                    <div className={style.Createbox}>+</div>
+                    <div className={style.box}></div>
+                    <div className={style.box}></div>
+                </div>
             </div>
         </div >
     );
