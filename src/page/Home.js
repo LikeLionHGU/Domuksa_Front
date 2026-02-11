@@ -4,10 +4,10 @@ import logoImg from "../asset/icon-logo.png";
 import addImg from "../asset/icon-add_white.png";
 import Profile from "../component/Profile";
 import Progress from "../component/Progress";
+import Archived from "../component/Archived";
 import Joinpw from "../component/Joinpw";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Archived from "../component/Archived";
 
 function Home() {
   const navigate = useNavigate();
@@ -25,28 +25,23 @@ function Home() {
 
   const [progressRooms, setProgressRooms] = useState([]);
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
+  const [isEnter, setIsEnter] = useState(false);
 
   const [value, setValue] = useState("");
   const [code, setCode] = useState("");
 
+  const [roomId, setRoomId] = useState("");
+  const [isPassword, setIsPassword] = useState(false);
+
   function activeEnter(e) {
     if (e.key === "Enter") {
       setCode(value);
+      setIsEnter(!isEnter);
     }
   }
 
-  function isRightPw() {
-    if (code === progressRooms.code) {
-      setPwOpen(true);
-      setCode("");
-    }
+  function joinRoom() {
 
-    for (let i = 0; i < progressRooms.length; i++) {
-      if (progressRooms[i].code === code) {
-        setPwOpen(true);
-        setCode("");
-      }
-    }
   }
 
   function isProfileOpen() {
@@ -82,21 +77,33 @@ function Home() {
         setProgressRooms(res.data);
       })
       .catch((error) => {
-        console.error("마이페이지 정보 가져오기 실패:", error);
+        console.error("진행중인 룸 정보 가져오기 실패:", error);
       });
   }, [reset]);
 
   useEffect(() => {
-    isRightPw();
-  }, [code]);
-
-  console.log(progressRooms);
+    axios
+      .get(`${process.env.REACT_APP_HOST_URL}/room/code?code=${code}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        code: code,
+      })
+      .then((res) => {
+        setRoomId(res.data.roomId);
+        setIsPassword(res.data.password);
+      })
+      .catch((error) => {
+        console.error("룸 입장 코드 가져오기 실패:", error);
+      });
+  }, [isEnter]);
 
   return (
     <div>
       <div className={styles.extradiv}>
         <div className={styles.Maindiv}>
           {pwOpen === true ? <Joinpw onChange={setPwOpen} code={code} /> : null}
+          <Joinpw onChange={setPwOpen} code={code} />
           <div className={styles.header}>
             <img
               className={styles.logo}

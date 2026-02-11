@@ -17,36 +17,62 @@ function Joinpw({ onChange }) {
   const [password, setPassword] = useState("");
 
   function onDelete(e) {
-    switch (e.target.name) {
-      case "pw1":
-        if (e.keyCode == 8 || e.keyCode == 46) {
-          e.preventDefault();
-          if (e.target.value) e.target.value = "";
-        }
-        break;
-      case "pw2":
-        if (e.keyCode == 8) {
-          e.preventDefault();
-          if (e.target.value) e.target.value = "";
-          inputRef1.current.focus();
-        }
-        break;
-      case "pw3":
-        if (e.keyCode == 8 || e.keyCode == 46) {
-          e.preventDefault();
-          if (e.target.value) e.target.value = "";
-          inputRef2.current.focus();
-        }
-        break;
-      case "pw4":
-        if (e.keyCode == 8 || e.keyCode == 46) {
-          e.preventDefault();
-          if (e.target.value) e.target.value = "";
-          inputRef3.current.focus();
-        }
-        break;
-      default:
-        break;
+    if (e.target.value.length === 1) {
+      switch (e.target.name) {
+        case "pw1":
+          if (e.keyCode == 8 || e.keyCode == 46) {
+            e.preventDefault();
+            if (e.target.value) e.target.value = "";
+            inputNum[0] = e.target.value;
+          }
+          break;
+        case "pw2":
+          if (e.keyCode == 8 || e.keyCode == 46) {
+            e.preventDefault();
+            if (e.target.value) e.target.value = "";
+            inputNum[1] = e.target.value;
+          }
+          break;
+        case "pw3":
+          if (e.keyCode == 8 || e.keyCode == 46) {
+            e.preventDefault();
+            if (e.target.value) e.target.value = "";
+            inputNum[2] = e.target.value;
+          }
+          break;
+        case "pw4":
+          if (e.keyCode == 8 || e.keyCode == 46) {
+            e.preventDefault();
+            if (e.target.value) e.target.value = "";
+            inputNum[3] = e.target.value;
+          }
+          break;
+        default:
+          break;
+      }
+    } else if (e.target.value.length === 0) {
+      switch (e.target.name) {
+        case "pw2":
+          if (e.keyCode == 8 || e.keyCode == 46) {
+            e.preventDefault();
+            inputRef1.current.focus();
+          }
+          break;
+        case "pw3":
+          if (e.keyCode == 8 || e.keyCode == 46) {
+            e.preventDefault();
+            inputRef2.current.focus();
+          }
+          break;
+        case "pw4":
+          if (e.keyCode == 8 || e.keyCode == 46) {
+            e.preventDefault();
+            inputRef3.current.focus();
+          }
+          break;
+        default:
+          break;
+      }
     }
   }
 
@@ -94,11 +120,6 @@ function Joinpw({ onChange }) {
     console.log(inputNum);
 
     setPassword(inputNum.join(""));
-
-    // if(password !== testPw){
-    //   inputRef1.current.focus();
-    //   setInputNum("");
-    // }
   }
 
   console.log(password);
