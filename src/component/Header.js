@@ -9,44 +9,25 @@ import logo from "../asset/icon-logo.png";
 import out from "../asset/icon-out.png";
 
 //사이트 메인 아이콘 + 구글 아이콘 + 방번호 + 완료/진행중 상태
-function Header({ code }) {
+function Header({ code, state, roomId }) {
 
   const navigate = useNavigate();
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
   const [picture, setPicture] = useState(null);
-
-  const [buttonWord, setButtonword] = useState("진행중");
+  const [State, setState] = useState("");
   const [profileOpen, setProfileOpen] = useState(false);
   const ModalRef = useRef(null);
 
+  useEffect(() => {
+    if (state === "running") {
+      setState("진행중");
+    } else if (state === "completed") {
+      setState("완료");
+    }
+  }, [state]);
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
-    const user = localStorage.getItem("userInfo");
-    const roomId = localStorage.getItem("roomId");
-
-    if (token === null && user === null) {
-      navigate("/home");
-    }
-
-    setName(JSON.parse(user).name);
-    setEmail(JSON.parse(user).email);
-    setPicture(JSON.parse(user).profileUrl);
-
-    axios
-      .get(`${process.env.REACT_APP_HOST_URL}/room/${roomId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        console.log(res);
-      })
-      .catch((error) => {
-
-        console.error("마이페이지 정보 가져오기 실패:", error);
-      });
 
     function HandClickoutsideofModal(e) {
       if (ModalRef.current && !ModalRef.current.contains(e.target)) {
@@ -59,14 +40,53 @@ function Header({ code }) {
     return () => document.removeEventListener("mousedown", HandClickoutsideofModal);
   }, [ModalRef]);
 
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+    const user = localStorage.getItem("userInfo");
+
+    if (!token && !user) {
+      navigate("/home");
+    }
+
+    setName(JSON.parse(user).name);
+    setEmail(JSON.parse(user).email);
+    setPicture(JSON.parse(user).profileUrl);
+
+  }, []);
+
   function handleButton() {
-    if (buttonWord === "진행중") {
-      setButtonword("완료");
+    if (State === "진행중") {
+      setState("완료");
       document.getElementById("state").className = style.StateFinish;
+      axios
+        .patch(`
+          ${process.env.REACT_APP_HOST_URL}/room/${roomId}/state`,
+          {
+            state: "completed",
+          })
+        .then((res) => {
+          console.log(res);
+        })
+        .catch((error) => {
+          console.error("마이페이지 정보 가져오기 실패:", error);
+        });
       return;
     }
-    setButtonword("진행중");
+    setState("진행중");
     document.getElementById("state").className = style.StateIng;
+    axios
+      .patch(`
+          ${process.env.REACT_APP_HOST_URL}/room/${roomId}/state`,
+        {
+          state: "running",
+        })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+
+        console.error("마이페이지 정보 가져오기 실패:", error);
+      });
   }
 
   function handleRoomNumber() {
@@ -92,7 +112,7 @@ function Header({ code }) {
       </div>
 
       <div className={style.Right}>
-        <div id="state" className={style.StateIng} onClick={() => handleButton()}><strong>•</strong>&nbsp;{buttonWord}</div>
+        <div id="state" className={style.StateIng} onClick={() => handleButton()}><strong>•</strong>&nbsp;{State}</div>
         <div id="RoomNumber" className={style.Number} onClick={() => handleRoomNumber()}>{code}<img alt="copy" src={copy} /></div>
         <img alt="profileicon" src={picture} onClick={() => setProfileOpen(true)} />
 
