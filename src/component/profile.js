@@ -2,8 +2,7 @@
 
 import styles from "../CSS/Profile.module.css";
 
-import deleteIcon from "../asset/icon-delete.png";
-import logoutIcon from "../asset/icon-logout.png";
+import logoutIcon from "../asset/icon-out.png";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
@@ -35,13 +34,8 @@ function Profile({ onChange, user }) {
     <div className={styles.extradiv}>
       <div className={styles.maindiv}>
         <div className={styles.profilePopup} ref={popup}>
-          <img
-            className={styles.deleteIcon}
-            src={deleteIcon}
-            onClick={() => onChange(false)}
-          />
           <div className={styles.info}>
-            <img className={styles.modalImg} src={user.picture} />
+            <img className={styles.profileImg} src={user.picture} />
             <div className={styles.text}>
               <div className={styles.name}>{user.name}</div>
               <div className={styles.email}>{user.email}</div>

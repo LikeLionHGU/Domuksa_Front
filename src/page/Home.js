@@ -1,11 +1,10 @@
 import { useEffect, useState } from "react";
 import styles from "../CSS/Home.module.css";
 import logoImg from "../asset/icon-logo.png";
-import completeImg from "../asset/icon-complete.png";
 import addImg from "../asset/icon-add_white.png";
-import roomImg from "../asset/icon-meetingroom.png";
-import roomHostImg from "../asset/icon-meetinghost.png";
 import Profile from "../component/Profile";
+import Progress from "../component/Progress";
+import Archived from "../component/Archived";
 import Joinpw from "../component/Joinpw";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -24,28 +23,34 @@ function Home() {
   const [picture, setPicture] = useState("");
   const [userId, setUserId] = useState("");
 
-  const [rooms, setRooms] = useState([]);
+  const [progressRooms, setProgressRooms] = useState([]);
+  const [isArchiveOpen, setIsArchiveOpen] = useState(false);
+  const [isEnter, setIsEnter] = useState(false);
 
   const [value, setValue] = useState("");
   const [code, setCode] = useState("");
 
-  const testCode = "1234567890";
+  const [roomId, setRoomId] = useState("");
+  const [isPassword, setIsPassword] = useState(false);
 
   function activeEnter(e) {
     if (e.key === "Enter") {
       setCode(value);
+      console.log(code);
+      setIsEnter(!isEnter);
     }
   }
 
-  function getRoomId(e) {
-    localStorage.setItem("roomId", e.currentTarget.id);
-    navigate("/meet");
-  }
-
-  function isRightPw() {
-    if (testCode === code) {
+  function joinRoom() {
+    if (isPassword === true) {
       setPwOpen(true);
-      setCode("");
+      setIsPassword(!isPassword);
+    } else if (isPassword === false) {
+      
+      localStorage.setItem("roomId", roomId);
+      const check = localStorage.getItem("roomId");
+      console.log("check", check);
+      if (check) navigate("/meet");
     }
   }
 
@@ -57,8 +62,8 @@ function Home() {
     }
   }
 
-
   useEffect(() => {
+    localStorage.removeItem("roomId");
     setToken(localStorage.getItem("accessToken"));
     const user = JSON.parse(localStorage.getItem("userInfo"));
     setUserId(user.id);
@@ -79,25 +84,48 @@ function Home() {
         userId: userId,
       })
       .then((res) => {
-        setRooms(res.data);
+        setProgressRooms(res.data);
       })
       .catch((error) => {
-        console.error("마이페이지 정보 가져오기 실패:", error);
+        console.error("룸 상태 정보 가져오기 실패:", error);
       });
+  }, [reset]);
 
-    isRightPw();
-  
-  }, [code, reset]);
+  useEffect(() => {
+    if (code) {
+      axios
+        .get(`${process.env.REACT_APP_HOST_URL}/room/code?code=${code}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          code: code,
+        })
+        .then((res) => {
+          setRoomId(res.data.roomId);
+          setIsPassword(res.data.password);
+        })
+        .catch((error) => {
+          console.error("룸 입장 코드 가져오기 실패:", error);
+        });
+    }
 
-  if (!token) {
-    navigate("/");
-  }
+    joinRoom();
+  }, [isEnter]);
+
+  console.log(progressRooms);
 
   return (
     <div>
       <div className={styles.extradiv}>
         <div className={styles.Maindiv}>
-          {pwOpen === true ? <Joinpw onChange={setPwOpen} code={code} /> : null}
+          {pwOpen === true ? (
+            <Joinpw
+              onChange={setPwOpen}
+              code={code}
+              token={token}
+              roomId={roomId}
+            />
+          ) : null}
           <div className={styles.header}>
             <img
               className={styles.logo}
@@ -121,6 +149,13 @@ function Home() {
             </div>
           </div>
 
+          {isArchiveOpen === true ? (
+            <Archived
+              onChange={setIsArchiveOpen}
+              progressRoomList={progressRooms}
+            />
+          ) : null}
+
           <div className={styles.menu}>
             <div className={styles.new} onClick={(e) => navigate("/meet")}>
               <img className={styles.addBtn} src={addImg} />
@@ -136,35 +171,12 @@ function Home() {
             </div>
           </div>
 
-          <div className={styles.process}>
-            <div>진행중인 회의</div>
-            <input placeholder="🔍︎ 검색"></input>
-          </div>
-
-          <div className={styles.rooms}>
-            <div
-              className={styles.archive}
-              onClick={(e) => navigate("/archived")}
-            >
-              <img className={styles.completeImg} src={completeImg} />
-              <div className={styles.complete}>완료됨</div>
-            </div>
-            {rooms.map((rooms) => (
-              <div
-                id={rooms.roomId}
-                key={rooms.roomId}
-                className={styles.room}
-                onClick={(e) => getRoomId(e)}
-              >
-                {rooms.role === "host" ? (
-                  <img className={styles.roomHostImg} src={roomHostImg} />
-                ) : (
-                  <img className={styles.roomImg} src={roomImg} />
-                )}
-                <div className={styles.roomName}>{rooms.roomName}</div>
-              </div>
-            ))}
-          </div>
+          {isArchiveOpen === false ? (
+            <Progress
+              onChange={setIsArchiveOpen}
+              progressRoomList={progressRooms}
+            />
+          ) : null}
         </div>
       </div>
     </div>

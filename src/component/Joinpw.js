@@ -1,14 +1,12 @@
 //홈페이지 프로필 사진 눌렀을 때 나오는 창
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import styles from "../CSS/Joinpw.module.css";
 
 import deleteIcon from "../asset/icon-delete.png";
-import logoutIcon from "../asset/icon-logout.png";
+import axios from "axios";
 
-function Joinpw({ onChange }) {
-  const testPw = "1234";
-
+function Joinpw({ onChange, code, token, roomId }) {
   const inputRef1 = useRef(null);
   const inputRef2 = useRef(null);
   const inputRef3 = useRef(null);
@@ -18,36 +16,62 @@ function Joinpw({ onChange }) {
   const [password, setPassword] = useState("");
 
   function onDelete(e) {
-    switch (e.target.name) {
-      case "pw1":
-        if (e.keyCode == 8 || e.keyCode == 46) {
-          e.preventDefault();
-          if (e.target.value) e.target.value = "";
-        }
-        break;
-      case "pw2":
-        if (e.keyCode == 8) {
-          e.preventDefault();
-          if (e.target.value) e.target.value = "";
-          inputRef1.current.focus();
-        }
-        break;
-      case "pw3":
-        if (e.keyCode == 8 || e.keyCode == 46) {
-          e.preventDefault();
-          if (e.target.value) e.target.value = "";
-          inputRef2.current.focus();
-        }
-        break;
-      case "pw4":
-        if (e.keyCode == 8 || e.keyCode == 46) {
-          e.preventDefault();
-          if (e.target.value) e.target.value = "";
-          inputRef3.current.focus();
-        }
-        break;
-      default:
-        break;
+    if (e.target.value.length === 1) {
+      switch (e.target.name) {
+        case "pw1":
+          if (e.keyCode == 8 || e.keyCode == 46) {
+            e.preventDefault();
+            if (e.target.value) e.target.value = "";
+            inputNum[0] = e.target.value;
+          }
+          break;
+        case "pw2":
+          if (e.keyCode == 8 || e.keyCode == 46) {
+            e.preventDefault();
+            if (e.target.value) e.target.value = "";
+            inputNum[1] = e.target.value;
+          }
+          break;
+        case "pw3":
+          if (e.keyCode == 8 || e.keyCode == 46) {
+            e.preventDefault();
+            if (e.target.value) e.target.value = "";
+            inputNum[2] = e.target.value;
+          }
+          break;
+        case "pw4":
+          if (e.keyCode == 8 || e.keyCode == 46) {
+            e.preventDefault();
+            if (e.target.value) e.target.value = "";
+            inputNum[3] = e.target.value;
+          }
+          break;
+        default:
+          break;
+      }
+    } else if (e.target.value.length === 0) {
+      switch (e.target.name) {
+        case "pw2":
+          if (e.keyCode == 8 || e.keyCode == 46) {
+            e.preventDefault();
+            inputRef1.current.focus();
+          }
+          break;
+        case "pw3":
+          if (e.keyCode == 8 || e.keyCode == 46) {
+            e.preventDefault();
+            inputRef2.current.focus();
+          }
+          break;
+        case "pw4":
+          if (e.keyCode == 8 || e.keyCode == 46) {
+            e.preventDefault();
+            inputRef3.current.focus();
+          }
+          break;
+        default:
+          break;
+      }
     }
   }
 
@@ -92,17 +116,30 @@ function Joinpw({ onChange }) {
       }
     }
 
-    console.log(inputNum);
-
     setPassword(inputNum.join(""));
+  }
 
-    // if(password !== testPw){
-    //   inputRef1.current.focus();
-    //   setInputNum("");
-    // }
+  function handleJoin() {
+    axios
+      .post(
+        `${process.env.REACT_APP_HOST_URL}/room/${roomId}/member/password`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          password: password,
+        },
+      )
+      .then((res) => {
+        console.log("noid", res);
+      })
+      .catch((error) => {
+        console.error("진행중인 룸 정보 가져오기 실패:", error);
+      });
   }
 
   console.log(password);
+  console.log("a", roomId);
 
   return (
     <div>
@@ -157,7 +194,9 @@ function Joinpw({ onChange }) {
                 onKeyDown={onDelete}
               ></input>
             </div>
-            <div className={styles.joinBtn}>입장하기</div>
+            <div className={styles.joinBtn} onClick={handleJoin}>
+              입장하기
+            </div>
             <div className={styles.lowText}>
               기분 좋은 회의의 시작, 두먹사가 함께합니다
             </div>

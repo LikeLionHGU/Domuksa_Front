@@ -1,6 +1,6 @@
 import Home from "./page/Home";
 import Meet from "./page/Meet";
-import Archived from "./page/Archived";
+import Archived from "./component/Archived";
 import Landing from "./page/Landing";
 import Loading from "./component/loading";
 import { Route, Routes } from "react-router-dom";
