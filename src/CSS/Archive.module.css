@@ -1,11 +1,35 @@
-.process {
+.extradiv {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fafafa;
+}
+
+.maindiv {
+  z-index: 5;
+  width: 1440px;
+  height: 872px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: none;
+}
+
+.archiveHeader {
   display: grid;
   grid-template-columns: 1fr auto;
 
-  margin: 80px 138px 20px 138px;
+  margin: 60px 138px 80px 138px;
 
   font-size: 20px;
   font-weight: 900;
+
+  .backIcon {
+    width: 10px;
+    height: 18px;
+  }
 
   input {
     width: 379px;

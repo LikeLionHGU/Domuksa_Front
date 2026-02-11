@@ -1,9 +1,10 @@
 import styles from "../CSS/Archive.module.css";
+import backIcon from "../asset/icon-backArrow.png";
 import roomImg from "../asset/icon-meetingroom.png";
 import roomHostImg from "../asset/icon-meetinghost.png";
 import { useNavigate } from "react-router-dom";
 
-function Archived({ progressRoomList }) {
+function Archived({ onChange, progressRoomList }) {
   const navigate = useNavigate();
 
   // 나중에 검색창 만들때 써야됨
@@ -22,8 +23,10 @@ function Archived({ progressRoomList }) {
 
   return (
     <div>
-      <div className={styles.process}>
-        <div></div>
+      <div className={styles.extradiv}>
+        <div className={styles.Maindiv}>
+          <div className={styles.archiveHeader}>
+        <img className={styles.backIcon} src={backIcon} onClick={(e) => onChange(false)} />
         <input placeholder="🔍︎ 검색"></input>
       </div>
 
@@ -44,6 +47,10 @@ function Archived({ progressRoomList }) {
           </div>
         ))}
       </div>
+        </div>
+      </div>
+        
+      
     </div>
   );
 }

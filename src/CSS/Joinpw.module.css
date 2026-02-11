@@ -8,7 +8,7 @@
 }
 
 .maindiv {
-  z-index: 5;
+  z-index: 500;
   backdrop-filter: blur(10px);
   width: 1440px;
   height: 872px;
