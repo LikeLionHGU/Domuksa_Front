@@ -46,18 +46,11 @@ function Home() {
       setPwOpen(true);
       setIsPassword(!isPassword);
     } else if (isPassword === false) {
-      axios
-        .post(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/member`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          console.log("noid", res);
-        })
-        .catch((error) => {
-          console.error("진행중인 룸 정보 가져오기 실패:", error);
-        });
+      
+      localStorage.setItem("roomId", roomId);
+      const check = localStorage.getItem("roomId");
+      console.log("check", check);
+      if (check) navigate("/meet");
     }
   }
 
@@ -126,7 +119,12 @@ function Home() {
       <div className={styles.extradiv}>
         <div className={styles.Maindiv}>
           {pwOpen === true ? (
-            <Joinpw onChange={setPwOpen} code={code} token={token} roomId={roomId} />
+            <Joinpw
+              onChange={setPwOpen}
+              code={code}
+              token={token}
+              roomId={roomId}
+            />
           ) : null}
           <div className={styles.header}>
             <img
