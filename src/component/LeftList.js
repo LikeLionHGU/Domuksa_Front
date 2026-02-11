@@ -1,8 +1,7 @@
 import { use, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import style from "../CSS/Left.module.css";
-
-import option from "../asset/icon-option.png";
+import tip from "../asset/icon-tip-red.png";
 import setting from "../asset/icon-setting.png";
 import edit from "../asset/icon-edit.png";
 import bin from "../asset/icon-trashbin.png";
@@ -10,7 +9,7 @@ import visible from "../asset/icon-visible.png";
 import add from "../asset/icon-add.png";
 
 //host는 소켓으로 생성된 요소들 다 서버로 전송 / 사용자는 그저 받기!
-function LeftList({ roomName }) {
+function LeftList({ roomName ,deleteModal}) {
 
   const token = localStorage.getItem("accessToken");
   const [ModalId, setModalId] = useState(null);
@@ -113,8 +112,6 @@ function LeftList({ roomName }) {
     //   });
   }
   function handleBlock(e) {
-
-    console.log(e.currentTarget.id);
     if (pre === null) {
       //클릭한적 없을시!
       setPre(e.currentTarget.id)
@@ -181,6 +178,7 @@ function LeftList({ roomName }) {
     setModalId(id);
     e.stopPropagation();
   }
+  
   return (
     <div className={style.Maindiv}>
       <div className={style.Head}>
@@ -196,7 +194,7 @@ function LeftList({ roomName }) {
         <div className={style.Setting}>
           <div className={style.SettingDiv}>
             <h2 onClick={() => handleSetting()} >+</h2>
-            <form onClick={() => handleEditRoom()}>
+            <form>
               <label>회의 이름 변경
                 <div className={style.Input}>
                   <input
@@ -216,11 +214,22 @@ function LeftList({ roomName }) {
                   <img alt="visible" src={visible} onClick={() => handleVisible()} />
                 </div>
               </label>
-              <div className={style.Tip}>
-                비밀번호를 변경하신 후에는 함께 회의 중인<br />
-                팀원들에게 새 비밀번호를 꼭 공유해 주세요!
-              </div>
+
               <button onClick={() => onsubmit()}>변경하기</button>
+              <div className={style.Tip}>
+                <img src={tip} />
+                삭제하기 버튼을 누르면 이 방의 모든 회의 기록과 <br />
+                데이터가 영구적으로 삭제되며 복구할 수 없습니다
+              </div>
+
+              <button
+                className={style.cancel}
+                onClick={(e) => {
+                  e.preventDefault();
+                  deleteModal(true);
+                }}
+
+              >방 삭제하기</button>
             </form>
           </div>
         </div>

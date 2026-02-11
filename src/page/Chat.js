@@ -50,7 +50,6 @@ export default function Chat() {
     };
   }, []);
 
-  // ✅ 전송은 REST로: POST /chat  -> 백엔드가 /topic/chat로 broadcast
   const sendMessage = async () => {
     const text = input.trim();
     if (!text && !file) return;
@@ -76,7 +75,7 @@ export default function Chat() {
     try {
       const res = await fetch(`${BASE_URL}/chat`, {
         method: "POST",
-        body: formData, // ⚠️ Content-Type 자동 설정됨
+        body: formData, 
       });
 
       if (!res.ok) {

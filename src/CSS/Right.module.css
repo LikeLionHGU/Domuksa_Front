@@ -42,7 +42,12 @@
         width: 147.09px;
         height: 126.63px;
     }
+    .imgVote {
+        margin-top: 86.6px;
 
+        width: 133px;
+        height: 136.13px;
+    }
 }
 
 .BigBlock {
@@ -61,5 +66,11 @@
     h3 {
         font-size: 24px;
         margin: auto auto 40px 40px;
+    }
+    .imgAI {
+        margin-top: 83px;
+
+        width: 155.02px;
+        height: 184px;
     }
 }
