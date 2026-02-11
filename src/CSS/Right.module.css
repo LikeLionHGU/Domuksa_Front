@@ -12,13 +12,12 @@
 }
 
 .Block {
-    box-shadow: 2px 2px #dbdbdb;
-
     width: 335px;
     height: 343px;
 
     background-color: #ffffff;
     border-radius: 20px;
+    border: 1px solid #E4E4E4;
 
     display: flex;
     flex-direction: column;
@@ -47,13 +46,12 @@
 }
 
 .BigBlock {
-    box-shadow: 2px 2px #dbdbdb;
-
     width: 690px;
     height: 363px;
 
     background-color: #ffffff;
     border-radius: 20px;
+    border: 1px solid #E4E4E4;
 
     display: flex;
     flex-direction: column;

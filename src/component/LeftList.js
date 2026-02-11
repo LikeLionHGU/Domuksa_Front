@@ -93,6 +93,25 @@ function LeftList({ roomName }) {
     }
   }
 
+  function handleEditRoom() {
+    const newRoomName = document.getElementById("newRoomName").value;
+    const newPassword = document.getElememtById("newPassword").value;
+    // axios
+    //   .post(`${process.env.REACT_APP_HOST_URL}/agenda/${roomId}`, {
+    //     headers: {
+    //       Authorization: `Bearer ${token}`,
+    //     },
+    //     name: "안건 1",
+    //     sequence: 1
+    //   })
+    //   .then((res) => {
+    //     console.log(res);
+    //     setAgendas([...agendas, res.data]);
+    //   })
+    //   .catch((error) => {
+    //     console.error("마이페이지 정보 가져오기 실패:", error);
+    //   });
+  }
   function handleBlock(e) {
 
     console.log(e.currentTarget.id);
@@ -177,7 +196,7 @@ function LeftList({ roomName }) {
         <div className={style.Setting}>
           <div className={style.SettingDiv}>
             <h2 onClick={() => handleSetting()} >+</h2>
-            <form>
+            <form onClick={() => handleEditRoom()}>
               <label>회의 이름 변경
                 <div className={style.Input}>
                   <input
@@ -201,7 +220,7 @@ function LeftList({ roomName }) {
                 비밀번호를 변경하신 후에는 함께 회의 중인<br />
                 팀원들에게 새 비밀번호를 꼭 공유해 주세요!
               </div>
-              <button>변경하기</button>
+              <button onClick={() => onsubmit()}>변경하기</button>
             </form>
           </div>
         </div>
