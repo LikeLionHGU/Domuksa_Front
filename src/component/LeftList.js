@@ -196,7 +196,7 @@ function LeftList({ roomName }) {
                 onClick={(event) => handleBlock(event)}
               >
                 <div className={style.Text} onDoubleClick={() => setChanged(agenda.id)}>
-                  <span>•</span> {Changed === agenda.id ? <input onKeyDown={(e) => handleKeydownEnter(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.name}</h1>}
+                  <span>•</span> {Changed === agenda.id ? <input onKeyDown={(e) => handleKeydownEnter(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.agenda.name}</h1>}
                 </div>
                 <h3 alt="option"
                   onClick={(e) => {
