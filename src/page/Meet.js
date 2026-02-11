@@ -21,6 +21,7 @@ function Meet() {
   const [RoomName, setRoomName] = useState(null);
   const [password, setPassword] = useState(null);
   const [Code, setCode] = useState(null);
+  const [state, setState] = useState(null);
 
   const [isHost, setIshost] = useState(true);
   const [modalChat, setModalChat] = useState(false);
@@ -42,6 +43,9 @@ function Meet() {
         .then((res) => {
           console.log(res);
           setCode(res.data.code);
+          setState(res.data.state);
+          setRoomId(res.data.roomId);
+          setRoomName(res.data.roomName);
 
           if (res.data.role === "host") {
             setIshost(true);
@@ -57,7 +61,7 @@ function Meet() {
       setModalNew(true);
     }
 
-  }, []);
+  }, [roomId]);
 
 function CreateRoom() {
   axios
@@ -103,6 +107,8 @@ return (
           <div className={style.Header}>
             <Header
               code={Code}
+              state={state}
+              roomId={roomId}
             />
           </div>
           <div className={style.Component}>
@@ -183,7 +189,8 @@ return (
                         required
                         onChange={() => {
                           setRoomName(document.getElementById("name").value);
-                        }} />
+                        }} 
+                        />
                     </div>
                   </label>
 

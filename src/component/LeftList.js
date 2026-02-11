@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { use, useEffect, useRef, useState } from "react";
 import axios from "axios";
 import style from "../CSS/Left.module.css";
 
@@ -23,8 +23,6 @@ function LeftList({ roomName }) {
   const [Changed, setChanged] = useState(null);
 
   useEffect(() => {
-
-
     function HandClickoutsideofModal(e) {
       if (ModalRef.current && !ModalRef.current.contains(e.target)) {
         setModalId(null);
@@ -39,7 +37,6 @@ function LeftList({ roomName }) {
 
   useEffect(() => {
     const roomId = localStorage.getItem("roomId");
-
     axios
       .get(
         `${process.env.REACT_APP_HOST_URL}/room/${roomId}/agenda`,
@@ -49,30 +46,43 @@ function LeftList({ roomName }) {
           },
         })
       .then((res) => {
-        console.log(res);
-        setAgendas(res.data);
+        const format = res.data.map(item => ({
+          id: item.agenda.agendaId,
+          name: item.agenda.name,
+        }));
+
+        setAgendas(format);
       })
       .catch((error) => {
         console.error("마이페이지 정보 가져오기 실패:", error);
       });
 
-  }, [agendas.length]);
+  }, []);
 
-
+  // useEffect(() => {
+  //   if (roomName != null) {
+  //     setRoomName(roomName);
+  //   }
+  // }, [roomName]);
 
   function addAgenda() {
     const roomId = localStorage.getItem("roomId");
     axios
       .post(`${process.env.REACT_APP_HOST_URL}/agenda/${roomId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
         name: "안건 1",
         sequence: 1
       })
       .then((res) => {
         console.log(res);
+        setAgendas([...agendas, res.data]);
       })
       .catch((error) => {
         console.error("마이페이지 정보 가져오기 실패:", error);
       });
+
   }
 
   function handleSetting() {
@@ -110,14 +120,20 @@ function LeftList({ roomName }) {
   function handleAgendaEdit() {
 
   }
-  function deleteAgenda(id) {
+  function deleteAgenda(e) {
+    const id = e.currentTarget.id;
+    console.log(id);
     axios
       .delete(
         `${process.env.REACT_APP_HOST_URL}/agenda/${id}`,
         {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         })
       .then((res) => {
         console.log(res);
+        setAgendas(prev => prev.filter(agenda => agenda.id !== id));
       })
       .catch((error) => {
         console.error("실패:", error);
@@ -125,7 +141,6 @@ function LeftList({ roomName }) {
   }
   function handleKeydownEnter(e, id) {
     if (e.key === 'Enter') {
-      // handleSubmit(e);
       setChanged(null);
       console.log(e, id);
       axios
@@ -139,7 +154,13 @@ function LeftList({ roomName }) {
           console.error("실패:", error);
         });
     }
+  }
 
+  function handleOption(e, id) {
+
+    console.log(id, e);
+    setModalId(id);
+    e.stopPropagation();
   }
   return (
     <div className={style.Maindiv}>
@@ -196,27 +217,28 @@ function LeftList({ roomName }) {
                 onClick={(event) => handleBlock(event)}
               >
                 <div className={style.Text} onDoubleClick={() => setChanged(agenda.id)}>
-                  <span>•</span> {Changed === agenda.id ? <input onKeyDown={(e) => handleKeydownEnter(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.agenda.name}</h1>}
+                  <span>•</span> {Changed === agenda.id ? <input onKeyDown={(e) => handleKeydownEnter(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.name}</h1>}
                 </div>
                 <h3 alt="option"
                   onClick={(e) => {
-                    e.stopPropagation();
-                    setModalId(agenda.id);
+                    handleOption(e, agenda.id);
                   }} >⋮</h3>
                 {ModalId === agenda.id &&
                   <div className={style.Modal} ref={ModalRef}>
                     <div className={style.Options}>
                       <div className={style.Edit} onClick={(e) => {
-                        setModalId(null);
+
                         setChanged(agenda.id);
+                        setModalId(null);
                         e.stopPropagation();
                       }}>
                         <img alt="edit" src={edit} />
                         이름 변경
                       </div>
-                      <div className={style.Dlt} onClick={(e) => {
+                      <div className={style.Dlt} id={agenda.id} onClick={(e) => {
+
+                        deleteAgenda(e);
                         setModalId(null);
-                        deleteAgenda(agenda.id);
                         e.stopPropagation();
                       }}>
                         <img alt="bin" src={bin} />
