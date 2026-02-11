@@ -29,7 +29,7 @@ function Meet() {
   useEffect(() => {
 
     const token = localStorage.getItem("accessToken");
-    setRoomId(localStorage.getItem("roomId"));
+    const roomId = localStorage.getItem("roomId");
 
     if (roomId!==null) {
 
@@ -41,6 +41,8 @@ function Meet() {
         })
         .then((res) => {
           console.log(res);
+          setCode(res.data.code);
+
           if (res.data.role === "host") {
             setIshost(true);
           } else {
@@ -107,10 +109,9 @@ return (
             <Left
               roomId={roomId}
               roomName={RoomName}
-
             />
             <Right
-              roomId
+              roomId={roomId}
             />
           </div>
           <div className={style.DM} onClick={() => setModalChat(true)}>
