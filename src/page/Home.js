@@ -90,6 +90,8 @@ function Home() {
     isRightPw();
   }, [code]);
 
+  console.log(progressRooms);
+
   return (
     <div>
       <div className={styles.extradiv}>

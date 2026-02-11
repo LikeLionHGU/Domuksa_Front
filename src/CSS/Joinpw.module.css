@@ -1,5 +1,6 @@
 .extradiv {
   position: fixed;
+  z-index: 500;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -8,7 +9,7 @@
 }
 
 .maindiv {
-  z-index: 500;
+  
   backdrop-filter: blur(10px);
   width: 1440px;
   height: 872px;
