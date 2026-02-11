@@ -84,7 +84,6 @@ function Header({ code, state, roomId }) {
         console.log(res);
       })
       .catch((error) => {
-
         console.error("마이페이지 정보 가져오기 실패:", error);
       });
   }
@@ -98,6 +97,10 @@ function Header({ code, state, roomId }) {
     localStorage.removeItem("userInfo");
     localStorage.removeItem("accessToken");
     localStorage.removeItem("roomId");
+    setName(null);
+    setEmail(null);
+    setPicture(null);
+    navigate("/loading");
   }
 
   function backtohome() {

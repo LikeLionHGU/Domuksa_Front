@@ -218,15 +218,13 @@ body {
         }
 
         .ModalChat {
-            box-shadow: 2px 2px #dbdbdb;
-
             position: absolute;
             right: 0%;
             bottom: 0%;
 
             width: 305px;
             height: 400px;
-            border: 1px #E4E4E4;
+            border: 1px solid#E4E4E4;
             border-radius: 15px;
             background-color: #ffffff;
 
