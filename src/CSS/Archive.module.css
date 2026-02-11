@@ -1,90 +1,92 @@
-.header {
+.process {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr auto;
 
-  .logo {
-    display: flex;
-    align-items: center;
+  margin: 80px 138px 20px 138px;
 
-    font-size: 20px;
-    font-weight: 800;
-    img {
-      margin: 20px;
-      width: 78px;
-      height: 73px;
-      border-radius: 15px;
-    }
-  }
-  .profile {
-    display: flex;
-    justify-content: right;
+  font-size: 20px;
+  font-weight: 900;
 
-    img {
-      margin: 20px;
-      width: 45px;
-      height: 45px;
-      border-radius: 10px;
-    }
+  input {
+    width: 379px;
+    height: 36px;
+
+    padding-left: 15px;
+
+    border-radius: 30px;
+    border: #dcdddf;
   }
 }
 
-.menu {
-  display: flex;
-  align-items: center;
+.rooms {
+  display: grid;
+  height: 335px;
+  margin-left: 138px;
+  margin-right: 138px;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  row-gap: 21px;
+  column-gap: 20px;
+
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.archive {
+  display: grid;
   justify-content: center;
 
-  .left {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  grid-template-rows: 1fr 1fr;
 
-    margin: 10px;
-    background-color: gray;
-    width: 333px;
-    height: 196px;
+  width: 217px;
+  height: 157px;
 
-    border-radius: 30px;
+  background-color: #ffffff;
 
-    font-size: 50px;
+  text-align: center;
+  color: #5043e7;
+  font-size: 14px;
+
+  border: #dcdddf;
+  border-radius: 15px;
+
+  font-size: 14px;
+
+  .completeImg {
+    width: 32px;
+    height: auto;
+    margin: 51px 93px 14px 92px;
   }
-  .right {
-    margin: 10px;
+}
 
-    width: 334px;
-    height: 196px;
+.room {
+  z-index: 0;
+  position: relative;
+  display: grid;
+  grid-row: auto auto;
+  justify-content: center;
+  align-items: end;
 
-    .join {
-      display: grid;
-      place-items: center;
-      text-align: center;
+  width: 217px;
+  height: 157px;
+  background-color: #ffffff;
+  border-radius: 15px;
 
-      width: 334px;
-      height: 95px;
+  .roomHostImg {
+    width: 70px;
+    height: auto;
+    margin: 24px 73px 0px 74px;
+  }
 
-      background-color: gray;
+  .roomImg {
+    width: 70px;
+    height: auto;
 
-      border-radius: 15px;
-      input {
-        width: 250px;
-        height: 37px;
-        border-radius: 15px;
+    margin: 40px 73px 0px 74px;
+  }
 
-        margin-bottom: 15px;
-      }
-    }
-
-    .archive {
-      margin-top: 9px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      width: 334px;
-      height: 92px;
-
-      background-color: gray;
-
-      border-radius: 15px;
-    }
+  .roomName {
+    font-size: 16px;
+    margin-top: 48px;
+    margin-bottom: 18px;
+    text-align: center;
   }
 }

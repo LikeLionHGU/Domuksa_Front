@@ -118,6 +118,13 @@ function Home() {
             </div>
           </div>
 
+          {isArchiveOpen === true ? (
+            <Archived
+              onChange={setIsArchiveOpen}
+              progressRoomList={progressRooms}
+            />
+          ) : null}
+
           <div className={styles.menu}>
             <div className={styles.new} onClick={(e) => navigate("/meet")}>
               <img className={styles.addBtn} src={addImg} />
@@ -138,12 +145,7 @@ function Home() {
               onChange={setIsArchiveOpen}
               progressRoomList={progressRooms}
             />
-          ) : (
-            <Archived
-              onChange={setIsArchiveOpen}
-              progressRoomList={progressRooms}
-            />
-          )}
+          ) : null}
         </div>
       </div>
     </div>

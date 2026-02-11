@@ -2,7 +2,7 @@
 
 import styles from "../CSS/Profile.module.css";
 
-import logoutIcon from "../asset/icon-logout.png";
+import logoutIcon from "../asset/icon-out.png";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 

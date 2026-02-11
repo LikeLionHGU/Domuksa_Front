@@ -1,6 +1,4 @@
-import { useEffect, useState } from "react";
-import styles from "../CSS/Progress.module.css";
-import completeImg from "../asset/icon-complete.png";
+import styles from "../CSS/Archive.module.css";
 import roomImg from "../asset/icon-meetingroom.png";
 import roomHostImg from "../asset/icon-meetinghost.png";
 import { useNavigate } from "react-router-dom";
