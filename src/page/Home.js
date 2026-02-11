@@ -28,6 +28,7 @@ function Home() {
 
   const [value, setValue] = useState("");
   const [code, setCode] = useState("");
+  const [roomCode, setRoomCode] = useState("");
 
   const testCode = "1234567890";
 
@@ -43,9 +44,16 @@ function Home() {
   }
 
   function isRightPw() {
-    if (testCode === code) {
+    if (code === rooms.code) {
       setPwOpen(true);
       setCode("");
+    }
+
+    for (let i = 0; i < rooms.length; i++) {
+      if (rooms[i].code === code) {
+        setPwOpen(true);
+        setCode("");
+      }
     }
   }
 
@@ -56,7 +64,6 @@ function Home() {
       setProfileOpen(false);
     }
   }
-
 
   useEffect(() => {
     setToken(localStorage.getItem("accessToken"));
@@ -84,14 +91,13 @@ function Home() {
       .catch((error) => {
         console.error("마이페이지 정보 가져오기 실패:", error);
       });
+  }, [reset]);
 
+  console.log(rooms);
+
+  useEffect(() => {
     isRightPw();
-  
-  }, [code, reset]);
-
-  if (!token) {
-    navigate("/");
-  }
+  }, [code]);
 
   return (
     <div>
