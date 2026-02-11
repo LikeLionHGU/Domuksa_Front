@@ -7,6 +7,7 @@ function Landing() {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("memberId");
   localStorage.removeItem("userInfo");
+  localStorage.removeItem("roomId");
 
   function goHome() {
     navigate("/home");

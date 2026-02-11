@@ -60,6 +60,7 @@ function Home() {
   }
 
   useEffect(() => {
+    localStorage.removeItem("roomId");
     setToken(localStorage.getItem("accessToken"));
     const user = JSON.parse(localStorage.getItem("userInfo"));
     setUserId(user.id);
