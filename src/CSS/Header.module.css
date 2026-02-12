@@ -97,6 +97,7 @@
     }
 
     .ProfileModal {
+        z-index: 9999;
         box-shadow: 2px 2px #dbdbdb;
 
         position: absolute;

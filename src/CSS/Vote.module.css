@@ -5,6 +5,7 @@
     border-radius: 20px;
     background-color: rgb(255, 255, 255);
     overflow: hidden;
+    position: relative;
 }
 
 .Maintitle {
@@ -28,6 +29,7 @@
         color: #111111;
     }
 }
+
 .Subdiv {
     width: 100%;
     display: flex;
@@ -73,19 +75,34 @@
     }
 
     .Votelist {
-        width: 611px;
-        height:450px;
+        width: 900px;
+        height: 600px;
         overflow: scroll;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
         .Vote {
+            position: relative;
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100%;
+
+            width: 611px;
             height: 70px;
 
             border-radius: 20px;
             background-color: #ededed;
             margin-bottom: 20px;
+
+            .option {
+                text-align: center;
+                margin-left: auto;
+                margin-right: 25px;
+                width: 19px;
+                height: 22px;
+                float: right;
+            }
 
             .VoteText {
                 gap: 10px;
@@ -94,12 +111,22 @@
                 flex-direction: column;
 
                 padding-left: 34px;
-                padding-right:20px;
+                padding-right: 20px;
 
                 width: auto;
                 height: 42px;
 
-                h3 {
+                input {
+                    background-color: #ededed;
+                    font-size: 18px;
+                    color: #5a5a5a;
+                    margin: 0;
+                    border: none;
+                    width: 400px;
+                    height: auto;
+                }
+
+                h1 {
                     font-size: 16px;
                     margin: 0;
                 }
@@ -115,7 +142,65 @@
                 height: 12px;
                 width: auto;
                 margin-left: auto;
-                margin-right:20px;
+                margin-right: 20px;
+            }
+
+            .Modal {
+                border-radius: 15px;
+                border: 1px solid #EDEDED;
+                background-color: white;
+                border: 1px #ededed;
+                font-weight: normal;
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+
+                position: absolute;
+                z-index: 999;
+
+                right: -10%;
+                top: 37%;
+
+                width: 109px;
+                height: 62px;
+
+                color: #b4b3b3;
+
+
+                .Options {
+                    margin: 10px 10px;
+                    width: 83px;
+                    height: 42px;
+
+                    .Edit {
+                        margin-bottom: 10px;
+
+                        img {
+                            margin-right: 4px;
+
+                            width: 14px;
+                            height: 14px;
+                        }
+                    }
+
+                    .Edit:hover {
+                        color: #111111;
+                    }
+
+                    .Dlt {
+                        img {
+                            margin-right: 10px;
+
+                            width: auto;
+                            height: 14px;
+                        }
+                    }
+
+                    .Dlt:hover {
+                        color: #111111;
+                    }
+                }
             }
         }
     }

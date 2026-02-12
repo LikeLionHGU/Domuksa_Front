@@ -62,7 +62,7 @@ function Header({ code, state, roomId }) {
         .patch(`
           ${process.env.REACT_APP_HOST_URL}/room/${roomId}/state`,
           {
-            state: "completed",
+            state: "complete",
           })
         .then((res) => {
           console.log(res);
