@@ -1,4 +1,5 @@
 //투표 개수/투표 이름
+import NewVote from "./NewVote";
 import { useRef, useEffect, useState } from "react";
 import axios from "axios";
 import style from "../CSS/Vote.module.css";
@@ -16,9 +17,15 @@ function Vote({ roomId, onChange, clickedAgendaId }) {
     //[투표이름변경]
     const [Changed, setChanged] = useState(null);
 
+    //새로운 투표 (객체)
+    const [Voteobj, setVoteobj] = useState([]);
+
     //[모달]
     const [ModalId, setModalId] = useState(null);
     const ModalRef = useRef(null);
+    const inputRef = useRef(null);
+
+    //새로운 투표
 
     //모달 외부 클릭시 닫히게 만드는 
     useEffect(() => {
@@ -26,13 +33,16 @@ function Vote({ roomId, onChange, clickedAgendaId }) {
             if (ModalRef.current && !ModalRef.current.contains(e.target)) {
                 setModalId(null);
             }
+            if (inputRef.current && !inputRef.current.contains(e.target)) {
+                setChanged(null);
+            }
         }
         document.addEventListener("mousedown", HandClickoutsideofModal);
 
         return () => {
             document.removeEventListener("mousedown", HandClickoutsideofModal);
         }
-    }, [ModalId])
+    }, [ModalId, inputRef]);
 
     //투표list 불러오기
     useEffect(() => {
@@ -66,6 +76,9 @@ function Vote({ roomId, onChange, clickedAgendaId }) {
             .then((res) => {
                 console.log(res);
                 if (res.status === 200 || res.status === 201) {
+
+                    setVoteobj(res.data);
+
                     axios
                         .get(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`, {
                             headers: {
@@ -130,6 +143,7 @@ function Vote({ roomId, onChange, clickedAgendaId }) {
     function EditVote(e, id) {
         const token = localStorage.getItem("accessToken");
         if (e.key === "Enter") {
+            console.log(e.target.value);
             axios
                 .patch(`${process.env.REACT_APP_HOST_URL}/vote/${id}`, {
                     title: e.target.value,
@@ -171,13 +185,18 @@ function Vote({ roomId, onChange, clickedAgendaId }) {
             <div className={style.Subdiv}>
                 <div className={style.Subtitle}>
                     <h3>안건 1에 대한 투표</h3>
-                    <img src={addBtn} onClick={() => addVote()} />
+                    <img
+                        src={addBtn}
+                        onClick={() => {
+                            setNewvote(true);
+                            addVote();
+                        }} />
                 </div>
                 <div className={style.Votelist}>
                     {votes.map((vote) => (
                         <div className={style.Vote} key={vote.voteId} >
-                            <div className={style.VoteText}>
-                                {Changed === vote.voteId ? <input id="newVoteName" onKeyDown={(e) => EditVote(e, vote.voteId)} placeholder={vote.title} /> : <h1>{vote.title}</h1>}
+                            <div className={style.VoteText} onDoubleClick={() => setChanged(vote.voteId)}>
+                                {Changed === vote.voteId ? <input id="newVoteName" ref={inputRef} onKeyDown={(e) => EditVote(e, vote.voteId)} placeholder={vote.title} /> : <h1>{vote.title}</h1>}
                                 <span>{vote.number}</span>
                             </div>
                             <h3
@@ -212,10 +231,12 @@ function Vote({ roomId, onChange, clickedAgendaId }) {
 
                 </div>
             </div>
-            {Newvote &&
-                <div>
-
-                </div>
+            {
+                Newvote === true &&
+                <NewVote 
+                setNewvote={setNewvote}
+                Voteobj={Voteobj}
+                />
             }
         </div >
     );

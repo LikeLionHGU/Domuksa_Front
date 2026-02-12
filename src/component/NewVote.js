@@ -1,0 +1,91 @@
+import { useState } from "react";
+import axios from "axios";
+import style from '../CSS/Vote_new_modal.module.css';
+
+function NewVote({ setNewvote, Voteobj }) {
+    const token = localStorage.getItem("accessToken");
+
+    const [options, setOptions] = useState([]);
+
+    function addOption() {
+
+        axios
+            .post(`${process.env.REACT_APP_HOST_URL}/vote/${Voteobj.vote.voteId}/option`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                contents: "옵션",
+            })
+            .then((res) => {
+                console.log(res);
+                if (res.status === 200 || res.status === 201) {
+                    setOptions([...options, res.data]);
+                }
+            })
+            .catch((error) => {
+                console.error("마이페이지 정보 가져오기 실패:", error);
+            });
+    }
+
+    function deleteOption(e) {
+        axios
+            .delete(`${process.env.REACT_APP_HOST_URL}/vote/${e.target.id}/option`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) => {
+                console.log(res);
+                if (res.status === 200 || res.status === 201) {
+                    setOptions(options.filter((option) => option.id !== parseInt(e.target.id)));
+                }
+            })
+            .catch((error) => {
+                console.error("마이페이지 정보 가져오기 실패:", error);
+            });
+    }
+    return (
+        <div className={style.NewVote}>
+            <div className={style.Maintitle}>
+                <h3>투표</h3>
+                <h2 onClick={() => setNewvote(false)}>+</h2>
+            </div>
+            <div className={style.Subdiv}>
+                <div className={style.Subtitle}>
+                    <h3>투표 안건이름</h3>
+                </div>
+
+                <div className={style.Votelist}>
+                    <div className={style.Vote}>
+                        <div className={style.VoteText}>
+                            <input id="newVoteName" placeholder="새로운 투표 안건을 입력하세요!" />
+                        </div>
+                    </div>
+
+                    <div className={style.Subtitle}>
+                        <h3>옵션</h3>
+                    </div>
+
+                    {options.map((option) => {
+                        return (
+                            <div id={option.id} className={style.Vote}>
+                                <div className={style.VoteText}>
+                                    <input id={option.id} placeholder="새로운 투표 안건을 입력하세요!" />
+                                </div>
+                                <h1 id={option.id} onClick={(e) => deleteOption(e)}>+</h1>
+                            </div>
+                        );
+                    })}
+                    <div className={style.Subsubtitle} onClick={() => addOption()}>
+                        <h1>+</h1><h4>옵션 추가</h4>
+                    </div>
+                    <div className={style.Buttons}>
+                        <button className={style.Cancel}>취소하기</button>
+                        <button className={style.Create}>생성하기</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    );
+}
+export default NewVote;
