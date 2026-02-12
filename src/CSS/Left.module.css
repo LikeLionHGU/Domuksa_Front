@@ -5,6 +5,7 @@
     background-color: #ffffff;
     border-radius: 20px;
     border: 1px solid #E4E4E4;
+    overflow: hidden;
 }
 
 hr {
@@ -202,12 +203,10 @@ hr {
                 input {
                     font-size: 18px;
                     color: #5a5a5a;
-                    /* font-weight: bold; */
                     margin: 0;
                     border: none;
                     width: 160px;
                     height: auto;
-
                 }
             }
 

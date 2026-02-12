@@ -1,6 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import style from "../CSS/Left.module.css";
+
+import Timer from "./Timer";
+
 import tip from "../asset/icon-tip-red.png";
 import setting from "../asset/icon-setting.png";
 import edit from "../asset/icon-edit.png";
@@ -8,7 +11,7 @@ import bin from "../asset/icon-trashbin.png";
 import visible from "../asset/icon-visible.png";
 import add from "../asset/icon-add.png";
 
-function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId,clickedAgendaId}) {
+function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAgendaId }) {
 
   const token = localStorage.getItem("accessToken");
 
@@ -26,7 +29,9 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId,clickedAge
 
   //[모달]
   const [ModalId, setModalId] = useState(null);
+
   const ModalRef = useRef(null);
+  const inputRef = useRef(null);
 
 
   useEffect(() => {
@@ -34,13 +39,16 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId,clickedAge
       if (ModalRef.current && !ModalRef.current.contains(e.target)) {
         setModalId(null);
       }
+      if (inputRef.current && !inputRef.current.contains(e.target)) {
+        setChanged(null);
+      }
     }
     document.addEventListener("mousedown", HandClickoutsideofModal);
 
     return () => {
       document.removeEventListener("mousedown", HandClickoutsideofModal);
     }
-  }, [ModalId])
+  }, [ModalId, inputRef]);
 
   useEffect(() => {
     axios
@@ -66,13 +74,13 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId,clickedAge
 
   }, [roomId]);
 
-  useEffect(()=>{
-    if(clickedAgendaId !== null){ //아직 첫 안건 번호가 없다면, 실행하지 않는다, 첫안건 번호 세팅후 실행
+  useEffect(() => {
+    if (clickedAgendaId !== null) { //아직 첫 안건 번호가 없다면, 실행하지 않는다, 첫안건 번호 세팅후 실행
       setBlockNumber(clickedAgendaId)
       document.getElementById(clickedAgendaId).className = style.ChosenBlock; //첫 안건 자동 선택
     }
-  },[clickedAgendaId]);
-  
+  }, [clickedAgendaId]);
+
   function handleSetting() {
     if (Setting === true) {
       setSetting(false);
@@ -330,7 +338,7 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId,clickedAge
                 onClick={(event) => handleBlock(event)}
               >
                 <div className={style.Text} onDoubleClick={() => setChanged(agenda.id)}>
-                  <span>•</span> {Changed === agenda.id ? <input id="newAgendaName" onKeyDown={(e) => EditAgenda(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.name}</h1>}
+                  <span>•</span> {Changed === agenda.id ? <input id="newAgendaName" ref={inputRef} onKeyDown={(e) => EditAgenda(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.name}</h1>}
                 </div>
                 <h3 alt="option"
                   onClick={(e) => {
@@ -369,6 +377,8 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId,clickedAge
         </div>
       }
       <hr />
+
+      <Timer/>
     </div >
   );
 }
