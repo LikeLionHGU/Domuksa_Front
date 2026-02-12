@@ -36,13 +36,13 @@ function Timer() {
 
     return (
         <div className={style.Maindiv}>
-            <img className={style.TimerWord} src={TimerWord} />
+            <img className={style.TimerWord} alt="TimerWord" src={TimerWord} />
             <div className={style.margin}>
                 <div className={style.TImerBody}>
                     <h1>{hour.toString().padStart(2, "0")}:{min.toString().padStart(2, "0")}:{sec.toString().padStart(2, "0")}</h1>
                     <div className={style.UPandDOWN}>
-                        <img onClick={() => setTotal(pre => pre + 60)} src={TimerUpdown} />
-                        <img onClick={() => setTotal(pre => {
+                        <img alt="keyup" onClick={() => setTotal(pre => pre + 60)} src={TimerUpdown} />
+                        <img alt="keydown" onClick={() => setTotal(pre => {
                             if (pre <= 59) {
                                 return 0;
                             }
@@ -51,8 +51,8 @@ function Timer() {
                     </div>
                 </div>
                 <div className={style.Buttons}>
-                    <button className={style.Play} onClick={() => Play()}><img id="stateBtn" src={Stateimg === true ? TimerPlay : TimerStop} /></button>
-                    <button className={style.Reset} onClick={() => setTotal(0)}><img src={TimerReset} /></button>
+                    <button className={style.Play} onClick={() => Play()}><img alt="stateBtn" id="stateBtn" src={Stateimg === true ? TimerPlay : TimerStop} /></button>
+                    <button className={style.Reset} onClick={() => setTotal(0)}><img alt="reset" src={TimerReset} /></button>
                 </div>
                 <div className={style.ExtraButtons}>
                     <button onClick={() => setTotal(pre => pre + (3 * 60))}>+ 3m</button>
