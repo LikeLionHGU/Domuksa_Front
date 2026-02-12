@@ -1,4 +1,4 @@
-import { use, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import style from "../CSS/Left.module.css";
 import tip from "../asset/icon-tip-red.png";
@@ -8,18 +8,26 @@ import bin from "../asset/icon-trashbin.png";
 import visible from "../asset/icon-visible.png";
 import add from "../asset/icon-add.png";
 
-//host는 소켓으로 생성된 요소들 다 서버로 전송 / 사용자는 그저 받기!
-function LeftList({ roomName ,deleteModal}) {
+function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId,clickedAgendaId}) {
 
   const token = localStorage.getItem("accessToken");
+
+  //[안건]
+  const [blockNumber, setBlockNumber] = useState(null);
+  const [agendas, setAgendas] = useState([]);
+
+  //[현재 안건]
+
+  //[안건이름변경]
+  const [Changed, setChanged] = useState(null);
+
+  //[방설정]
+  const [Setting, setSetting] = useState(false);
+
+  //[모달]
   const [ModalId, setModalId] = useState(null);
   const ModalRef = useRef(null);
 
-  const [pre, setPre] = useState(null); //선택된 블럭이 어떤 블럭인지?
-  const [agendas, setAgendas] = useState([]);
-  const [Setting, setSetting] = useState(false);
-
-  const [Changed, setChanged] = useState(null);
 
   useEffect(() => {
     function HandClickoutsideofModal(e) {
@@ -35,7 +43,6 @@ function LeftList({ roomName ,deleteModal}) {
   }, [ModalId])
 
   useEffect(() => {
-    const roomId = localStorage.getItem("roomId");
     axios
       .get(
         `${process.env.REACT_APP_HOST_URL}/room/${roomId}/agenda`,
@@ -45,45 +52,27 @@ function LeftList({ roomName ,deleteModal}) {
           },
         })
       .then((res) => {
+        console.log(res);
         const format = res.data.map(item => ({
           id: item.agenda.agendaId,
           name: item.agenda.name,
         }));
-
         setAgendas(format);
+        format.length > 0 && setClickedAgendaId(format[0].id);
       })
       .catch((error) => {
         console.error("마이페이지 정보 가져오기 실패:", error);
       });
 
-  }, []);
+  }, [roomId]);
 
-  // useEffect(() => {
-  //   if (roomName != null) {
-  //     setRoomName(roomName);
-  //   }
-  // }, [roomName]);
-
-  function addAgenda() {
-    const roomId = localStorage.getItem("roomId");
-    axios
-      .post(`${process.env.REACT_APP_HOST_URL}/agenda/${roomId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        name: "안건 1",
-        sequence: 1
-      })
-      .then((res) => {
-        console.log(res);
-        setAgendas([...agendas, res.data]);
-      })
-      .catch((error) => {
-        console.error("마이페이지 정보 가져오기 실패:", error);
-      });
-
-  }
-
+  useEffect(()=>{
+    if(clickedAgendaId !== null){ //아직 첫 안건 번호가 없다면, 실행하지 않는다, 첫안건 번호 세팅후 실행
+      setBlockNumber(clickedAgendaId)
+      document.getElementById(clickedAgendaId).className = style.ChosenBlock; //첫 안건 자동 선택
+    }
+  },[clickedAgendaId]);
+  
   function handleSetting() {
     if (Setting === true) {
       setSetting(false);
@@ -91,38 +80,23 @@ function LeftList({ roomName ,deleteModal}) {
       setSetting(true);
     }
   }
-
-  function handleEditRoom() {
-    const newRoomName = document.getElementById("newRoomName").value;
-    const newPassword = document.getElememtById("newPassword").value;
-    // axios
-    //   .post(`${process.env.REACT_APP_HOST_URL}/agenda/${roomId}`, {
-    //     headers: {
-    //       Authorization: `Bearer ${token}`,
-    //     },
-    //     name: "안건 1",
-    //     sequence: 1
-    //   })
-    //   .then((res) => {
-    //     console.log(res);
-    //     setAgendas([...agendas, res.data]);
-    //   })
-    //   .catch((error) => {
-    //     console.error("마이페이지 정보 가져오기 실패:", error);
-    //   });
-  }
   function handleBlock(e) {
-    if (pre === null) {
+    if (blockNumber === null) {
       //클릭한적 없을시!
-      setPre(e.currentTarget.id)
+      setBlockNumber(e.currentTarget.id)
       document.getElementById(e.currentTarget.id).className = style.ChosenBlock;
       return;
     }
-    setPre(e.currentTarget.id)
-    document.getElementById(pre).className = style.Block;//이전껀 어둡게
+    setBlockNumber(e.currentTarget.id)
+    document.getElementById(blockNumber).className = style.Block;//이전껀 어둡게
+    setClickedAgendaId(e.currentTarget.id);
     document.getElementById(e.currentTarget.id).className = style.ChosenBlock; //클릭한거 색입히기
   }
 
+  function handleOption(e, id) {
+    setModalId(id);
+    e.stopPropagation();
+  }
   function handleVisible() {
     const pw = document.getElementById("password");
     if (pw.type === "password") {
@@ -130,15 +104,76 @@ function LeftList({ roomName ,deleteModal}) {
       return;
     }
     pw.type = "password";
-
   }
 
-  function handleAgendaEdit() {
+  //방 functions
+  function handleEditRoom(e) {
+    const newRoomName = e.target.querySelector("#newRoomName").value;
+    const newPassword = e.target.querySelector("#newPassword").value;
+    axios
+      .patch(`${process.env.REACT_APP_HOST_URL}/room/${roomId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        name: newRoomName,
+        password: newPassword,
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          setSetting(false);
+        }
+      })
+      .catch((error) => {
+        console.error("마이페이지 정보 가져오기 실패:", error);
+      });
+  }
+
+  //안건 functions
+  function addAgenda() {
+    const roomId = localStorage.getItem("roomId");
+
+    axios
+      .post(`${process.env.REACT_APP_HOST_URL}/agenda/${roomId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        name: "안건 제목",
+        sequence: 1
+      })
+      .then((res) => {
+        console.log(res);
+        if (res.status === 200) {
+          axios
+            .get(
+              `${process.env.REACT_APP_HOST_URL}/room/${roomId}/agenda`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              })
+            .then((res) => {
+              console.log(res);
+              const format = res.data.map(item => ({
+                id: item.agenda.agendaId,
+                name: item.agenda.name,
+              }));
+
+              setAgendas(format);
+            })
+            .catch((error) => {
+              console.error("마이페이지 정보 가져오기 실패:", error);
+            });
+
+        }
+      })
+      .catch((error) => {
+        console.error("마이페이지 정보 가져오기 실패:", error);
+      });
 
   }
-  function deleteAgenda(e) {
-    const id = e.currentTarget.id;
-    console.log(id);
+  function deleteAgenda(id) {
+
     axios
       .delete(
         `${process.env.REACT_APP_HOST_URL}/agenda/${id}`,
@@ -149,36 +184,77 @@ function LeftList({ roomName ,deleteModal}) {
         })
       .then((res) => {
         console.log(res);
-        setAgendas(prev => prev.filter(agenda => agenda.id !== id));
+        if (res.status === 200) {
+          axios
+            .get(
+              `${process.env.REACT_APP_HOST_URL}/room/${roomId}/agenda`,
+              {
+                headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              })
+            .then((res) => {
+              console.log(res);
+              const format = res.data.map(item => ({
+                id: item.agenda.agendaId,
+                name: item.agenda.name,
+              }));
+
+              setAgendas(format);
+            })
+            .catch((error) => {
+              console.error("마이페이지 정보 가져오기 실패:", error);
+            });
+        }
       })
       .catch((error) => {
         console.error("실패:", error);
       });
   }
-  function handleKeydownEnter(e, id) {
-    if (e.key === 'Enter') {
-      setChanged(null);
-      console.log(e, id);
+  function EditAgenda(e, id) {
+    console.log(e);
+    if (e.key === "Enter") {
       axios
         .patch(`${process.env.REACT_APP_HOST_URL}/agenda/${id}`, {
           name: e.target.value,
         })
         .then((res) => {
           console.log(res);
+          if (res.status === 200) {
+            // setAgendas(prev => prev.map(agenda => agenda.id === id ? { ...agenda, name: e.target.value } : agenda));
+            axios
+              .get(
+                `${process.env.REACT_APP_HOST_URL}/room/${roomId}/agenda`,
+                {
+                  headers: {
+                    Authorization: `Bearer ${token}`,
+                  },
+                })
+              .then((res) => {
+                console.log(res);
+                const format = res.data.map(item => ({
+                  id: item.agenda.agendaId,
+                  name: item.agenda.name,
+                }));
+
+                setAgendas(format);
+              })
+              .catch((error) => {
+                console.error("마이페이지 정보 가져오기 실패:", error);
+              });
+
+          }
         })
         .catch((error) => {
           console.error("실패:", error);
         });
+      setChanged(null);
     }
+
   }
 
-  function handleOption(e, id) {
 
-    console.log(id, e);
-    setModalId(id);
-    e.stopPropagation();
-  }
-  
+
   return (
     <div className={style.Maindiv}>
       <div className={style.Head}>
@@ -194,10 +270,14 @@ function LeftList({ roomName ,deleteModal}) {
         <div className={style.Setting}>
           <div className={style.SettingDiv}>
             <h2 onClick={() => handleSetting()} >+</h2>
-            <form>
+            <form onSubmit={(e) => {
+              handleEditRoom(e);
+              e.preventDefault();
+            }}>
               <label>회의 이름 변경
                 <div className={style.Input}>
                   <input
+                    placeholder={roomName}
                     id="newRoomName"
                     maxLength='12'
                   />
@@ -209,13 +289,18 @@ function LeftList({ roomName ,deleteModal}) {
                   <input
                     id="newPassword"
                     type="password"
+                    minLength='4'
                     maxLength='4'
                   />
                   <img alt="visible" src={visible} onClick={() => handleVisible()} />
                 </div>
               </label>
 
-              <button onClick={() => onsubmit()}>변경하기</button>
+              <button
+                type="submit"
+
+
+              >변경하기</button>
               <div className={style.Tip}>
                 <img src={tip} />
                 삭제하기 버튼을 누르면 이 방의 모든 회의 기록과 <br />
@@ -245,7 +330,7 @@ function LeftList({ roomName ,deleteModal}) {
                 onClick={(event) => handleBlock(event)}
               >
                 <div className={style.Text} onDoubleClick={() => setChanged(agenda.id)}>
-                  <span>•</span> {Changed === agenda.id ? <input onKeyDown={(e) => handleKeydownEnter(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.name}</h1>}
+                  <span>•</span> {Changed === agenda.id ? <input id="newAgendaName" onKeyDown={(e) => EditAgenda(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.name}</h1>}
                 </div>
                 <h3 alt="option"
                   onClick={(e) => {
@@ -265,7 +350,7 @@ function LeftList({ roomName ,deleteModal}) {
                       </div>
                       <div className={style.Dlt} id={agenda.id} onClick={(e) => {
 
-                        deleteAgenda(e);
+                        deleteAgenda(agenda.id);
                         setModalId(null);
                         e.stopPropagation();
                       }}>
@@ -284,7 +369,7 @@ function LeftList({ roomName ,deleteModal}) {
         </div>
       }
       <hr />
-    </div>
+    </div >
   );
 }
 

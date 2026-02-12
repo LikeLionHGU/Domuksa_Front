@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import style from "../CSS/Right.module.css";
 
@@ -16,13 +16,16 @@ import iconChatColor from "../asset/Mainicon-color-comment.png";
 import iconVoteColor from "../asset/Mainicon-color-vote.png";
 import iconAIColor from "../asset/Mainicon-color-Ai.png";
 
-function RightList() {
+function RightList({ roomId, clickedAgendaId}) {
   const [mode, setMode] = useState("basic");
   const [FileState, setFileState] = useState(false);
   const [ChatState, setChatState] = useState(false);
   const [VoteState, setVoteState] = useState(false);
   const [AIState, setAIState] = useState(false);
 
+  useEffect(()=>{
+    console.log(clickedAgendaId);
+  },[]);
   const Mode = {
     basic: <>
       <div className={style.Maindiv}>
@@ -53,8 +56,8 @@ function RightList() {
             <h3>투표</h3>
           </div>
         </div>
-        <div 
-        className={style.Subdiv}>
+        <div
+          className={style.Subdiv}>
           <div
             className={style.BigBlock}
             onClick={() => setMode("AI")}
@@ -66,10 +69,20 @@ function RightList() {
         </div>
       </div>
     </>,
-    File: <File onChange={setMode} />,
-    Comment: <Comment onChange={setMode} />,
-    Vote: <Vote onChange={setMode} />,
-    AI: <AI onChange={setMode} />
+    File: <File
+      onChange={setMode}
+    />,
+    Comment: <Comment
+      onChange={setMode}
+    />,
+    Vote: <Vote
+    clickedAgendaId={clickedAgendaId}
+      roomId={roomId}
+      onChange={setMode}
+    />,
+    AI: <AI
+      onChange={setMode}
+    />
   };
   return Mode[mode];
 }

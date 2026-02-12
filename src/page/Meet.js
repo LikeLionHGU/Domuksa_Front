@@ -20,6 +20,8 @@ import Logo from "../asset/icon-logo.png";
 function Meet() {
   const navigate = useNavigate();
 
+  const [clickedAgendaId, setClickedAgendaId] = useState(null);
+  
   const [roomId, setRoomId] = useState(null);
   const [RoomName, setRoomName] = useState(null);
   const [password, setPassword] = useState(null);
@@ -32,7 +34,6 @@ function Meet() {
   const [deleteModal, setDeleteModal] = useState(false);
 
   useEffect(() => {
-
     const token = localStorage.getItem("accessToken");
     const roomId = localStorage.getItem("roomId");
 
@@ -101,7 +102,20 @@ function Meet() {
     pw.type = "password";
 
   }
-  function deleteRoom(){
+  function deleteRoom() {
+    const token = localStorage.getItem("accessToken");
+    axios
+      .delete(`${process.env.REACT_APP_HOST_URL}/room/${roomId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((error) => {
+        console.error("마이페이지 정보 가져오기 실패:", error);
+      });
     navigate("/home");
   }
 
@@ -123,9 +137,12 @@ function Meet() {
                 deleteModal={setDeleteModal}
                 roomId={roomId}
                 roomName={RoomName}
+                clickedAgendaId={clickedAgendaId}
+                setClickedAgendaId={setClickedAgendaId}
               />
               <Right
                 roomId={roomId}
+                clickedAgendaId={clickedAgendaId}
               />
             </div>
             <div className={style.DM} onClick={() => setModalChat(true)}>
@@ -207,6 +224,7 @@ function Meet() {
                         <input
                           id="password"
                           type="password"
+                          minLength='4'
                           maxLength='4'
                           required
                           onChange={() => {
@@ -230,11 +248,11 @@ function Meet() {
           {deleteModal &&
             <div className={style.DeleteModal}>
               <div className={style.Modal}>
-                <img src={Logo}/>
+                <img src={Logo} />
                 <h2>회의를 삭제하시겠습니까</h2>
                 <div className={style.Tip}>
                   <img src={tipRed} />
-                  삭제하기 버튼을 누르면 이 방의 모든 회의 기록과 <br/>
+                  삭제하기 버튼을 누르면 이 방의 모든 회의 기록과 <br />
                   데이터가 영구적으로 삭제되며 복구할 수 없습니다
                 </div>
                 <div className={style.Buttons}>

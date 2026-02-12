@@ -1,20 +1,165 @@
 //투표 개수/투표 이름
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
+import axios from "axios";
 import style from "../CSS/Vote.module.css";
-import dlt from "../asset/icon-delete.png";
+
+
+import edit from "../asset/icon-edit.png";
+import bin from "../asset/icon-trashbin.png";
 import addBtn from "../asset/icon-addBtn.png";
-import option from "../asset/icon-option.png";
 
-function Vote({ onChange }) {
+function Vote({ roomId, onChange, clickedAgendaId }) {
 
-    const [idCounter, setIdCounter] = useState(0);
+    const [Newvote, setNewvote] = useState(false)
     const [votes, setVotes] = useState([]);
-    useEffect(()=>{
-        
-    },[]);
+
+    //[투표이름변경]
+    const [Changed, setChanged] = useState(null);
+
+    //[모달]
+    const [ModalId, setModalId] = useState(null);
+    const ModalRef = useRef(null);
+
+    //모달 외부 클릭시 닫히게 만드는 
+    useEffect(() => {
+        function HandClickoutsideofModal(e) {
+            if (ModalRef.current && !ModalRef.current.contains(e.target)) {
+                setModalId(null);
+            }
+        }
+        document.addEventListener("mousedown", HandClickoutsideofModal);
+
+        return () => {
+            document.removeEventListener("mousedown", HandClickoutsideofModal);
+        }
+    }, [ModalId])
+
+    //투표list 불러오기
+    useEffect(() => {
+        const token = localStorage.getItem("accessToken");
+        console.log(clickedAgendaId);
+        axios
+            .get(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) => {
+                console.log(res);
+                if (res.status === 200 || res.status === 201) {
+                    setVotes(res.data);
+                }
+            })
+            .catch((error) => {
+                console.error("마이페이지 정보 가져오기 실패:", error);
+            });
+    }, []);
     function addVote() {
-        setVotes(prev => [...prev, { id: idCounter, title: "안건이름", number: "투표수", voteStatus: "running" }]);
-        setIdCounter(prev => prev + 1);
+        const token = localStorage.getItem("accessToken");
+        axios
+            .post(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                title: "찬반투표",
+            })
+            .then((res) => {
+                console.log(res);
+                if (res.status === 200 || res.status === 201) {
+                    axios
+                        .get(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`, {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        })
+                        .then((res) => {
+                            console.log(res);
+                            if (res.status === 200 || res.status === 201) {
+                                setVotes(res.data);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("마이페이지 정보 가져오기 실패:", error);
+                        });
+                }
+            })
+            .catch((error) => {
+                console.error("마이페이지 정보 가져오기 실패:", error);
+            });
+    }
+
+    function handleOption(e, id) {
+        setModalId(id);
+        e.stopPropagation();
+    }
+    function deleteVote(voteId) {
+        const token = localStorage.getItem("accessToken");
+        axios
+            .delete(
+                `${process.env.REACT_APP_HOST_URL}/vote/${voteId}`,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
+            .then((res) => {
+                console.log(res);
+                if (res.status === 200 || res.status === 201) {
+                    axios
+                        .get(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`, {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        })
+                        .then((res) => {
+                            console.log(res);
+                            if (res.status === 200 || res.status === 201) {
+                                setVotes(res.data);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("마이페이지 정보 가져오기 실패:", error);
+                        });
+                }
+            })
+            .catch((error) => {
+                console.error("실패:", error);
+            });
+    }
+
+    function EditVote(e, id) {
+        const token = localStorage.getItem("accessToken");
+        if (e.key === "Enter") {
+            axios
+                .patch(`${process.env.REACT_APP_HOST_URL}/vote/${id}`, {
+                    title: e.target.value,
+                })
+                .then((res) => {
+                    console.log(res);
+                    if (res.status === 200 || res.status === 201) {
+                        axios
+                            .get(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`, {
+                                headers: {
+                                    Authorization: `Bearer ${token}`,
+                                },
+                            })
+                            .then((res) => {
+                                console.log(res);
+                                if (res.status === 200 || res.status === 201) {
+                                    setVotes(res.data);
+                                }
+                            })
+                            .catch((error) => {
+                                console.error("마이페이지 정보 가져오기 실패:", error);
+                            });
+                    }
+                })
+                .catch((error) => {
+                    console.error("실패:", error);
+                });
+            setChanged(null);
+        }
+
     }
     return (
         <div className={style.Maindiv}>
@@ -30,17 +175,48 @@ function Vote({ onChange }) {
                 </div>
                 <div className={style.Votelist}>
                     {votes.map((vote) => (
-                        <div className={style.Vote} key={vote.id} >
+                        <div className={style.Vote} key={vote.voteId} >
                             <div className={style.VoteText}>
-                                <h3>{vote.title}</h3>
+                                {Changed === vote.voteId ? <input id="newVoteName" onKeyDown={(e) => EditVote(e, vote.voteId)} placeholder={vote.title} /> : <h1>{vote.title}</h1>}
                                 <span>{vote.number}</span>
                             </div>
-                            <img src={option} />
+                            <h3
+                                className={style.option}
+                                alt="option"
+                                onClick={(e) => handleOption(e, vote.voteId)}>⋮</h3>
+                            {ModalId === vote.voteId &&
+                                <div key={vote.voteId} className={style.Modal} ref={ModalRef}>
+                                    <div className={style.Options}>
+                                        <div className={style.Edit} onClick={(e) => {
+
+                                            setChanged(vote.voteId);
+                                            setModalId(null);
+                                            e.stopPropagation();
+                                        }}>
+                                            <img alt="edit" src={edit} />
+                                            이름 변경
+                                        </div>
+                                        <div className={style.Dlt} id={vote.voteId} onClick={(e) => {
+
+                                            deleteVote(vote.voteId);
+                                            setModalId(null);
+                                            e.stopPropagation();
+                                        }}>
+                                            <img alt="bin" src={bin} />
+                                            삭제
+                                        </div>
+                                    </div>
+                                </div>}
                         </div>
                     ))}
 
                 </div>
             </div>
+            {Newvote &&
+                <div>
+
+                </div>
+            }
         </div >
     );
 }
