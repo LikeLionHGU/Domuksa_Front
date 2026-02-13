@@ -60,7 +60,6 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAg
           },
         })
       .then((res) => {
-        console.log(res);
         const format = res.data.map(item => ({
           id: item.agenda.agendaId,
           name: item.agenda.name,
@@ -91,12 +90,13 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAg
   function handleBlock(e) {
     if (blockNumber === null) {
       //클릭한적 없을시!
-      setBlockNumber(e.currentTarget.id)
+      setBlockNumber(e.currentTarget.id);
+      setClickedAgendaId(e.currentTarget.id);
       document.getElementById(e.currentTarget.id).className = style.ChosenBlock;
-      return;
+    } else {
+      setBlockNumber(e.currentTarget.id);
+      document.getElementById(blockNumber).className = style.Block;//이전껀 어둡게
     }
-    setBlockNumber(e.currentTarget.id)
-    document.getElementById(blockNumber).className = style.Block;//이전껀 어둡게
     setClickedAgendaId(e.currentTarget.id);
     document.getElementById(e.currentTarget.id).className = style.ChosenBlock; //클릭한거 색입히기
   }
@@ -207,7 +207,6 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAg
                 id: item.agenda.agendaId,
                 name: item.agenda.name,
               }));
-
               setAgendas(format);
             })
             .catch((error) => {
@@ -378,7 +377,7 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAg
       }
       <hr />
 
-      <Timer/>
+      <Timer />
     </div >
   );
 }
