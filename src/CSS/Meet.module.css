@@ -294,6 +294,7 @@ body {
 
 
     .DMdiv {
+        z-index: 9999;
         background-color: #5043E7;
         border-radius: 45px;
         width: 50px;

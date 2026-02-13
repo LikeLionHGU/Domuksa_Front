@@ -21,7 +21,7 @@ function Meet() {
   const navigate = useNavigate();
 
   const [clickedAgendaId, setClickedAgendaId] = useState(null);
-  
+
   const [roomId, setRoomId] = useState(null);
   const [RoomName, setRoomName] = useState(null);
   const [password, setPassword] = useState(null);
@@ -46,7 +46,7 @@ function Meet() {
           },
         })
         .then((res) => {
-          console.log(res);
+          ;
           setCode(res.data.code);
           setState(res.data.state);
           setRoomId(res.data.roomId);
@@ -141,6 +141,7 @@ function Meet() {
                 setClickedAgendaId={setClickedAgendaId}
               />
               <Right
+
                 roomId={roomId}
                 clickedAgendaId={clickedAgendaId}
               />
