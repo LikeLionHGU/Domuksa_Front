@@ -51,6 +51,9 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAg
   }, [ModalId, inputRef]);
 
   useEffect(() => {
+    if (roomId === null) {
+      return;
+    }
     axios
       .get(
         `${process.env.REACT_APP_HOST_URL}/room/${roomId}/agenda`,
@@ -65,7 +68,9 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAg
           name: item.agenda.name,
         }));
         setAgendas(format);
-        format.length > 0 && setClickedAgendaId(format[0].id);
+        if (clickedAgendaId === null) {
+          format.length > 0 && setClickedAgendaId(format[0].id);
+        }
       })
       .catch((error) => {
         console.error("마이페이지 정보 가져오기 실패:", error);
@@ -309,7 +314,7 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAg
 
               >변경하기</button>
               <div className={style.Tip}>
-                <img src={tip} />
+                <img alt="tipicon" src={tip} />
                 삭제하기 버튼을 누르면 이 방의 모든 회의 기록과 <br />
                 데이터가 영구적으로 삭제되며 복구할 수 없습니다
               </div>
