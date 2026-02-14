@@ -26,31 +26,25 @@ function RightList({ roomId, clickedAgendaId }) {
   const [AIState, setAIState] = useState(false);
 
   useEffect(() => {
+    
     const token = localStorage.getItem("accessToken");
+
+    if(clickedAgendaId===null){
+      return;
+    }
     axios
       .get(
-        `${process.env.REACT_APP_HOST_URL}/room/${roomId}/agenda`,
+        `${process.env.REACT_APP_HOST_URL}/agenda/${clickedAgendaId}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
       .then((res) => {
-        if (clickedAgendaId === null) {
-          if (res.data[0].config === null) {
-            return;
-          }
-          if (res.data[0].config.voteEnabled) setVoteState(true);
-          if (res.data[0].config.commentEnabled) setChatState(true);
-          if (res.data[0].config.fileEnabled) setFileState(true);
-          if (res.data[0].config.aiSummaryEnabled) setAIState(true);
-        } else {
-          if (res.data.find(item => item.agenda.agendaId === parseInt(clickedAgendaId)).config.voteEnabled) setVoteState(true);
-          if (res.data.find(item => item.agenda.agendaId === parseInt(clickedAgendaId)).config.commentEnabled) setChatState(true);
-          if (res.data.find(item => item.agenda.agendaId === parseInt(clickedAgendaId)).config.fileEnabled) setFileState(true);
-          if (res.data.find(item => item.agenda.agendaId === parseInt(clickedAgendaId)).config.aiSummaryEnabled) setAIState(true);
-        }
-        console.log(res.data[0].config);
+          if (res.data.config.voteEnabled) setVoteState(true);
+          if (res.data.config.commentEnabled) setChatState(true);
+          if (res.data.config.fileEnabled) setFileState(true);
+          if (res.data.config.aiSummaryEnabled) setAIState(true);
       })
       .catch((error) => {
         console.error("마이페이지 정보 가져오기 실패:", error);
@@ -105,6 +99,7 @@ function RightList({ roomId, clickedAgendaId }) {
       </div>
     </>,
     File: <File
+    clickedAgendaId={clickedAgendaId}
       onChange={setMode}
     />,
     Comment: <Comment

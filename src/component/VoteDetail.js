@@ -18,8 +18,8 @@ function VoteDetail({ setDetail, DetailId, DetailName }) {
             .then((res) => {
                 console.log(res);
                 if (res.status === 200 || res.status === 201) {
-                    console.log(res.data);
-                    setOptions(res.data);
+                    console.log(res.data.voteOptions);
+                    setOptions(res.data.voteOptions);
                 }
             })
             .catch((error) => {
@@ -41,7 +41,7 @@ function VoteDetail({ setDetail, DetailId, DetailName }) {
 
                     {options.map((option) => {
                         return (
-                            <div id={option.voteOptionId} className={style.Vote}>
+                            <div id={option.voteOptionId} key={option.voteOptionId} className={style.Vote}>
                                 <div className={style.VoteText}>
                                     <h8>{option.contents}</h8>
                                 </div>
@@ -49,15 +49,10 @@ function VoteDetail({ setDetail, DetailId, DetailName }) {
                         );
                     })}
 
-                    <div id="1" className={style.Vote}>
-                        <div className={style.VoteText}>
-                            <h8>찬성</h8>
-                        </div>
-                    </div>
 
                     <div className={style.Buttons}>
                         <button className={style.Cancel}>취소하기</button>
-                        <button className={style.Create}>선택하기</button>
+                        <button className={style.Create} style={{visibility:"hidden"}}>선택하기</button>
                     </div>
                 </div>
             </div>

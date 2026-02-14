@@ -1,12 +1,16 @@
 //룸에 있는 안건에 있는 파일 불러오기+ 확대
-
+import {useEffect} from "react";
 import style from "../CSS/File.module.css";
 import { PDFViewer } from '@embedpdf/react-pdf-viewer';
 
 import fileIcon from "../asset/icon-filelist.png";
 
-function File({ onChange }) {
+function File({ onChange, clickedAgendaId }) {
 
+    useEffect(()=>{
+
+
+    },[])
     return (
         <div className={style.Maindiv}>
             <div className={style.Maintitle}>
@@ -22,7 +26,7 @@ function File({ onChange }) {
                     }}
                 />
                 <div className={style.Filelist}>
-                    <div className={style.Iconbox}><img className={style.ListIcon} src={fileIcon} /></div>
+                    <div className={style.Iconbox}><img alt="listicon" className={style.ListIcon} src={fileIcon} /></div>
                     <div className={style.Createbox}>+</div>
                     <div className={style.box}></div>
                     <div className={style.box}></div>
