@@ -22,7 +22,7 @@ function Header({
   useEffect(() => {
     if (state === "running") {
       setState("진행중");
-    } else if (state === "completed") {
+    } else {
       setState("완료");
     }
   }, [state]);
@@ -55,9 +55,8 @@ function Header({
   }, []);
 
   function handleButton() {
-    if (State === "진행중") {
-      setState("완료");
-      document.getElementById("state").className = style.StateFinish;
+    if (State === "running") {
+      setState("completed");
       axios
         .patch(`
           ${process.env.REACT_APP_HOST_URL}/room/${roomId}/state`,
@@ -72,8 +71,7 @@ function Header({
         });
       return;
     }
-    setState("진행중");
-    document.getElementById("state").className = style.StateIng;
+    setState("running");
     axios
       .patch(`
           ${process.env.REACT_APP_HOST_URL}/room/${roomId}/state`,
@@ -107,7 +105,7 @@ function Header({
       </div>
 
       <div className={style.Right}>
-        <div id="state" className={style.StateIng} onClick={() => isHost&&handleButton()}><strong>•</strong>&nbsp;{State}</div>
+        <div id="state" className={State==="running"?style.StateIng:style.StateFinish} onClick={() => isHost&&handleButton()}><strong>•</strong>&nbsp;{State==="running"?"진행중":"완료"}</div>
         <div id="RoomNumber" className={style.Number} onClick={() => handleRoomNumber()}>{code}<img alt="copy" src={copy} /></div>
         <img alt="profileicon" src={picture} onClick={() => setProfileOpen(true)} />
 
