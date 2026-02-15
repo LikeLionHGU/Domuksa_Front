@@ -1,22 +1,27 @@
 import GoogleLogin from "../component/loginPage";
-import { useNavigate } from "react-router-dom";
+import styles from "../CSS/Landing.module.css";
+import logoImg from "../asset/icon-logo.png"
 
 function Landing() {
-  const navigate = useNavigate();
-
   localStorage.removeItem("accessToken");
   localStorage.removeItem("memberId");
   localStorage.removeItem("userInfo");
   localStorage.removeItem("roomId");
 
-  function goHome() {
-    navigate("/home");
-  }
-
   return (
     <>
-      <div onClick={goHome}>홈으로 가기 임시 버튼</div>
-      <GoogleLogin />
+      <div className={styles.extradiv}>
+        <div className={styles.Maindiv}>
+          <div className={styles.menu}>
+            <img className={styles.logoImg} src={logoImg} />
+            <div className={styles.dms}>두먹사</div>
+            <div className={styles.emmm}>이음</div>
+            <div className={styles.service}>서비스</div>
+            <div className={styles.ask}>문의</div>
+            <GoogleLogin />
+          </div>
+        </div>
+      </div>
     </>
   );
 }

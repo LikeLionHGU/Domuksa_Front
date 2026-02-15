@@ -1,0 +1,58 @@
+.extradiv {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(to right bottom, #ffffff, #e3e7fb);
+}
+
+.Maindiv {
+  width: 1440px;
+  height: 872px;
+  background-color: none;
+}
+
+.menu {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr auto;
+  align-items: center;
+  background-color: #ffffff;
+
+  width: 1336px;
+  height: 60px;
+
+  border-radius: 30px;
+
+  .logoImg {
+    width: 129px;
+    height: 39px;
+
+    margin-left: 46px;
+  }
+
+  .loginButton {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 105px;
+    height: 40px;
+    border-radius: 30px;
+
+    background-color: #5043E7;
+
+    color: white;
+    font-size: 16px;
+
+    margin-right: 50px;
+
+    .googleLogo {
+      width: 13px;
+      height: 13px;
+      margin-right: 10px;
+    }
+  }
+}

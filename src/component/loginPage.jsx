@@ -1,6 +1,6 @@
 import React from "react";
-import styles from "../CSS/LoginButton.module.css"
-import logoImg from "../asset/googleLogo.png"
+import styles from "../CSS/Landing.module.css"
+import googleLogoImg from "../asset/googleLogo.png"
 
 const GoogleLogin = () => {
   const handleGoogleLogin = () => {
@@ -10,7 +10,7 @@ const GoogleLogin = () => {
   return (
     <div>
       <div className={styles.loginButton} alt="" onClick={handleGoogleLogin}>
-        <img className={styles.logo} src={logoImg}/>
+        <img className={styles.googleLogo} src={googleLogoImg}/>
       로그인
       </div>
       
