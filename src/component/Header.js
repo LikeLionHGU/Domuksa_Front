@@ -9,12 +9,12 @@ import logo from "../asset/icon-logo.png";
 import out from "../asset/icon-out.png";
 
 //사이트 메인 아이콘 + 구글 아이콘 + 방번호 + 완료/진행중 상태
-function Header({ code, state, roomId }) {
+function Header({
+  setLogoutmodal, setEmail, setName, setPicture,
+  isHost,code, state, roomId, name, email, picture
+}) {
 
   const navigate = useNavigate();
-  const [name, setName] = useState(null);
-  const [email, setEmail] = useState(null);
-  const [picture, setPicture] = useState(null);
   const [State, setState] = useState("");
   const [profileOpen, setProfileOpen] = useState(false);
   const ModalRef = useRef(null);
@@ -93,15 +93,7 @@ function Header({ code, state, roomId }) {
     alert("클립이 복사되었습니다!");
   }
 
-  function Logout() {
-    localStorage.removeItem("userInfo");
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("roomId");
-    setName(null);
-    setEmail(null);
-    setPicture(null);
-    navigate("/loading");
-  }
+
 
   function backtohome() {
     navigate("/home");
@@ -115,7 +107,7 @@ function Header({ code, state, roomId }) {
       </div>
 
       <div className={style.Right}>
-        <div id="state" className={style.StateIng} onClick={() => handleButton()}><strong>•</strong>&nbsp;{State}</div>
+        <div id="state" className={style.StateIng} onClick={() => isHost&&handleButton()}><strong>•</strong>&nbsp;{State}</div>
         <div id="RoomNumber" className={style.Number} onClick={() => handleRoomNumber()}>{code}<img alt="copy" src={copy} /></div>
         <img alt="profileicon" src={picture} onClick={() => setProfileOpen(true)} />
 
@@ -129,9 +121,15 @@ function Header({ code, state, roomId }) {
                 <span>{email}</span>
               </div>
             </div>
-            <h2 onClick={() => setProfileOpen(false)}>+</h2>
           </div>
-          <button onClick={() => Logout()}><img alt="out" src={out} />Logout</button>
+          <button
+            onClick={() => {
+              setLogoutmodal(true);
+              setProfileOpen(false);
+            }}>
+            <img alt="out"
+              src={out} 
+              />Logout</button>
         </div> : <></>}
       </div>
 

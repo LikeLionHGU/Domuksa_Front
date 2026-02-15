@@ -42,6 +42,7 @@
         width: 147.09px;
         height: 126.63px;
     }
+
     .imgVote {
         margin-top: 86.6px;
 
@@ -67,10 +68,30 @@
         font-size: 24px;
         margin: auto auto 40px 40px;
     }
+
     .imgAI {
         margin-top: 83px;
 
         width: 155.02px;
         height: 184px;
+    }
+}
+
+.SmallBlock {
+    width: 335px;
+    height: 363px;
+
+    background-color: #ffffff;
+    border-radius: 20px;
+    border: 1px solid #E4E4E4;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    h3 {
+        font-size: 24px;
+        margin: auto auto 40px 40px;
     }
 }

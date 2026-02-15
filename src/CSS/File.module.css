@@ -40,6 +40,28 @@
     justify-content: center;
     align-items: center;
 
+    .Iconbox {
+        position: absolute;
+        left: 88.8%;
+        top: 0;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        width: 33px;
+        height: 30px;
+
+        margin: 10px 0 0 66px;
+        border-radius: 10px;
+        background-color: #E4E4E4;
+
+        .ListIcon {
+            width: 21.43px;
+            height: 22px;
+        }
+    }
+
     .Filelist {
         position: absolute;
         left: 88.8%;
@@ -57,30 +79,9 @@
 
         gap: 10px;
 
-        .Iconbox {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-
-            width: 33px;
-            height: 30px;
-
-            margin: 10px 0 0 66px;
-            border-radius: 10px;
-
-            .ListIcon {
-                width: 21.43px;
-                height: 22px;
-            }
-        }
-
-        .Iconbox:hover {
-            background-color: #E4E4E4;
-        }
-
-
         .Createbox {
 
+            margin-top: 50px;
             width: 99px;
             height: 90px;
 
@@ -94,18 +95,28 @@
 
             border: 1px solid #F5F5F5;
         }
-        .Createbox:hover{
+
+        .Createbox:hover {
             border: 1px solid #555555;
         }
 
         .box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
             width: 99px;
             height: 90px;
             background-color: white;
-
             border: 1px solid #F5F5F5;
+
+            img {
+                width: 60px;
+                height: auto;
+            }
         }
-        .box:hover{
+
+        .box:hover {
             border: 1px solid #555555;
         }
     }
