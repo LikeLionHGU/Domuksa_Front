@@ -49,7 +49,6 @@ function Home() {
     } else if (isPassword === false) {
       if (roomId) localStorage.setItem("roomId", roomId);
       const check = localStorage.getItem("roomId");
-      console.log("check", check);
       if (check) navigate("/meet");
     }
   }
@@ -98,7 +97,6 @@ function Home() {
         userId: userId,
       })
       .then((res) => {
-        console.log("com", res);
         setCompleteRooms(res.data);
       })
       .catch((error) => {
@@ -126,8 +124,6 @@ function Home() {
 
     joinRoom();
   }, [isEnter]);
-
-  console.log(progressRooms);
 
   return (
     <div>
