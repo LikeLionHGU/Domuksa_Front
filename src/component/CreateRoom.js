@@ -80,23 +80,28 @@ function CreateRoom({
                 </div>
               </label>
 
-              <label>
-                방 비밀번호
-                <div className={style.Input}>
-                  <input
-                    id="password"
-                    type="password"
-                    minLength="4"
-                    maxLength="4"
-                    onChange={() => {
-                      setPassword(document.getElementById("password").value);
-                    }}
-                  />
-                  <img
-                    alt="visible"
-                    src={visible}
-                    onClick={() => handleVisible()}
-                  />
+                            <label>방 비밀번호
+                                <div className={style.Input}>
+                                    <input
+                                        id="password"
+                                        type="password"
+                                        minLength='4'
+                                        maxLength='4'
+                                        onChange={() => {
+                                            setPassword(document.getElementById("password").value);
+                                        }}
+                                    />
+                                    <img alt="visible" src={visible} onClick={() => handleVisible()} />
+                                </div>
+                            </label>
+                            <div className={style.Tip}>
+                                <img src={tip} />
+                                비밀번호를 변경하신 후에는 함께 회의 중인<br />
+                                팀원들에게 새 비밀번호를 꼭 공유해 주세요!
+                            </div>
+                            <button>생성하기</button>
+                        </form>
+                    </div>
                 </div>
               </label>
               <div className={style.Tip}>
