@@ -40,7 +40,6 @@ function Home() {
   function activeEnter(e) {
     if (e.key === "Enter") {
       setCode(value);
-      console.log(code);
       setIsEnter(!isEnter);
     }
   }
@@ -51,8 +50,21 @@ function Home() {
       setIsPassword(!isPassword);
     } else if (isPassword === false) {
       if (roomId) localStorage.setItem("roomId", roomId);
-      const check = localStorage.getItem("roomId");
-      if (check) navigate("/meet");
+
+      // axios
+      // .post(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/member`, {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // })
+      // .then((res) => {
+      //   console.log("join", res);
+      // })
+      // .catch((error) => {
+      //   console.error("진행중인 룸 상태 정보 가져오기 실패:", error);
+      // });
+      // const check = localStorage.getItem("roomId");
+      // // if (check) navigate("/meet");
     }
   }
 
@@ -118,11 +130,13 @@ function Home() {
         })
         .then((res) => {
           setRoomId(res.data.roomId);
-          setIsPassword(res.data.password);
+          // setIsPassword(res.data.password);
         })
         .catch((error) => {
           console.error("룸 입장 코드 가져오기 실패:", error);
         });
+
+      setCode("");
     }
 
     joinRoom();

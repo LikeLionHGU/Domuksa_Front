@@ -139,7 +139,6 @@ function Joinpw({ onChange, code, token, roomId }) {
   }
 
   console.log(password);
-  console.log("a", roomId);
 
   return (
     <div>
