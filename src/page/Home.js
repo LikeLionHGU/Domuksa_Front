@@ -6,6 +6,7 @@ import Profile from "../component/Profile";
 import Progress from "../component/Progress";
 import Archived from "../component/Archived";
 import Joinpw from "../component/Joinpw";
+import LogoutModal from "../component/LogoutModal";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -13,6 +14,8 @@ function Home() {
   const navigate = useNavigate();
 
   const [reset, setReset] = useState(false);
+
+  const [Logoutmodal, setLogoutmodal] = useState(false);
 
   const [profileOpen, setProfileOpen] = useState(false);
   const [pwOpen, setPwOpen] = useState(false);
@@ -137,6 +140,15 @@ function Home() {
               roomId={roomId}
             />
           ) : null}
+
+          {Logoutmodal === true ? (
+            <LogoutModal
+              setLogoutmodal={setLogoutmodal}
+              setName={setName}
+              setEmail={setEmail}
+              setPicture={setPicture}
+            />
+          ) : null}
           <div className={styles.header}>
             <img
               className={styles.logo}
@@ -154,6 +166,7 @@ function Home() {
               {profileOpen === true ? (
                 <Profile
                   onChange={setProfileOpen}
+                  Logoutmodal={setLogoutmodal}
                   user={{ name: name, email: email, picture: picture }}
                 />
               ) : null}

@@ -19,8 +19,6 @@ function Archived({ onChange, completeRoomList }) {
     navigate("/meet");
   }
 
-  console.log("a", completeRoomList);
-
   return (
     <div>
       <div className={styles.extradiv}>
