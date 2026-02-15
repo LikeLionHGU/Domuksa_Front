@@ -7,6 +7,7 @@ import File from "../component/File";
 import Comment from "../component/Comment";
 import Vote from "../component/Vote";
 import AI from "../component/AiSummary";
+import Users from "../component/UserState";
 
 import iconFile from "../asset/Mainicon-file.png";
 import iconChat from "../asset/Mainicon-comment.png";
@@ -17,7 +18,7 @@ import iconChatColor from "../asset/Mainicon-color-comment.png";
 import iconVoteColor from "../asset/Mainicon-color-vote.png";
 import iconAIColor from "../asset/Mainicon-color-Ai.png";
 
-function RightList({ roomId, clickedAgendaId }) {
+function RightList({ isHost, roomId, clickedAgendaId }) {
   const [mode, setMode] = useState("basic");
   const [hover, setHover] = useState("");
   const [FileState, setFileState] = useState(false);
@@ -26,10 +27,10 @@ function RightList({ roomId, clickedAgendaId }) {
   const [AIState, setAIState] = useState(false);
 
   useEffect(() => {
-    
+
     const token = localStorage.getItem("accessToken");
 
-    if(clickedAgendaId===null){
+    if (clickedAgendaId === null) {
       return;
     }
     axios
@@ -41,10 +42,10 @@ function RightList({ roomId, clickedAgendaId }) {
           },
         })
       .then((res) => {
-          if (res.data.config.voteEnabled) setVoteState(true);
-          if (res.data.config.commentEnabled) setChatState(true);
-          if (res.data.config.fileEnabled) setFileState(true);
-          if (res.data.config.aiSummaryEnabled) setAIState(true);
+        if (res.data.config.voteEnabled) setVoteState(true);
+        if (res.data.config.commentEnabled) setChatState(true);
+        if (res.data.config.fileEnabled) setFileState(true);
+        if (res.data.config.aiSummaryEnabled) setAIState(true);
       })
       .catch((error) => {
         console.error("마이페이지 정보 가져오기 실패:", error);
@@ -62,7 +63,7 @@ function RightList({ roomId, clickedAgendaId }) {
             onMouseEnter={() => setHover("File")}
             onMouseLeave={() => setHover("")}
           >
-            <img alt="Mainicon-file" className={style.imgFile} src={FileState || hover ==="File"? iconFileColor : iconFile} />
+            <img alt="Mainicon-file" className={style.imgFile} src={FileState || hover === "File" ? iconFileColor : iconFile} />
             <h3>파일</h3>
           </div>
           <div
@@ -71,7 +72,7 @@ function RightList({ roomId, clickedAgendaId }) {
             onClick={() => setMode("Comment")}
             onMouseEnter={() => setHover("Comment")}
             onMouseLeave={() => setHover("")}>
-            <img alt="Mainicon-comment" className={style.imgComment} src={ChatState || hover==="Comment" ? iconChatColor : iconChat} />
+            <img alt="Mainicon-comment" className={style.imgComment} src={ChatState || hover === "Comment" ? iconChatColor : iconChat} />
             <h3>코멘트</h3>
           </div>
           <div
@@ -80,7 +81,7 @@ function RightList({ roomId, clickedAgendaId }) {
             onClick={() => setMode("Vote")}
             onMouseEnter={() => setHover("Vote")}
             onMouseLeave={() => setHover("")}>
-            <img alt="Mainicon-vote" className={style.imgVote} src={VoteState || hover==="Vote" ? iconVoteColor : iconVote} />
+            <img alt="Mainicon-vote" className={style.imgVote} src={VoteState || hover === "Vote" ? iconVoteColor : iconVote} />
             <h3>투표</h3>
           </div>
         </div>
@@ -92,20 +93,28 @@ function RightList({ roomId, clickedAgendaId }) {
             onClick={() => setMode("AI")}
             onMouseEnter={() => setHover("AI")}
             onMouseLeave={() => setHover("")}>
-            <img alt="Mainicon-ai" className={style.imgAI} src={AIState || hover ==="AI"? iconAIColor : iconAI} />
+            <img alt="Mainicon-ai" className={style.imgAI} src={AIState || hover === "AI" ? iconAIColor : iconAI} />
             <h3>AI 요약</h3>
+          </div>
+          <div
+            className={style.SmallBlock}
+            id="users"
+          >
+            <Users/>
           </div>
         </div>
       </div>
     </>,
     File: <File
-    clickedAgendaId={clickedAgendaId}
+      isHost={isHost}
+      clickedAgendaId={clickedAgendaId}
       onChange={setMode}
     />,
     Comment: <Comment
       onChange={setMode}
     />,
     Vote: <Vote
+      isHost={isHost}
       clickedAgendaId={clickedAgendaId}
       roomId={roomId}
       onChange={setMode}

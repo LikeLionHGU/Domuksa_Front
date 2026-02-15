@@ -11,12 +11,12 @@ import bin from "../asset/icon-trashbin.png";
 import visible from "../asset/icon-visible.png";
 import add from "../asset/icon-add.png";
 
-function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAgendaId }) {
+function LeftList({ isHost,roomId, roomName, deleteModal, setClickedAgendaId, clickedAgendaId }) {
 
   const token = localStorage.getItem("accessToken");
 
   //[안건]
-  const [blockNumber, setBlockNumber] = useState(null);
+  const [blockId, setBlockId] = useState(null);
   const [agendas, setAgendas] = useState([]);
 
   //[현재 안건]
@@ -79,10 +79,11 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAg
   }, [roomId]);
 
   useEffect(() => {
-    if (clickedAgendaId !== null) { //아직 첫 안건 번호가 없다면, 실행하지 않는다, 첫안건 번호 세팅후 실행
-      setBlockNumber(clickedAgendaId)
-      document.getElementById(clickedAgendaId).className = style.ChosenBlock; //첫 안건 자동 선택
+    //아직 첫 안건 번호가 없다면, 실행하지 않는다, 첫안건 번호 세팅후 실행
+    if (clickedAgendaId === null) {
+      return;
     }
+    setBlockId(clickedAgendaId)
   }, [clickedAgendaId]);
 
   function handleSetting() {
@@ -93,17 +94,8 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAg
     }
   }
   function handleBlock(e) {
-    if (blockNumber === null) {
-      //클릭한적 없을시!
-      setBlockNumber(e.currentTarget.id);
-      setClickedAgendaId(e.currentTarget.id);
-      document.getElementById(e.currentTarget.id).className = style.ChosenBlock;
-    } else {
-      setBlockNumber(e.currentTarget.id);
-      document.getElementById(blockNumber).className = style.Block;//이전껀 어둡게
-    }
-    setClickedAgendaId(e.currentTarget.id);
-    document.getElementById(e.currentTarget.id).className = style.ChosenBlock; //클릭한거 색입히기
+    setBlockId(parseInt(e.currentTarget.id));
+    setClickedAgendaId(parseInt(e.currentTarget.id));
   }
 
   function handleOption(e, id) {
@@ -155,7 +147,6 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAg
         sequence: 1
       })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           axios
             .get(
@@ -166,12 +157,10 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAg
                 },
               })
             .then((res) => {
-              console.log(res);
               const format = res.data.map(item => ({
                 id: item.agenda.agendaId,
                 name: item.agenda.name,
               }));
-
               setAgendas(format);
             })
             .catch((error) => {
@@ -208,11 +197,12 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAg
               })
             .then((res) => {
               console.log(res);
-              const format = res.data.map(item => ({
+              const Agendaformat = res.data.map(item => ({
                 id: item.agenda.agendaId,
                 name: item.agenda.name,
               }));
-              setAgendas(format);
+              setBlockId(null);
+              setAgendas(Agendaformat);
             })
             .catch((error) => {
               console.error("마이페이지 정보 가져오기 실패:", error);
@@ -273,7 +263,7 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAg
         <div className={style.Left}>
           {roomName}
         </div>
-        <img alt="setting" src={setting} onClick={() => handleSetting()} />
+        {isHost&&<img alt="setting" src={setting} onClick={() => handleSetting()} />}
       </div>
 
       <hr />
@@ -338,17 +328,17 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAg
               <div
                 key={agenda.id}
                 id={agenda.id}
-                className={style.Block}
-                onClick={(event) => handleBlock(event)}
+                className={blockId===agenda.id && isHost?style.ChosenBlock:style.Block}
+                onClick={(e) => isHost&&handleBlock(e)}
               >
                 <div className={style.Text} onDoubleClick={() => setChanged(agenda.id)}>
-                  <span>•</span> {Changed === agenda.id ? <input id="newAgendaName" ref={inputRef} onKeyDown={(e) => EditAgenda(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.name}</h1>}
+                  <span>•</span> {Changed === agenda.id ? <input id="newAgendaName" ref={inputRef} onKeyDown={(e) => isHost&&EditAgenda(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.name}</h1>}
                 </div>
-                <h3 alt="option"
+                {isHost&&<h3 alt="option"
                   onClick={(e) => {
                     handleOption(e, agenda.id);
-                  }} >⋮</h3>
-                {ModalId === agenda.id &&
+                  }} >⋮</h3>}
+                {ModalId === agenda.id &&isHost&&
                   <div className={style.Modal} ref={ModalRef}>
                     <div className={style.Options}>
                       <div className={style.Edit} onClick={(e) => {
@@ -375,9 +365,9 @@ function LeftList({ roomId, roomName, deleteModal, setClickedAgendaId, clickedAg
               </div>))}
 
           </div>
-          <div className={style.Add} onClick={() => addAgenda()}>
+          {isHost&&<div className={style.Add} onClick={() => addAgenda()}>
             <img alt="add" src={add} />&nbsp;안건을 추가해주세요
-          </div>
+          </div>}
         </div>
       }
       <hr />

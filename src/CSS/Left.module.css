@@ -285,6 +285,7 @@ hr {
             font-weight: bold;
             border: 1px solid #5043E7;
 
+            color:5043E7;
             h3 {
                 text-align: center;
                 margin-left: auto;
@@ -302,6 +303,7 @@ hr {
                 margin-left: 10px;
                 display: flex;
                 align-items: center;
+                color:#5043E7;
 
                 span {
                     font-size: 30px;
@@ -309,7 +311,6 @@ hr {
 
                 h1 {
                     font-size: 16px;
-                    color: #5a5a5a;
                     font-weight: bold;
                 }
 

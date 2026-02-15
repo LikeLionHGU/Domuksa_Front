@@ -11,7 +11,7 @@ import edit from "../asset/icon-edit.png";
 import bin from "../asset/icon-trashbin.png";
 import addBtn from "../asset/icon-addBtn.png";
 
-function Vote({ roomId, onChange, clickedAgendaId }) {
+function Vote({ isHost, onChange, clickedAgendaId }) {
 
     //[투표리스트]
     const [votes, setVotes] = useState([]);
@@ -81,7 +81,6 @@ function Vote({ roomId, onChange, clickedAgendaId }) {
                 title: "찬반투표",
             })
             .then((res) => {
-                console.log(res);
                 if (res.status === 200 || res.status === 201) {
 
                     setVoteobj(res.data);
@@ -93,7 +92,6 @@ function Vote({ roomId, onChange, clickedAgendaId }) {
                             },
                         })
                         .then((res) => {
-                            console.log(res);
                             if (res.status === 200 || res.status === 201) {
                                 setVotes(res.data);
                             }
@@ -197,12 +195,12 @@ function Vote({ roomId, onChange, clickedAgendaId }) {
             <div className={style.Subdiv}>
                 <div className={style.Subtitle}>
                     <h3>안건 1에 대한 투표</h3>
-                    <img
+                    {isHost && <img
                         src={addBtn}
                         onClick={() => {
                             setNewvote(true);
                             addVote();
-                        }} />
+                        }} />}
                 </div>
                 <div className={style.Votelist}>
                     {votes.map((vote) => (
@@ -211,10 +209,10 @@ function Vote({ roomId, onChange, clickedAgendaId }) {
                                 {Changed === vote.voteId ? <input id="newVoteName" ref={inputRef} onKeyDown={(e) => EditVote(e, vote.voteId)} placeholder={vote.title} /> : <h1>{vote.title}</h1>}
                                 <span>{vote.number}</span>
                             </div>
-                            <h3
+                            {isHost && <h3
                                 className={style.option}
                                 alt="option"
-                                onClick={(e) => handleOption(e, vote.voteId)}>⋮</h3>
+                                onClick={(e) => handleOption(e, vote.voteId)}>⋮</h3>}
                             {ModalId === vote.voteId &&
                                 <div key={vote.voteId} className={style.Modal} ref={ModalRef}>
                                     <div className={style.Options}>
@@ -244,7 +242,7 @@ function Vote({ roomId, onChange, clickedAgendaId }) {
                 </div>
             </div>
             {
-                Newvote === true &&
+                Newvote === true && isHost &&
                 <VoteNew
                     setNewvote={setNewvote}
                     Voteobj={Voteobj}
@@ -253,6 +251,7 @@ function Vote({ roomId, onChange, clickedAgendaId }) {
             {
                 Detail === true &&
                 <VoteDetail
+                    Newvote={Newvote}
                     DetailName={DetailName}
                     DetailId={DetailId}
                     setDetail={setDetail}

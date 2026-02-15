@@ -17,7 +17,6 @@ function NewVote({ setNewvote, Voteobj }) {
                 contents: "옵션",
             })
             .then((res) => {
-                console.log(res);
                 if (res.status === 200 || res.status === 201) {
                     setOptions([...options, res.data]);
                 }
@@ -27,6 +26,35 @@ function NewVote({ setNewvote, Voteobj }) {
             });
     }
 
+    function editOption(e) {
+        axios
+            .patch(`${process.env.REACT_APP_HOST_URL}/vote/${e.target.id}/option`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                content: e.target.value,
+            })
+            .then((res) => {
+                if (res.status === 200 || res.status === 201) {
+                    setOptions(prev =>
+                        prev.map(option =>
+                            option.voteOption.voteOptionId === parseInt(e.target.id)
+                                ? {
+                                    ...option,
+                                    voteOption: {
+                                        ...option.voteOption,
+                                        title: e.target.value,
+                                    },
+                                }
+                                : option
+                        )
+                    );
+                }
+            })
+            .catch((error) => {
+                console.error("마이페이지 정보 가져오기 실패:", error);
+            });
+    }
     function deleteOption(e) {
         axios
             .delete(`${process.env.REACT_APP_HOST_URL}/vote/${e.target.id}/option`, {
@@ -45,6 +73,10 @@ function NewVote({ setNewvote, Voteobj }) {
             });
     }
     function Create() {
+        if(options.length<2){
+            alert("투표를 생성하려면 옵션을 2개 이상 입력해주세요");
+            return;
+        }
         const newtitle = document.getElementById("newVoteName").value;
         axios
             .patch(`${process.env.REACT_APP_HOST_URL}/vote/${Voteobj.vote.voteId}`, {
@@ -54,7 +86,6 @@ function NewVote({ setNewvote, Voteobj }) {
                 title: newtitle,
             })
             .then((res) => {
-                console.log(res);
                 if (res.status === 200 || res.status === 201) {
                     setNewvote(false);
                 }
@@ -107,7 +138,7 @@ function NewVote({ setNewvote, Voteobj }) {
                         return (
                             <div id={option.voteOption.voteOptionId} key={option.voteOption.voteOptionId} className={style.Vote}>
                                 <div className={style.VoteText}>
-                                    <input id={option.voteOption.voteOptionId} placeholder="새로운 투표 안건을 입력하세요!" />
+                                    <input id={option.voteOption.voteOptionId} placeholder="새로운 투표 안건을 입력하세요!" onBlur={(e) => editOption(e)} />
                                 </div>
                                 <h1 id={option.voteOption.voteOptionId} onClick={(e) => deleteOption(e)}>+</h1>
                             </div>
@@ -117,7 +148,7 @@ function NewVote({ setNewvote, Voteobj }) {
                         <h1>+</h1><h4>옵션 추가</h4>
                     </div>
                     <div className={style.Buttons}>
-                        <button className={style.Cancel} onClick={()=>DeleteandOut()}>취소하기</button>
+                        <button className={style.Cancel} onClick={() => DeleteandOut()}>취소하기</button>
                         <button className={style.Create} onClick={() => Create()}>생성하기</button>
                     </div>
                 </div>
