@@ -80,7 +80,6 @@ function CreateRoom({
                                         type="password"
                                         minLength='4'
                                         maxLength='4'
-                                        required
                                         onChange={() => {
                                             setPassword(document.getElementById("password").value);
                                         }}

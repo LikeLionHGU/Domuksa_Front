@@ -53,7 +53,7 @@ function Meet() {
           setRoomName(res.data.roomName);
 
           if (res.data.role === "host") {
-            // setIshost(true);
+            setIshost(true);
           } else {
             setIshost(false);
           }
