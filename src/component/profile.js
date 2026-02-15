@@ -6,15 +6,12 @@ import logoutIcon from "../asset/icon-out.png";
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 
-function Profile({ onChange, user }) {
+function Profile({ onChange, user, Logoutmodal }) {
   const navigate = useNavigate();
   const popup = useRef();
 
   function onLogout() {
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("memberId");
-    localStorage.removeItem("userInfo");
-    navigate("/");
+    Logoutmodal(true);
   }
 
   useEffect(() => {

@@ -6,6 +6,7 @@ import Profile from "../component/Profile";
 import Progress from "../component/Progress";
 import Archived from "../component/Archived";
 import Joinpw from "../component/Joinpw";
+import LogoutModal from "../component/LogoutModal";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
@@ -13,6 +14,8 @@ function Home() {
   const navigate = useNavigate();
 
   const [reset, setReset] = useState(false);
+
+  const [Logoutmodal, setLogoutmodal] = useState(false);
 
   const [profileOpen, setProfileOpen] = useState(false);
   const [pwOpen, setPwOpen] = useState(false);
@@ -37,7 +40,6 @@ function Home() {
   function activeEnter(e) {
     if (e.key === "Enter") {
       setCode(value);
-      console.log(code);
       setIsEnter(!isEnter);
     }
   }
@@ -48,8 +50,21 @@ function Home() {
       setIsPassword(!isPassword);
     } else if (isPassword === false) {
       if (roomId) localStorage.setItem("roomId", roomId);
-      const check = localStorage.getItem("roomId");
-      if (check) navigate("/meet");
+
+      // axios
+      // .post(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/member`, {
+      //   headers: {
+      //     Authorization: `Bearer ${token}`,
+      //   },
+      // })
+      // .then((res) => {
+      //   console.log("join", res);
+      // })
+      // .catch((error) => {
+      //   console.error("진행중인 룸 상태 정보 가져오기 실패:", error);
+      // });
+      // const check = localStorage.getItem("roomId");
+      // // if (check) navigate("/meet");
     }
   }
 
@@ -115,11 +130,13 @@ function Home() {
         })
         .then((res) => {
           setRoomId(res.data.roomId);
-          setIsPassword(res.data.password);
+          // setIsPassword(res.data.password);
         })
         .catch((error) => {
           console.error("룸 입장 코드 가져오기 실패:", error);
         });
+
+      setCode("");
     }
 
     joinRoom();
@@ -135,6 +152,15 @@ function Home() {
               code={code}
               token={token}
               roomId={roomId}
+            />
+          ) : null}
+
+          {Logoutmodal === true ? (
+            <LogoutModal
+              setLogoutmodal={setLogoutmodal}
+              setName={setName}
+              setEmail={setEmail}
+              setPicture={setPicture}
             />
           ) : null}
           <div className={styles.header}>
@@ -154,6 +180,7 @@ function Home() {
               {profileOpen === true ? (
                 <Profile
                   onChange={setProfileOpen}
+                  Logoutmodal={setLogoutmodal}
                   user={{ name: name, email: email, picture: picture }}
                 />
               ) : null}
@@ -163,7 +190,7 @@ function Home() {
           {isArchiveOpen === true ? (
             <Archived
               onChange={setIsArchiveOpen}
-              progressRoomList={progressRooms}
+              completeRoomList={completeRooms}
             />
           ) : null}
 
