@@ -35,6 +35,7 @@ function Home() {
   const [code, setCode] = useState("");
 
   const [roomId, setRoomId] = useState("");
+  const [check, setCheck] = useState("");
   const [isPassword, setIsPassword] = useState(false);
 
   function activeEnter(e) {
@@ -49,7 +50,15 @@ function Home() {
       setPwOpen(true);
       setIsPassword(!isPassword);
     } else if (isPassword === false) {
-      if (roomId) localStorage.setItem("roomId", roomId);
+      if (roomId) {
+        localStorage.setItem("roomId", roomId);
+        setCheck(localStorage.getItem("roomId"));
+      }
+      if (check) {
+        setCheck("");
+
+        navigate("/meet");
+      }
 
       // axios
       // .post(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/member`, {
@@ -142,6 +151,8 @@ function Home() {
     joinRoom();
   }, [isEnter]);
 
+  console.log("check", check);
+
   return (
     <div>
       <div className={styles.extradiv}>
@@ -155,14 +166,6 @@ function Home() {
             />
           ) : null}
 
-          {Logoutmodal === true ? (
-            <LogoutModal
-              setLogoutmodal={setLogoutmodal}
-              setName={setName}
-              setEmail={setEmail}
-              setPicture={setPicture}
-            />
-          ) : null}
           <div className={styles.header}>
             <img
               className={styles.logo}
@@ -216,6 +219,14 @@ function Home() {
             />
           ) : null}
         </div>
+        {Logoutmodal === true ? (
+          <LogoutModal
+            setLogoutmodal={setLogoutmodal}
+            setName={setName}
+            setEmail={setEmail}
+            setPicture={setPicture}
+          />
+        ) : null}
       </div>
     </div>
   );
