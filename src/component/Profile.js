@@ -2,13 +2,17 @@
 
 import styles from "../CSS/Profile.module.css";
 
-import profileImg from "../asset/profile-test.png";
-import deleteIcon from "../asset/icon-delete.png";
-import logoutIcon from "../asset/icon-logout.png";
+import logoutIcon from "../asset/icon-out.png";
 import { useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
-function Profile({ onChange }) {
+function Profile({ onChange, user, Logoutmodal }) {
+  const navigate = useNavigate();
   const popup = useRef();
+
+  function onLogout() {
+    Logoutmodal(true);
+  }
 
   useEffect(() => {
     const clickOutside = (e) => {
@@ -27,19 +31,14 @@ function Profile({ onChange }) {
     <div className={styles.extradiv}>
       <div className={styles.maindiv}>
         <div className={styles.profilePopup} ref={popup}>
-          <img
-            className={styles.deleteIcon}
-            src={deleteIcon}
-            onClick={() => onChange(false)}
-          />
           <div className={styles.info}>
-            <img className={styles.modalImg} src={profileImg} />
+            <img className={styles.profileImg} src={user.picture} />
             <div className={styles.text}>
-              <div className={styles.name}>대표 김진성</div>
-              <div className={styles.email}>email@email.com</div>
+              <div className={styles.name}>{user.name}</div>
+              <div className={styles.email}>{user.email}</div>
             </div>
           </div>
-          <div className={styles.logout}>
+          <div className={styles.logout} onClick={onLogout}>
             <img className={styles.logoutIcon} src={logoutIcon} />
             로그아웃
           </div>
