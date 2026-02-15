@@ -11,10 +11,7 @@ import LogoutModal from "../component/LogoutModal.js";
 
 import style from "../CSS/Meet.module.css";
 
-
-
 function Meet() {
-
   const [clickedAgendaId, setClickedAgendaId] = useState(null);
 
   const [roomId, setRoomId] = useState(null);
@@ -38,7 +35,6 @@ function Meet() {
     const roomId = localStorage.getItem("roomId");
 
     if (roomId !== null) {
-
       axios
         .get(`${process.env.REACT_APP_HOST_URL}/room/${roomId}`, {
           headers: {
@@ -46,7 +42,6 @@ function Meet() {
           },
         })
         .then((res) => {
-          ;
           setCode(res.data.code);
           setState(res.data.state);
           setRoomId(res.data.roomId);
@@ -65,7 +60,6 @@ function Meet() {
     if (roomId === null) {
       setModalNew(true);
     }
-
   }, [roomId]);
 
   return (
@@ -77,7 +71,6 @@ function Meet() {
             setEmail={setEmail}
             setPicture={setPicture}
             setLogoutmodal={setLogoutmodal}
-
             isHost={isHost}
             code={Code}
             state={state}
@@ -91,12 +84,10 @@ function Meet() {
           <Left
             deleteModal={setDeleteModal}
             setClickedAgendaId={setClickedAgendaId}
-
             isHost={isHost}
             roomId={roomId}
             roomName={RoomName}
             clickedAgendaId={clickedAgendaId}
-
           />
           <Right
             isHost={isHost}
@@ -104,40 +95,31 @@ function Meet() {
             clickedAgendaId={clickedAgendaId}
           />
         </div>
-        <DM
-          isHost={isHost}
-          roomId={roomId}
-        />
+        <DM isHost={isHost} roomId={roomId} />
       </div>
 
-      {modalNew &&
+      {modalNew && (
         <CreateModal
           setCode={setCode}
           setRoomId={setRoomId}
           setRoomName={setRoomName}
           setPassword={setPassword}
           setModalNew={setModalNew}
-
           RoomName={RoomName}
           password={password}
-
         />
-      }
-      {deleteModal &&
-        <Deletemodal
-          setDeleteModal={setDeleteModal}
-
-          roomId={roomId}
-        />
-      }
-      {Logoutmodal &&
+      )}
+      {deleteModal && (
+        <Deletemodal setDeleteModal={setDeleteModal} roomId={roomId} />
+      )}
+      {Logoutmodal && (
         <LogoutModal
           setLogoutmodal={setLogoutmodal}
           setName={setName}
           setEmail={setEmail}
           setPicture={setPicture}
         />
-      }
+      )}
     </div>
   );
 }
