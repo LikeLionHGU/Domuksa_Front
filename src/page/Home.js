@@ -163,7 +163,7 @@ function Home() {
           {isArchiveOpen === true ? (
             <Archived
               onChange={setIsArchiveOpen}
-              progressRoomList={progressRooms}
+              completeRoomList={completeRooms}
             />
           ) : null}
 

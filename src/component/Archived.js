@@ -4,7 +4,7 @@ import roomImg from "../asset/icon-meetingroom.png";
 import roomHostImg from "../asset/icon-meetinghost.png";
 import { useNavigate } from "react-router-dom";
 
-function Archived({ onChange, progressRoomList }) {
+function Archived({ onChange, completeRoomList }) {
   const navigate = useNavigate();
 
   // 나중에 검색창 만들때 써야됨
@@ -19,38 +19,42 @@ function Archived({ onChange, progressRoomList }) {
     navigate("/meet");
   }
 
-  console.log("a", progressRoomList);
+  console.log("a", completeRoomList);
 
   return (
     <div>
       <div className={styles.extradiv}>
         <div className={styles.Maindiv}>
           <div className={styles.archiveHeader}>
-        <img className={styles.backIcon} src={backIcon} onClick={(e) => onChange(false)} />
-        <input placeholder="🔍︎ 검색"></input>
-      </div>
-
-      <div className={styles.rooms}>
-        {progressRoomList.map((progressRoomList) => (
-          <div
-            id={progressRoomList.roomId}
-            key={progressRoomList.roomId}
-            className={styles.room}
-            onClick={(e) => getRoomId(e)}
-          >
-            {progressRoomList.role === "host" ? (
-              <img className={styles.roomHostImg} src={roomHostImg} />
-            ) : (
-              <img className={styles.roomImg} src={roomImg} />
-            )}
-            <div className={styles.roomName}>{progressRoomList.roomName}</div>
+            <img
+              className={styles.backIcon}
+              src={backIcon}
+              onClick={(e) => onChange(false)}
+            />
+            <input placeholder="🔍︎ 검색"></input>
           </div>
-        ))}
-      </div>
+
+          <div className={styles.rooms}>
+            {completeRoomList.map((completeRoomList) => (
+              <div
+                id={completeRoomList.roomId}
+                key={completeRoomList.roomId}
+                className={styles.room}
+                onClick={(e) => getRoomId(e)}
+              >
+                {completeRoomList.role === "host" ? (
+                  <img className={styles.roomHostImg} src={roomHostImg} />
+                ) : (
+                  <img className={styles.roomImg} src={roomImg} />
+                )}
+                <div className={styles.roomName}>
+                  {completeRoomList.roomName}
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
-        
-      
     </div>
   );
 }
