@@ -24,6 +24,7 @@ function Home() {
   const [userId, setUserId] = useState("");
 
   const [progressRooms, setProgressRooms] = useState([]);
+  const [completeRooms, setCompleteRooms] = useState([]);
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
   const [isEnter, setIsEnter] = useState(false);
 
@@ -46,8 +47,7 @@ function Home() {
       setPwOpen(true);
       setIsPassword(!isPassword);
     } else if (isPassword === false) {
-      
-      localStorage.setItem("roomId", roomId);
+      if (roomId) localStorage.setItem("roomId", roomId);
       const check = localStorage.getItem("roomId");
       console.log("check", check);
       if (check) navigate("/meet");
@@ -87,7 +87,22 @@ function Home() {
         setProgressRooms(res.data);
       })
       .catch((error) => {
-        console.error("룸 상태 정보 가져오기 실패:", error);
+        console.error("진행중인 룸 상태 정보 가져오기 실패:", error);
+      });
+
+    axios
+      .get(`${process.env.REACT_APP_HOST_URL}/user/me/complete`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        userId: userId,
+      })
+      .then((res) => {
+        console.log("com", res);
+        setCompleteRooms(res.data);
+      })
+      .catch((error) => {
+        console.error("완료된 룸 상태 정보 가져오기 실패:", error);
       });
   }, [reset]);
 
