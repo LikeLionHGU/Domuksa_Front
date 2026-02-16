@@ -49,7 +49,11 @@ function Progress({ progressRoomList, onChange }) {
             ) : (
               <img className={styles.roomImg} src={roomImg} />
             )}
-            <div className={styles.roomName}>{progressRoomList.roomName}</div>
+            <div className={styles.roomName}>
+              {progressRoomList.roomName.length > 9
+                ? `${progressRoomList.roomName.slice(0, 9)}...`
+                : progressRoomList.roomName}
+            </div>
           </div>
         ))}
       </div>
