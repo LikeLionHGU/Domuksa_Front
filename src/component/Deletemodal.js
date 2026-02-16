@@ -28,10 +28,10 @@ function Deletemodal({ token,setDeleteModal,roomId }) {
     return (
         <div className={style.DeleteModal}>
             <div className={style.Modal}>
-                <img src={Logo} />
+                <img alt="logo" src={Logo} />
                 <h2>회의를 삭제하시겠습니까</h2>
                 <div className={style.Tip}>
-                    <img src={tipRed} />
+                    <img alt="icon-tip"src={tipRed} />
                     삭제하기 버튼을 누르면 이 방의 모든 회의 기록과 <br />
                     데이터가 영구적으로 삭제되며 복구할 수 없습니다
                 </div>

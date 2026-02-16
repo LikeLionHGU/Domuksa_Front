@@ -11,7 +11,9 @@ import bin from "../asset/icon-trashbin.png";
 import visible from "../asset/icon-visible.png";
 import add from "../asset/icon-add.png";
 
-function LeftList({ token,isHost, roomId, roomName, deleteModal, setClickedAgendaId, clickedAgendaId }) {
+function LeftList({ token, isHost, roomId, roomName, deleteModal,
+  setClickedAgendaId, clickedAgendaId, setRoomName
+}) {
 
   //[안건]
   const [blockId, setBlockId] = useState(null);
@@ -61,12 +63,12 @@ function LeftList({ token,isHost, roomId, roomName, deleteModal, setClickedAgend
           },
         })
       .then((res) => {
-        console.log(res);
         const format = res.data.map(item => ({
           id: item.agenda.agendaId,
           name: item.agenda.name,
         }));
         setAgendas(format);
+        setClickedAgendaId(res.data[0].agenda.agendaId);
       })
       .catch((error) => {
         console.error("마이페이지 정보 가져오기 실패:", error);
@@ -80,7 +82,6 @@ function LeftList({ token,isHost, roomId, roomName, deleteModal, setClickedAgend
       return;
     }
     setBlockId(clickedAgendaId)
-    console.log(blockId);
   }, [clickedAgendaId]);
 
   function handleSetting() {
@@ -123,6 +124,7 @@ function LeftList({ token,isHost, roomId, roomName, deleteModal, setClickedAgend
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
+          setRoomName(newRoomName);
           setSetting(false);
         }
       })
@@ -155,9 +157,14 @@ function LeftList({ token,isHost, roomId, roomName, deleteModal, setClickedAgend
               })
             .then((res) => {
               const format = res.data.map(item => ({
-                id: item.agenda.sequence,
+                id: item.agenda.agendaId,
                 name: item.agenda.name,
               }));
+              if(agendas===null){
+                setAgendas(format);
+                console.log(agendas);
+                setClickedAgendaId(agendas.id);
+              }
               setAgendas(format);
             })
             .catch((error) => {
@@ -195,7 +202,7 @@ function LeftList({ token,isHost, roomId, roomName, deleteModal, setClickedAgend
             .then((res) => {
               console.log(res);
               const Agendaformat = res.data.map(item => ({
-                id: item.agenda.sequence,
+                id: item.agenda.agendaId,
                 name: item.agenda.name,
               }));
               setBlockId(null);
@@ -235,7 +242,7 @@ function LeftList({ token,isHost, roomId, roomName, deleteModal, setClickedAgend
               .then((res) => {
                 console.log(res);
                 const format = res.data.map(item => ({
-                  id: item.agenda.sequence,
+                  id: item.agenda.agendaId,
                   name: item.agenda.name,
                 }));
 

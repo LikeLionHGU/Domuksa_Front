@@ -11,7 +11,7 @@ import edit from "../asset/icon-edit.png";
 import bin from "../asset/icon-trashbin.png";
 import addBtn from "../asset/icon-addBtn.png";
 
-function Vote({ token,isHost, onChange, clickedAgendaId }) {
+function Vote({ token, isHost, onChange, clickedAgendaId }) {
 
     //[투표리스트]
     const [votes, setVotes] = useState([]);
@@ -63,13 +63,27 @@ function Vote({ token,isHost, onChange, clickedAgendaId }) {
             })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
-                    console.log(res.data);
                     setVotes(res.data);
                 }
             })
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
+
+        // axios
+        //     .get(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}/voteStatus`, {
+        //         headers: {
+        //             Authorization: `Bearer ${token}`,
+        //         },
+        //     })
+        //     .then((res) => {
+        //         if (res.status === 200 || res.status === 201) {
+        //             setVotes(res.data);
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         console.error("마이페이지 정보 가져오기 실패:", error);
+        //     });
     }, [Newvote]);
     function addVote() {
         axios
@@ -110,7 +124,6 @@ function Vote({ token,isHost, onChange, clickedAgendaId }) {
         e.stopPropagation();
     }
     function deleteVote(voteId) {
-        const token = localStorage.getItem("accessToken");
         axios
             .delete(
                 `${process.env.REACT_APP_HOST_URL}/vote/${voteId}`,
@@ -145,7 +158,6 @@ function Vote({ token,isHost, onChange, clickedAgendaId }) {
     }
 
     function EditVote(e, id) {
-        const token = localStorage.getItem("accessToken");
         if (e.key === "Enter") {
             console.log(e.target.value);
             axios
@@ -253,6 +265,7 @@ function Vote({ token,isHost, onChange, clickedAgendaId }) {
             {
                 Detail === true &&
                 <VoteDetail
+                    token={token}
                     Newvote={Newvote}
                     DetailName={DetailName}
                     DetailId={DetailId}

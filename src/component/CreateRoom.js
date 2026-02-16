@@ -53,7 +53,7 @@ function CreateRoom({
         <div className={style.ModalNew}>
             <div className={style.Modal}>
                 <div className={style.Left}>
-                    <img src={CreateNewimg} />
+                    <img alt="boardImg" src={CreateNewimg} />
                 </div>
                 <div className={style.Right}>
                     <h2 onClick={() => backtohome()}>+</h2>
@@ -91,7 +91,7 @@ function CreateRoom({
                                 </div>
                             </label>
                             <div className={style.Tip}>
-                                <img src={tip} />
+                                <img alt="icon-tip" src={tip} />
                                 비밀번호를 변경하신 후에는 함께 회의 중인<br />
                                 팀원들에게 새 비밀번호를 꼭 공유해 주세요!
                             </div>

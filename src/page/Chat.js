@@ -6,7 +6,7 @@ import EmojiPicker from 'emoji-picker-react';
 
 const BASE_URL = "http://172.17.205.157:8080"; // 백엔드 주소
 const WS_ENDPOINT = `${BASE_URL}/ws`;          // WebSocket 연결 엔드포인트
-const TOPIC = "/topic/chat";                   // 서버가 뿌리는 토픽
+const TOPIC = "/topic/chat";                   // 서버  토픽
 
 export default function Chat() {
   const [messages, setMessages] = useState([]);

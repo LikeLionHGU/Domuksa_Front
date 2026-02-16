@@ -4,12 +4,13 @@ import style from "../CSS/Vote_detail_modal.module.css";
 
 import winner from "../asset/icon-result.png";
 
-function VoteDetail({ token,setDetail, DetailId, DetailName, Newvote }) {
+function VoteDetail({ token, setDetail, DetailId, DetailName, Newvote }) {
 
     const [options, setOptions] = useState([]);
     const [ChosenOption, setChosenOption] = useState(null);
     const [result, setResult] = useState(false);
-    const [ResultOption,setResultOption]=useState(6);
+    const [ResultOption, setResultOption] = useState(6);
+    const [Edit, setEdit] = useState(false);
 
     useEffect(() => {
         axios
@@ -28,7 +29,7 @@ function VoteDetail({ token,setDetail, DetailId, DetailName, Newvote }) {
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
-    }, [Newvote,DetailId])
+    }, [Newvote, DetailId])
 
     useEffect(() => {
         axios
@@ -53,17 +54,38 @@ function VoteDetail({ token,setDetail, DetailId, DetailName, Newvote }) {
         setChosenOption(parseInt(id));
     }
     function SubmitChoise() {
+        console.log(ChosenOption);
+        console.log(DetailId);
         axios
             .post(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/voteSelect`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
                 voteOptionId: ChosenOption,
-            })
+            },)
             .then((res) => {
                 console.log(res);
                 if (res.status === 200 || res.status === 201) {
-                    setResult(true);
+                    // setResult(true);
+                    setEdit(true);
+                }
+            })
+            .catch((error) => {
+                console.error("마이페이지 정보 가져오기 실패:", error);
+            });
+    }
+    function EditChoise() {
+        axios
+            .patch(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/voteSelect`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                voteOptionId: ChosenOption,
+            },)
+            .then((res) => {
+                console.log(res);
+                if (res.status === 200 || res.status === 201) {
+                    setEdit(true);
                 }
             })
             .catch((error) => {
@@ -121,7 +143,7 @@ function VoteDetail({ token,setDetail, DetailId, DetailName, Newvote }) {
 
                         <div className={style.Buttons}>
                             <button className={style.Cancel} onClick={() => setDetail(false)}>취소하기</button>
-                            <button className={style.Create} style={ChosenOption === null ? { visibility: "hidden" } : {}} onClick={() => SubmitChoise()}>선택하기</button>
+                            <button className={style.Create} style={ChosenOption === null ? { visibility: "hidden" } : {}} onClick={() => Edit === true ? EditChoise() : SubmitChoise()}>{Edit===true?"수정하기":"선택하기"}</button>
                         </div>
                     </div>
                 </div>

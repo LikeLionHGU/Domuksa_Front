@@ -22,6 +22,7 @@ function Timer() {
             Time.current = setInterval(() => {
                 setTotal(pre => {
                     if (pre === 1||pre===0) {
+                        setStateimg(true);
                         clearInterval(Time.current);
                         return 0;
                     }
