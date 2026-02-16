@@ -47,13 +47,10 @@ function Meet() {
           },
         })
         .then((res) => {
-          console.log(res);
           setCode(res.data.code);
           setState(res.data.state);
           setRoomId(res.data.roomId);
           setRoomName(res.data.roomName);
-          console.log(res.data.currentAgendaSequence);
-          setClickedAgendaId(res.data.currentAgendaSequence);
 
           if (res.data.role === "host") {
             setIshost(true);
@@ -91,6 +88,7 @@ function Meet() {
         </div>
         <div className={style.Component}>
           <Left
+          setRoomName={setRoomName}
             deleteModal={setDeleteModal}
             setClickedAgendaId={setClickedAgendaId}
             token={token}

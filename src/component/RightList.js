@@ -28,7 +28,7 @@ function RightList({ token, isHost, roomId, clickedAgendaId }) {
 
   useEffect(() => {
 
-    if (clickedAgendaId === null) {
+    if (clickedAgendaId === null||token===null) {
       return;
     }
     axios
@@ -46,7 +46,9 @@ function RightList({ token, isHost, roomId, clickedAgendaId }) {
         if (res.data.config.aiSummaryEnabled) setAIState(true);
       })
       .catch((error) => {
-        console.error("마이페이지 정보 가져오기 실패:", error);
+        if (error.status === 500) {
+          console.error("500에러:", error);
+        }
       });
   }, [clickedAgendaId]);
 
