@@ -34,7 +34,6 @@ function Home() {
   const [code, setCode] = useState("");
 
   const [roomId, setRoomId] = useState("");
-  const [role, setRole] = useState("");
   const [isPassword, setIsPassword] = useState(false);
 
   function activeEnter(e) {
@@ -52,7 +51,10 @@ function Home() {
           },
         })
         .then((res) => {
-          console.log("join", res);
+          localStorage.setItem("role", res.data.role);
+          localStorage.setItem("roomId", res.data.roomId);
+
+          if (localStorage.getItem("role") === "member") navigate("/meet");
         })
         .catch((error) => {
           console.error("참여할 룸 상태 정보 가져오기 실패:", error);
@@ -70,6 +72,7 @@ function Home() {
 
   useEffect(() => {
     localStorage.removeItem("roomId");
+    // localStorage.removeItem("role");
     setToken(localStorage.getItem("accessToken"));
     const user = JSON.parse(localStorage.getItem("userInfo"));
     setUserId(user.id);
