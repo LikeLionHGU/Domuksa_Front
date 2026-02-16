@@ -9,8 +9,7 @@ import send from "../asset/icon-send.png";
 import emoji from "../asset/icon-emoji.png";
 import DM from "../asset/icon-DM.png";
 
-function Dm({ roomId, isHost }) {
-    const token = localStorage.getItem("accessToken");
+function Dm({ token,roomId, isHost }) {
 
     const [EmojiModal, setEmojiModal] = useState(false);
 
@@ -19,39 +18,39 @@ function Dm({ roomId, isHost }) {
     const [message, setMessage] = useState([]);
     const ModalRef=useRef(null);
     //외부클릭시 닫히게 지정해주기Ref!!
-    useEffect(() => {
+    // useEffect(() => {
 
-        function HandClickoutsideofModal(e) {
-            if (ModalRef.current && !ModalRef.current.contains(e.target)) {
-                setEmojiModal(false);
-            }
-        }
+    //     function HandClickoutsideofModal(e) {
+    //         if (ModalRef.current && !ModalRef.current.contains(e.target)) {
+    //             setEmojiModal(false);
+    //         }
+    //     }
 
-        document.addEventListener("mousedown", HandClickoutsideofModal);
+    //     document.addEventListener("mousedown", HandClickoutsideofModal);
 
-        return () => document.removeEventListener("mousedown", HandClickoutsideofModal);
-    }, [ModalRef]);
+    //     return () => document.removeEventListener("mousedown", HandClickoutsideofModal);
+    // }, [ModalRef]);
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if (isHost) {
-            axios
-                .get(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/dm`, {
-                    headers: {
-                        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-                    },
-                })
-                .then((res) => {
-                    if (res.status === 200 || res.status === 201) {
-                        setMessage(res.data);
-                    }
-                })
-                .catch((error) => {
-                    console.error("마이페이지 정보 가져오기 실패:", error);
-                });
-        }
+    //     if (isHost) {
+    //         axios
+    //             .get(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/dm`, {
+    //                 headers: {
+    //                     Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    //                 },
+    //             })
+    //             .then((res) => {
+    //                 if (res.status === 200 || res.status === 201) {
+    //                     setMessage(res.data);
+    //                 }
+    //             })
+    //             .catch((error) => {
+    //                 console.error("마이페이지 정보 가져오기 실패:", error);
+    //             });
+    //     }
 
-    }, []);
+    // }, []);
 
     function sendMessage() {
 

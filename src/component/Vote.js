@@ -11,7 +11,7 @@ import edit from "../asset/icon-edit.png";
 import bin from "../asset/icon-trashbin.png";
 import addBtn from "../asset/icon-addBtn.png";
 
-function Vote({ isHost, onChange, clickedAgendaId }) {
+function Vote({ token,isHost, onChange, clickedAgendaId }) {
 
     //[투표리스트]
     const [votes, setVotes] = useState([]);
@@ -55,7 +55,6 @@ function Vote({ isHost, onChange, clickedAgendaId }) {
 
     //투표list 불러오기
     useEffect(() => {
-        const token = localStorage.getItem("accessToken");
         axios
             .get(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`, {
                 headers: {
@@ -64,6 +63,7 @@ function Vote({ isHost, onChange, clickedAgendaId }) {
             })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
+                    console.log(res.data);
                     setVotes(res.data);
                 }
             })
@@ -72,7 +72,6 @@ function Vote({ isHost, onChange, clickedAgendaId }) {
             });
     }, [Newvote]);
     function addVote() {
-        const token = localStorage.getItem("accessToken");
         axios
             .post(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`, {
                 headers: {
@@ -151,6 +150,9 @@ function Vote({ isHost, onChange, clickedAgendaId }) {
             console.log(e.target.value);
             axios
                 .patch(`${process.env.REACT_APP_HOST_URL}/vote/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
                     title: e.target.value,
                 })
                 .then((res) => {
@@ -181,8 +183,8 @@ function Vote({ isHost, onChange, clickedAgendaId }) {
 
     }
 
-    function openDetail(e) {
-        setDetailId(e.target.id);
+    function openDetail(id) {
+        setDetailId(id);
         setDetail(true);
     }
     return (
@@ -204,7 +206,7 @@ function Vote({ isHost, onChange, clickedAgendaId }) {
                 </div>
                 <div className={style.Votelist}>
                     {votes.map((vote) => (
-                        <div className={style.Vote} id={vote.voteId} key={vote.voteId} onClick={(e) => { setDetailName(vote.title); openDetail(e); }}>
+                        <div className={style.Vote} id={vote.voteId} key={vote.voteId} onClick={(e) => { setDetailName(vote.title); openDetail(vote.voteId); }}>
                             <div className={style.VoteText} onDoubleClick={() => setChanged(vote.voteId)}>
                                 {Changed === vote.voteId ? <input id="newVoteName" ref={inputRef} onKeyDown={(e) => EditVote(e, vote.voteId)} placeholder={vote.title} /> : <h1>{vote.title}</h1>}
                                 <span>{vote.number}</span>

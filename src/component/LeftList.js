@@ -11,9 +11,7 @@ import bin from "../asset/icon-trashbin.png";
 import visible from "../asset/icon-visible.png";
 import add from "../asset/icon-add.png";
 
-function LeftList({ isHost,roomId, roomName, deleteModal, setClickedAgendaId, clickedAgendaId }) {
-
-  const token = localStorage.getItem("accessToken");
+function LeftList({ token,isHost, roomId, roomName, deleteModal, setClickedAgendaId, clickedAgendaId }) {
 
   //[안건]
   const [blockId, setBlockId] = useState(null);
@@ -63,14 +61,12 @@ function LeftList({ isHost,roomId, roomName, deleteModal, setClickedAgendaId, cl
           },
         })
       .then((res) => {
+        console.log(res);
         const format = res.data.map(item => ({
           id: item.agenda.agendaId,
           name: item.agenda.name,
         }));
         setAgendas(format);
-        if (clickedAgendaId === null) {
-          format.length > 0 && setClickedAgendaId(format[0].id);
-        }
       })
       .catch((error) => {
         console.error("마이페이지 정보 가져오기 실패:", error);
@@ -84,6 +80,7 @@ function LeftList({ isHost,roomId, roomName, deleteModal, setClickedAgendaId, cl
       return;
     }
     setBlockId(clickedAgendaId)
+    console.log(blockId);
   }, [clickedAgendaId]);
 
   function handleSetting() {
@@ -158,7 +155,7 @@ function LeftList({ isHost,roomId, roomName, deleteModal, setClickedAgendaId, cl
               })
             .then((res) => {
               const format = res.data.map(item => ({
-                id: item.agenda.agendaId,
+                id: item.agenda.sequence,
                 name: item.agenda.name,
               }));
               setAgendas(format);
@@ -198,7 +195,7 @@ function LeftList({ isHost,roomId, roomName, deleteModal, setClickedAgendaId, cl
             .then((res) => {
               console.log(res);
               const Agendaformat = res.data.map(item => ({
-                id: item.agenda.agendaId,
+                id: item.agenda.sequence,
                 name: item.agenda.name,
               }));
               setBlockId(null);
@@ -218,6 +215,9 @@ function LeftList({ isHost,roomId, roomName, deleteModal, setClickedAgendaId, cl
     if (e.key === "Enter") {
       axios
         .patch(`${process.env.REACT_APP_HOST_URL}/agenda/${id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           name: e.target.value,
         })
         .then((res) => {
@@ -235,7 +235,7 @@ function LeftList({ isHost,roomId, roomName, deleteModal, setClickedAgendaId, cl
               .then((res) => {
                 console.log(res);
                 const format = res.data.map(item => ({
-                  id: item.agenda.agendaId,
+                  id: item.agenda.sequence,
                   name: item.agenda.name,
                 }));
 
@@ -263,7 +263,7 @@ function LeftList({ isHost,roomId, roomName, deleteModal, setClickedAgendaId, cl
         <div className={style.Left}>
           {roomName}
         </div>
-        {isHost&&<img alt="setting" src={setting} onClick={() => handleSetting()} />}
+        {isHost && <img alt="setting" src={setting} onClick={() => handleSetting()} />}
       </div>
 
       <hr />
@@ -315,7 +315,6 @@ function LeftList({ isHost,roomId, roomName, deleteModal, setClickedAgendaId, cl
                   e.preventDefault();
                   deleteModal(true);
                 }}
-
               >방 삭제하기</button>
             </form>
           </div>
@@ -328,17 +327,17 @@ function LeftList({ isHost,roomId, roomName, deleteModal, setClickedAgendaId, cl
               <div
                 key={agenda.id}
                 id={agenda.id}
-                className={blockId===agenda.id && isHost?style.ChosenBlock:style.Block}
-                onClick={(e) => isHost&&handleBlock(e)}
+                className={blockId === agenda.id && isHost ? style.ChosenBlock : style.Block}
+                onClick={(e) => isHost && handleBlock(e)}
               >
                 <div className={style.Text} onDoubleClick={() => setChanged(agenda.id)}>
-                  <span>•</span> {Changed === agenda.id ? <input id="newAgendaName" ref={inputRef} onKeyDown={(e) => isHost&&EditAgenda(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.name}</h1>}
+                  <span>•</span> {Changed === agenda.id ? <input id="newAgendaName" ref={inputRef} onKeyDown={(e) => isHost && EditAgenda(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.name}</h1>}
                 </div>
-                {isHost&&<h3 alt="option"
+                {isHost && <h3 alt="option"
                   onClick={(e) => {
                     handleOption(e, agenda.id);
                   }} >⋮</h3>}
-                {ModalId === agenda.id &&isHost&&
+                {ModalId === agenda.id && isHost &&
                   <div className={style.Modal} ref={ModalRef}>
                     <div className={style.Options}>
                       <div className={style.Edit} onClick={(e) => {
@@ -365,7 +364,7 @@ function LeftList({ isHost,roomId, roomName, deleteModal, setClickedAgendaId, cl
               </div>))}
 
           </div>
-          {isHost&&<div className={style.Add} onClick={() => addAgenda()}>
+          {isHost && <div className={style.Add} onClick={() => addAgenda()}>
             <img alt="add" src={add} />&nbsp;안건을 추가해주세요
           </div>}
         </div>

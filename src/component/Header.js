@@ -11,7 +11,7 @@ import out from "../asset/icon-out.png";
 //사이트 메인 아이콘 + 구글 아이콘 + 방번호 + 완료/진행중 상태
 function Header({
   setLogoutmodal, setEmail, setName, setPicture,
-  isHost,code, state, roomId, name, email, picture
+  token, isHost, code, state, roomId, name, email, picture
 }) {
 
   const navigate = useNavigate();
@@ -21,9 +21,9 @@ function Header({
 
   useEffect(() => {
     if (state === "running") {
-      setState("진행중");
-    } else {
-      setState("완료");
+      setState("running");
+    } else if (state === "completed") {
+      setState("completed");
     }
   }, [state]);
 
@@ -41,7 +41,6 @@ function Header({
   }, [ModalRef]);
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
     const user = localStorage.getItem("userInfo");
 
     if (!token && !user) {
@@ -61,6 +60,9 @@ function Header({
         .patch(`
           ${process.env.REACT_APP_HOST_URL}/room/${roomId}/state`,
           {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
             state: "complete",
           })
         .then((res) => {
@@ -76,6 +78,9 @@ function Header({
       .patch(`
           ${process.env.REACT_APP_HOST_URL}/room/${roomId}/state`,
         {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
           state: "running",
         })
       .then((res) => {
@@ -105,7 +110,7 @@ function Header({
       </div>
 
       <div className={style.Right}>
-        <div id="state" className={State==="running"?style.StateIng:style.StateFinish} onClick={() => isHost&&handleButton()}><strong>•</strong>&nbsp;{State==="running"?"진행중":"완료"}</div>
+        <div id="state" className={State === "running" ? style.StateIng : style.StateFinish} onClick={() => isHost && handleButton()}><strong>•</strong>&nbsp;{State === "running" ? "진행중" : "완료"}</div>
         <div id="RoomNumber" className={style.Number} onClick={() => handleRoomNumber()}>{code}<img alt="copy" src={copy} /></div>
         <img alt="profileicon" src={picture} onClick={() => setProfileOpen(true)} />
 
@@ -126,8 +131,8 @@ function Header({
               setProfileOpen(false);
             }}>
             <img alt="out"
-              src={out} 
-              />Logout</button>
+              src={out}
+            />Logout</button>
         </div> : <></>}
       </div>
 
