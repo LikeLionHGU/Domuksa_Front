@@ -43,7 +43,7 @@ function Home() {
   }
 
   function joinRoom() {
-    if (isPassword === false && roomId !== null) {
+    if (isPassword === false && roomId !== "") {
       axios
         .post(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/member`, {
           headers: {
@@ -59,6 +59,9 @@ function Home() {
         .catch((error) => {
           console.error("참여할 룸 상태 정보 가져오기 실패:", error);
         });
+    } else if (isPassword === true && roomId !== "") {
+      setPwOpen(true);
+      setIsPassword(false);
     }
   }
 
@@ -72,7 +75,7 @@ function Home() {
 
   useEffect(() => {
     localStorage.removeItem("roomId");
-    // localStorage.removeItem("role");
+    localStorage.removeItem("role");
     setToken(localStorage.getItem("accessToken"));
     const user = JSON.parse(localStorage.getItem("userInfo"));
     setUserId(user.id);
@@ -134,8 +137,6 @@ function Home() {
     }
 
     if (roomId !== null) joinRoom();
-
-    console.log("id", roomId);
   }, [code, token, roomId]);
 
   return (
@@ -143,12 +144,7 @@ function Home() {
       <div className={styles.extradiv}>
         <div className={styles.Maindiv}>
           {pwOpen === true ? (
-            <Joinpw
-              onChange={setPwOpen}
-              code={code}
-              token={token}
-              roomId={roomId}
-            />
+            <Joinpw onChange={setPwOpen} token={token} roomId={roomId} />
           ) : null}
 
           <div className={styles.header}>

@@ -1,46 +1,48 @@
 //홈페이지 프로필 사진 눌렀을 때 나오는 창
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 
 import styles from "../CSS/Joinpw.module.css";
 
 import deleteIcon from "../asset/icon-delete.png";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
-function Joinpw({ onChange, code, token, roomId }) {
+function Joinpw({ onChange, token, roomId }) {
+  const navigate = useNavigate();
   const inputRef1 = useRef(null);
   const inputRef2 = useRef(null);
   const inputRef3 = useRef(null);
   const inputRef4 = useRef(null);
 
-  const [inputNum, setInputNum] = useState([]);
+  const [inputNum, setInputNumber] = useState([]);
   const [password, setPassword] = useState("");
 
   function onDelete(e) {
     if (e.target.value.length === 1) {
       switch (e.target.name) {
         case "pw1":
-          if (e.keyCode == 8 || e.keyCode == 46) {
+          if (e.keyCode === 8 || e.keyCode === 46) {
             e.preventDefault();
             if (e.target.value) e.target.value = "";
             inputNum[0] = e.target.value;
           }
           break;
         case "pw2":
-          if (e.keyCode == 8 || e.keyCode == 46) {
+          if (e.keyCode === 8 || e.keyCode === 46) {
             e.preventDefault();
             if (e.target.value) e.target.value = "";
             inputNum[1] = e.target.value;
           }
           break;
         case "pw3":
-          if (e.keyCode == 8 || e.keyCode == 46) {
+          if (e.keyCode === 8 || e.keyCode === 46) {
             e.preventDefault();
             if (e.target.value) e.target.value = "";
             inputNum[2] = e.target.value;
           }
           break;
         case "pw4":
-          if (e.keyCode == 8 || e.keyCode == 46) {
+          if (e.keyCode === 8 || e.keyCode === 46) {
             e.preventDefault();
             if (e.target.value) e.target.value = "";
             inputNum[3] = e.target.value;
@@ -52,19 +54,19 @@ function Joinpw({ onChange, code, token, roomId }) {
     } else if (e.target.value.length === 0) {
       switch (e.target.name) {
         case "pw2":
-          if (e.keyCode == 8 || e.keyCode == 46) {
+          if (e.keyCode === 8 || e.keyCode === 46) {
             e.preventDefault();
             inputRef1.current.focus();
           }
           break;
         case "pw3":
-          if (e.keyCode == 8 || e.keyCode == 46) {
+          if (e.keyCode === 8 || e.keyCode === 46) {
             e.preventDefault();
             inputRef2.current.focus();
           }
           break;
         case "pw4":
-          if (e.keyCode == 8 || e.keyCode == 46) {
+          if (e.keyCode === 8 || e.keyCode === 46) {
             e.preventDefault();
             inputRef3.current.focus();
           }
@@ -131,10 +133,15 @@ function Joinpw({ onChange, code, token, roomId }) {
         },
       )
       .then((res) => {
-        console.log("noid", res);
+        console.log("pass", res);
+        localStorage.setItem("role", res.data.role);
+        localStorage.setItem("roomId", res.data.roomId);
+        setInputNumber("");
+
+        if (localStorage.getItem("role") === "member") navigate("/meet");
       })
       .catch((error) => {
-        console.error("진행중인 룸 정보 가져오기 실패:", error);
+        console.error("참여할 룸 상태 정보 가져오기 실패:", error);
       });
   }
 
@@ -148,6 +155,7 @@ function Joinpw({ onChange, code, token, roomId }) {
             <img
               className={styles.deleteIcon}
               src={deleteIcon}
+              alt="나가기"
               onClick={() => onChange(false)}
             />
             <div className={styles.title}>
