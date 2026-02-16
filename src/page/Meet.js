@@ -19,6 +19,7 @@ function Meet() {
   const [password, setPassword] = useState(null);
   const [Code, setCode] = useState(null);
   const [state, setState] = useState(null);
+  const [token, setToken] = useState(null);
 
   //header state
   const [name, setName] = useState(null);
@@ -29,6 +30,10 @@ function Meet() {
   const [modalNew, setModalNew] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [Logoutmodal, setLogoutmodal] = useState(false);
+
+  useEffect(() => {
+    setToken(localStorage.getItem("accessToken"));
+  }, [])
 
   useEffect(() => {
     const token = localStorage.getItem("accessToken");
@@ -42,10 +47,13 @@ function Meet() {
           },
         })
         .then((res) => {
+          console.log(res);
           setCode(res.data.code);
           setState(res.data.state);
           setRoomId(res.data.roomId);
           setRoomName(res.data.roomName);
+          console.log(res.data.currentAgendaSequence);
+          setClickedAgendaId(res.data.currentAgendaSequence);
 
           if (res.data.role === "host") {
             setIshost(true);
@@ -71,6 +79,7 @@ function Meet() {
             setEmail={setEmail}
             setPicture={setPicture}
             setLogoutmodal={setLogoutmodal}
+            token={token}
             isHost={isHost}
             code={Code}
             state={state}
@@ -84,18 +93,23 @@ function Meet() {
           <Left
             deleteModal={setDeleteModal}
             setClickedAgendaId={setClickedAgendaId}
+            token={token}
             isHost={isHost}
             roomId={roomId}
             roomName={RoomName}
             clickedAgendaId={clickedAgendaId}
           />
           <Right
+            token={token}
             isHost={isHost}
             roomId={roomId}
             clickedAgendaId={clickedAgendaId}
           />
         </div>
-        <DM isHost={isHost} roomId={roomId} />
+        <DM
+          token={token}
+          isHost={isHost}
+          roomId={roomId} />
       </div>
 
       {modalNew && (
@@ -105,12 +119,16 @@ function Meet() {
           setRoomName={setRoomName}
           setPassword={setPassword}
           setModalNew={setModalNew}
+          token={token}
           RoomName={RoomName}
           password={password}
         />
       )}
       {deleteModal && (
-        <Deletemodal setDeleteModal={setDeleteModal} roomId={roomId} />
+        <Deletemodal
+          setDeleteModal={setDeleteModal}
+          token={token}
+          roomId={roomId} />
       )}
       {Logoutmodal && (
         <LogoutModal
@@ -118,6 +136,7 @@ function Meet() {
           setName={setName}
           setEmail={setEmail}
           setPicture={setPicture}
+          token={token}
         />
       )}
     </div>

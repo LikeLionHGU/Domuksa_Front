@@ -6,11 +6,10 @@ import style from "../CSS/Deletemodal.module.css";
 import tipRed from "../asset/icon-tip-red.png";
 import Logo from "../asset/icon-logo.png";
 
-function Deletemodal({ setDeleteModal,roomId }) {
+function Deletemodal({ token,setDeleteModal,roomId }) {
     const navigate = useNavigate();
 
     function deleteRoom() {
-        const token = localStorage.getItem("accessToken");
         axios
             .delete(`${process.env.REACT_APP_HOST_URL}/room/${roomId}`, {
                 headers: {

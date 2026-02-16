@@ -18,7 +18,7 @@ import iconChatColor from "../asset/Mainicon-color-comment.png";
 import iconVoteColor from "../asset/Mainicon-color-vote.png";
 import iconAIColor from "../asset/Mainicon-color-Ai.png";
 
-function RightList({ isHost, roomId, clickedAgendaId }) {
+function RightList({ token, isHost, roomId, clickedAgendaId }) {
   const [mode, setMode] = useState("basic");
   const [hover, setHover] = useState("");
   const [FileState, setFileState] = useState(false);
@@ -27,8 +27,6 @@ function RightList({ isHost, roomId, clickedAgendaId }) {
   const [AIState, setAIState] = useState(false);
 
   useEffect(() => {
-
-    const token = localStorage.getItem("accessToken");
 
     if (clickedAgendaId === null) {
       return;
@@ -59,7 +57,13 @@ function RightList({ isHost, roomId, clickedAgendaId }) {
           <div
             className={style.Block}
             id="file"
-            onClick={() => setMode("File")}
+            onClick={() => {
+              if (clickedAgendaId === null) {
+                alert("안건을 선택해주세요!");
+                return;
+              }
+              setMode("File");
+            }}
             onMouseEnter={() => setHover("File")}
             onMouseLeave={() => setHover("")}
           >
@@ -69,7 +73,13 @@ function RightList({ isHost, roomId, clickedAgendaId }) {
           <div
             className={style.Block}
             id="comment"
-            onClick={() => setMode("Comment")}
+            onClick={() => {
+              if (clickedAgendaId === null) {
+                alert("안건을 선택해주세요!");
+                return;
+              }
+              setMode("Comment");
+            }}
             onMouseEnter={() => setHover("Comment")}
             onMouseLeave={() => setHover("")}>
             <img alt="Mainicon-comment" className={style.imgComment} src={ChatState || hover === "Comment" ? iconChatColor : iconChat} />
@@ -78,7 +88,13 @@ function RightList({ isHost, roomId, clickedAgendaId }) {
           <div
             className={style.Block}
             id="vote"
-            onClick={() => setMode("Vote")}
+            onClick={() => {
+              if (clickedAgendaId === null) {
+                alert("안건을 선택해주세요!");
+                return;
+              }
+              setMode("Vote");
+            }}
             onMouseEnter={() => setHover("Vote")}
             onMouseLeave={() => setHover("")}>
             <img alt="Mainicon-vote" className={style.imgVote} src={VoteState || hover === "Vote" ? iconVoteColor : iconVote} />
@@ -90,7 +106,13 @@ function RightList({ isHost, roomId, clickedAgendaId }) {
           <div
             className={style.BigBlock}
             id="ai"
-            onClick={() => setMode("AI")}
+            onClick={() => {
+              if (clickedAgendaId === null) {
+                alert("안건을 선택해주세요!");
+                return;
+              }
+              setMode("AI");
+            }}
             onMouseEnter={() => setHover("AI")}
             onMouseLeave={() => setHover("")}>
             <img alt="Mainicon-ai" className={style.imgAI} src={AIState || hover === "AI" ? iconAIColor : iconAI} />
@@ -100,7 +122,7 @@ function RightList({ isHost, roomId, clickedAgendaId }) {
             className={style.SmallBlock}
             id="users"
           >
-            <Users/>
+            <Users />
           </div>
         </div>
       </div>
@@ -108,18 +130,22 @@ function RightList({ isHost, roomId, clickedAgendaId }) {
     File: <File
       isHost={isHost}
       clickedAgendaId={clickedAgendaId}
+      token={token}
       onChange={setMode}
     />,
     Comment: <Comment
+      token={token}
       onChange={setMode}
     />,
     Vote: <Vote
+      token={token}
       isHost={isHost}
       clickedAgendaId={clickedAgendaId}
       roomId={roomId}
       onChange={setMode}
     />,
     AI: <AI
+      token={token}
       onChange={setMode}
     />
   };

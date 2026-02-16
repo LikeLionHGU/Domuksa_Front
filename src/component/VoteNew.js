@@ -2,8 +2,7 @@ import { useState } from "react";
 import axios from "axios";
 import style from '../CSS/Vote_new_modal.module.css';
 
-function NewVote({ setNewvote, Voteobj }) {
-    const token = localStorage.getItem("accessToken");
+function NewVote({ token,setNewvote, Voteobj }) {
 
     const [options, setOptions] = useState([]);
 

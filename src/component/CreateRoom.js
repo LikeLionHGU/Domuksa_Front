@@ -9,13 +9,16 @@ import CreateNewimg from "../asset/icon-createNew.png";
 
 function CreateRoom({
     setRoomName, setPassword, setRoomId, setCode, setModalNew,
-    RoomName, password
+    token,RoomName, password
 }) {
     const navigate = useNavigate();
 
     function CreateRoom() {
         axios
             .post(`${process.env.REACT_APP_HOST_URL}/room/host`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
                 roomName: RoomName,
                 password: password,
                 role: "host",
