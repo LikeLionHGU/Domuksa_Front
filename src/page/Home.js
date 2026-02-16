@@ -29,51 +29,34 @@ function Home() {
   const [progressRooms, setProgressRooms] = useState([]);
   const [completeRooms, setCompleteRooms] = useState([]);
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
-  const [isEnter, setIsEnter] = useState(false);
 
   const [value, setValue] = useState("");
   const [code, setCode] = useState("");
 
   const [roomId, setRoomId] = useState("");
-  const [check, setCheck] = useState("");
+  const [role, setRole] = useState("");
   const [isPassword, setIsPassword] = useState(false);
 
   function activeEnter(e) {
     if (e.key === "Enter") {
       setCode(value);
-      setIsEnter(!isEnter);
     }
   }
 
   function joinRoom() {
-    if (isPassword === true) {
-      setPwOpen(true);
-      setIsPassword(!isPassword);
-    } else if (isPassword === false) {
-      if (roomId) {
-        localStorage.setItem("roomId", roomId);
-        setCheck(localStorage.getItem("roomId"));
-      }
-      if (check) {
-        setCheck("");
-
-        navigate("/meet");
-      }
-
-      // axios
-      // .post(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/member`, {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // })
-      // .then((res) => {
-      //   console.log("join", res);
-      // })
-      // .catch((error) => {
-      //   console.error("진행중인 룸 상태 정보 가져오기 실패:", error);
-      // });
-      // const check = localStorage.getItem("roomId");
-      // // if (check) navigate("/meet");
+    if (isPassword === false && roomId !== null) {
+      axios
+        .post(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/member`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          console.log("join", res);
+        })
+        .catch((error) => {
+          console.error("참여할 룸 상태 정보 가져오기 실패:", error);
+        });
     }
   }
 
@@ -129,7 +112,7 @@ function Home() {
   }, [reset]);
 
   useEffect(() => {
-    if (code) {
+    if (code !== null && code.length === 10) {
       axios
         .get(`${process.env.REACT_APP_HOST_URL}/room/code?code=${code}`, {
           headers: {
@@ -139,19 +122,20 @@ function Home() {
         })
         .then((res) => {
           setRoomId(res.data.roomId);
-          // setIsPassword(res.data.password);
+          setIsPassword(res.data.password);
+          setCode("");
+
+          if (roomId !== null) joinRoom();
         })
         .catch((error) => {
           console.error("룸 입장 코드 가져오기 실패:", error);
         });
-
-      setCode("");
     }
 
-    joinRoom();
-  }, [isEnter]);
+    console.log("id", roomId);
+  }, [code]);
 
-  console.log("check", check);
+  //console.log("check", check);
 
   return (
     <div>
@@ -175,11 +159,14 @@ function Home() {
 
             <div></div>
             <div className={styles.profile}>
-              <img
-                className={styles.profileImg}
-                src={picture}
-                onClick={isProfileOpen}
-              />
+              {picture && (
+                <img
+                  className={styles.profileImg}
+                  src={picture}
+                  onClick={isProfileOpen}
+                />
+              )}
+
               {profileOpen === true ? (
                 <Profile
                   onChange={setProfileOpen}
