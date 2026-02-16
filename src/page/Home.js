@@ -29,51 +29,39 @@ function Home() {
   const [progressRooms, setProgressRooms] = useState([]);
   const [completeRooms, setCompleteRooms] = useState([]);
   const [isArchiveOpen, setIsArchiveOpen] = useState(false);
-  const [isEnter, setIsEnter] = useState(false);
 
   const [value, setValue] = useState("");
   const [code, setCode] = useState("");
 
   const [roomId, setRoomId] = useState("");
-  const [check, setCheck] = useState("");
   const [isPassword, setIsPassword] = useState(false);
 
   function activeEnter(e) {
     if (e.key === "Enter") {
       setCode(value);
-      setIsEnter(!isEnter);
     }
   }
 
   function joinRoom() {
-    if (isPassword === true) {
+    if (isPassword === false && roomId !== "") {
+      axios
+        .post(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/member`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          localStorage.setItem("role", res.data.role);
+          localStorage.setItem("roomId", res.data.roomId);
+
+          if (localStorage.getItem("role") === "member") navigate("/meet");
+        })
+        .catch((error) => {
+          console.error("참여할 룸 상태 정보 가져오기 실패:", error);
+        });
+    } else if (isPassword === true && roomId !== "") {
       setPwOpen(true);
-      setIsPassword(!isPassword);
-    } else if (isPassword === false) {
-      if (roomId) {
-        localStorage.setItem("roomId", roomId);
-        setCheck(localStorage.getItem("roomId"));
-      }
-      if (check) {
-        setCheck("");
-
-        navigate("/meet");
-      }
-
-      // axios
-      // .post(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/member`, {
-      //   headers: {
-      //     Authorization: `Bearer ${token}`,
-      //   },
-      // })
-      // .then((res) => {
-      //   console.log("join", res);
-      // })
-      // .catch((error) => {
-      //   console.error("진행중인 룸 상태 정보 가져오기 실패:", error);
-      // });
-      // const check = localStorage.getItem("roomId");
-      // // if (check) navigate("/meet");
+      setIsPassword(false);
     }
   }
 
@@ -87,6 +75,7 @@ function Home() {
 
   useEffect(() => {
     localStorage.removeItem("roomId");
+    localStorage.removeItem("role");
     setToken(localStorage.getItem("accessToken"));
     const user = JSON.parse(localStorage.getItem("userInfo"));
     setUserId(user.id);
@@ -126,10 +115,10 @@ function Home() {
       .catch((error) => {
         console.error("완료된 룸 상태 정보 가져오기 실패:", error);
       });
-  }, [reset]);
+  }, [reset, token, userId]);
 
   useEffect(() => {
-    if (code) {
+    if (code !== null && code.length === 10) {
       axios
         .get(`${process.env.REACT_APP_HOST_URL}/room/code?code=${code}`, {
           headers: {
@@ -139,47 +128,44 @@ function Home() {
         })
         .then((res) => {
           setRoomId(res.data.roomId);
-          // setIsPassword(res.data.password);
+          setIsPassword(res.data.password);
+          setCode("");
         })
         .catch((error) => {
           console.error("룸 입장 코드 가져오기 실패:", error);
         });
-
-      setCode("");
     }
 
-    joinRoom();
-  }, [isEnter]);
-
-  console.log("check", check);
+    if (roomId !== null) joinRoom();
+  }, [code, token, roomId]);
 
   return (
     <div>
       <div className={styles.extradiv}>
         <div className={styles.Maindiv}>
           {pwOpen === true ? (
-            <Joinpw
-              onChange={setPwOpen}
-              code={code}
-              token={token}
-              roomId={roomId}
-            />
+            <Joinpw onChange={setPwOpen} token={token} roomId={roomId} />
           ) : null}
 
           <div className={styles.header}>
             <img
               className={styles.logo}
               src={logoImg}
+              alt="이음로고"
               onClick={(e) => navigate("/")}
             />
 
             <div></div>
             <div className={styles.profile}>
-              <img
-                className={styles.profileImg}
-                src={picture}
-                onClick={isProfileOpen}
-              />
+              {picture && (
+                <img
+                  className={styles.profileImg}
+                  src={picture}
+                  alt="프로필"
+                  onClick={isProfileOpen}
+                />
+              )}
+
               {profileOpen === true ? (
                 <Profile
                   onChange={setProfileOpen}
@@ -199,7 +185,7 @@ function Home() {
 
           <div className={styles.menu}>
             <div className={styles.new} onClick={(e) => navigate("/meet")}>
-              <img className={styles.addBtn} src={addImg} />
+              <img className={styles.addBtn} src={addImg} alt="추가" />
             </div>
 
             <div className={styles.join}>
