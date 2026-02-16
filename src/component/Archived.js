@@ -46,7 +46,9 @@ function Archived({ onChange, completeRoomList }) {
                   <img className={styles.roomImg} src={roomImg} />
                 )}
                 <div className={styles.roomName}>
-                  {completeRoomList.roomName}
+                  {completeRoomList.roomName.length > 9
+                    ? `${completeRoomList.roomName.slice(0, 9)}...`
+                    : completeRoomList.roomName}
                 </div>
               </div>
             ))}
