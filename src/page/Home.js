@@ -109,7 +109,7 @@ function Home() {
       .catch((error) => {
         console.error("완료된 룸 상태 정보 가져오기 실패:", error);
       });
-  }, [reset]);
+  }, [reset, token, userId]);
 
   useEffect(() => {
     if (code !== null && code.length === 10) {
@@ -124,18 +124,16 @@ function Home() {
           setRoomId(res.data.roomId);
           setIsPassword(res.data.password);
           setCode("");
-
-          if (roomId !== null) joinRoom();
         })
         .catch((error) => {
           console.error("룸 입장 코드 가져오기 실패:", error);
         });
     }
 
-    console.log("id", roomId);
-  }, [code]);
+    if (roomId !== null) joinRoom();
 
-  //console.log("check", check);
+    console.log("id", roomId);
+  }, [code, token, roomId]);
 
   return (
     <div>
@@ -154,6 +152,7 @@ function Home() {
             <img
               className={styles.logo}
               src={logoImg}
+              alt="이음로고"
               onClick={(e) => navigate("/")}
             />
 
@@ -163,6 +162,7 @@ function Home() {
                 <img
                   className={styles.profileImg}
                   src={picture}
+                  alt="프로필"
                   onClick={isProfileOpen}
                 />
               )}
@@ -186,7 +186,7 @@ function Home() {
 
           <div className={styles.menu}>
             <div className={styles.new} onClick={(e) => navigate("/meet")}>
-              <img className={styles.addBtn} src={addImg} />
+              <img className={styles.addBtn} src={addImg} alt="추가" />
             </div>
 
             <div className={styles.join}>
