@@ -88,7 +88,7 @@ function Meet() {
         </div>
         <div className={style.Component}>
           <Left
-          setRoomName={setRoomName}
+            setRoomName={setRoomName}
             deleteModal={setDeleteModal}
             setClickedAgendaId={setClickedAgendaId}
             token={token}
@@ -98,6 +98,7 @@ function Meet() {
             clickedAgendaId={clickedAgendaId}
           />
           <Right
+            RoomName={RoomName}
             token={token}
             isHost={isHost}
             roomId={roomId}

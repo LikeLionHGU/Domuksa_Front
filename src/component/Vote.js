@@ -69,21 +69,6 @@ function Vote({ token, isHost, onChange, clickedAgendaId }) {
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
-
-        // axios
-        //     .get(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}/voteStatus`, {
-        //         headers: {
-        //             Authorization: `Bearer ${token}`,
-        //         },
-        //     })
-        //     .then((res) => {
-        //         if (res.status === 200 || res.status === 201) {
-        //             setVotes(res.data);
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         console.error("마이페이지 정보 가져오기 실패:", error);
-        //     });
     }, [Newvote]);
     function addVote() {
         axios
@@ -266,6 +251,7 @@ function Vote({ token, isHost, onChange, clickedAgendaId }) {
                 Detail === true &&
                 <VoteDetail
                     token={token}
+                    isHost={isHost}
                     Newvote={Newvote}
                     DetailName={DetailName}
                     DetailId={DetailId}

@@ -171,6 +171,8 @@
         }
 
         .Buttons {
+            display:flex;
+            width: 611px;
             margin-top: auto;
             margin-bottom: 149px;
 
@@ -182,13 +184,26 @@
             }
 
             .Cancel {
-                margin-right: 207.5px;
+                /* margin-right: 207.5px; */
                 background-color: #ffffff;
                 border: 1px solid #B4B3B3;
             }
 
-            .Create {
-                margin-left: 207.5px;
+            .CreateEdit {
+                margin-left: auto;
+                background-color: #5043E7;
+                border: none;
+                color: #ffffff;
+            }
+
+            .BeforeEdit {
+                margin-left: auto;
+                background-color: #ffffff;
+                border: 1px solid #B4B3B3;
+            }
+
+            .FinishVote {
+                margin-left:10px;
                 background-color: #5043E7;
                 border: none;
                 color: #ffffff;

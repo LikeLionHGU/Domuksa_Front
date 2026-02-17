@@ -4,15 +4,42 @@ import style from "../CSS/Vote_detail_modal.module.css";
 
 import winner from "../asset/icon-result.png";
 
-function VoteDetail({ token, setDetail, DetailId, DetailName, Newvote }) {
+function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote }) {
 
+    //욥션들
     const [options, setOptions] = useState([]);
+
+    //선택한 욥션 아이디
     const [ChosenOption, setChosenOption] = useState(null);
+    const [showBtn, setShowBtn] = useState(false);
+
+    //결과
     const [result, setResult] = useState(false);
-    const [ResultOption, setResultOption] = useState(6);
+    //1등한 결과
+    const [ResultOption, setResultOption] = useState([]);
+
+    //제출한적있으면edit
     const [Edit, setEdit] = useState(false);
+    const [Editting, setEditting] = useState(false);
 
     useEffect(() => {
+        //투표 상태확인
+        axios
+            .get(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/voteStatus`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) => {
+                if (res.status === 200 || res.status === 201) {
+                    if (res.data.status !== "running") setResult(true);
+                }
+            })
+            .catch((error) => {
+                console.error("마이페이지 정보 가져오기 실패:", error);
+            });
+
+        //투표 옵션가져오기 (나의 선택포함)
         axios
             .get(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/option`, {
                 headers: {
@@ -22,8 +49,13 @@ function VoteDetail({ token, setDetail, DetailId, DetailName, Newvote }) {
             .then((res) => {
                 console.log(res);
                 if (res.status === 200 || res.status === 201) {
-                    console.log(res.data.voteOptions);
                     setOptions(res.data.voteOptions);
+                    if (res.data.voteSelection === null) {
+                        setEdit(false);
+                    } else {
+                        setEdit(true);
+                        setChosenOption(res.data.voteSelection.voteOptionId);
+                    }
                 }
             })
             .catch((error) => {
@@ -39,10 +71,10 @@ function VoteDetail({ token, setDetail, DetailId, DetailName, Newvote }) {
                 },
             })
             .then((res) => {
-                console.log(res);
                 if (res.status === 200 || res.status === 201) {
                     console.log(res.data);
                     setResultOption(res.data);
+                    console.log(ResultOption);
                 }
             })
             .catch((error) => {
@@ -52,10 +84,9 @@ function VoteDetail({ token, setDetail, DetailId, DetailName, Newvote }) {
 
     function handleOptionBlock(id) {
         setChosenOption(parseInt(id));
+        setShowBtn(true);
     }
     function SubmitChoise() {
-        console.log(ChosenOption);
-        console.log(DetailId);
         axios
             .post(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/voteSelect`, {
                 headers: {
@@ -68,6 +99,24 @@ function VoteDetail({ token, setDetail, DetailId, DetailName, Newvote }) {
                 if (res.status === 200 || res.status === 201) {
                     // setResult(true);
                     setEdit(true);
+                    setShowBtn(false);
+                }
+            })
+            .catch((error) => {
+                console.error("마이페이지 정보 가져오기 실패:", error);
+            });
+    }
+    function CancelChoise() {
+        axios
+            .delete(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/voteSelect`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            },)
+            .then((res) => {
+                console.log(res);
+                if (res.status === 200 || res.status === 201) {
+                    setDetail(false);
                 }
             })
             .catch((error) => {
@@ -86,6 +135,43 @@ function VoteDetail({ token, setDetail, DetailId, DetailName, Newvote }) {
                 console.log(res);
                 if (res.status === 200 || res.status === 201) {
                     setEdit(true);
+                    setShowBtn(false);
+                }
+            })
+            .catch((error) => {
+                console.error("마이페이지 정보 가져오기 실패:", error);
+            });
+    }
+    function HandleEdit(){
+        setEditting(true);
+    }
+    function ChangeVoteState() {
+        axios
+            .patch(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/voteStatus`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+                voteStatus: "comfirm",
+            })
+            .then((res) => {
+                if (res.status === 200 || res.status === 201) {
+                    setResult(true);
+                    axios
+                        .get(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/result`, {
+                            headers: {
+                                Authorization: `Bearer ${token}`,
+                            },
+                        })
+                        .then((res) => {
+                            if (res.status === 200 || res.status === 201) {
+                                console.log(res.data);
+                                setResultOption(res.data);
+                                console.log(ResultOption);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error("마이페이지 정보 가져오기 실패:", error);
+                        });
                 }
             })
             .catch((error) => {
@@ -142,12 +228,31 @@ function VoteDetail({ token, setDetail, DetailId, DetailName, Newvote }) {
 
 
                         <div className={style.Buttons}>
-                            <button className={style.Cancel} onClick={() => setDetail(false)}>취소하기</button>
-                            <button className={style.Create} style={ChosenOption === null ? { visibility: "hidden" } : {}} onClick={() => Edit === true ? EditChoise() : SubmitChoise()}>{Edit===true?"수정하기":"선택하기"}</button>
+                            <button className={style.Cancel} style={
+                                showBtn === true
+                                    ? {}
+                                    : Edit === true
+                                        ? {}
+                                        : { visibility: "hidden" }
+                            }>{Edit === true ? "취소하기" : "뒤로가기"}</button>
+
+                            <button className={showBtn === true ? style.CreateEdit : style.BeforeEdit}
+                                onClick={()=>
+                                    showBtn === true?
+                                        Edit === true? 
+                                        EditChoise()
+                                        :
+                                        SubmitChoise()
+                                         
+                                    :HandleEdit()
+
+                                }
+                                >{Edit === true ? "수정하기" : "선택하기"}</button>
+                            {Editting === true && isHost === true && Edit === true ? <button onClick={() => ChangeVoteState()} className={style.FinishVote}>확정하기</button> : <></>}
                         </div>
                     </div>
                 </div>
-            </div>
+            </div >
         )
     );
 }
