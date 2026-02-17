@@ -6,13 +6,16 @@ import axios from "axios";
 // import { PDFViewer } from '@embedpdf/react-pdf-viewer';
 import fileIcon from "../asset/icon-filelist.png";
 
-function File({ onChange, clickedAgendaId }) {
+function File({ isHost,token,onChange, clickedAgendaId }) {
 
-    const token = localStorage.getItem("accessToken");
     const [listModal, setListModal] = useState(false);
     const [Files, setFiles] = useState([]);
     const [FileChosenUrl, setFileChosenUrl] = useState(null);
     const [isPdf,setIsPdf]=useState();
+
+    // 삭제하기 버튼 상태값
+    const [x,setX]=useState(null);
+
     useEffect(() => {
         console.log(window.crossOriginIsolated);
         axios
@@ -114,15 +117,22 @@ function File({ onChange, clickedAgendaId }) {
                     </label>
                     {Files.map((file) => {
                         return (
-                            <div id={file.id} key={file.id} className={style.box} onClick={(e) => {
+                            <div 
+                            id={file.id} 
+                            key={file.id} 
+                            className={style.box} 
+                            onMouseEnter={()=>setX(file.id)}
+                            onMouseLeave={()=>setX(null)}
+                            onClick={(e) => {
                                 HandleChoise(file)
                             }}>
                                 <img id={file.id} src={file.fileUrl} />
-                                <div id={file.id} className={style.Close} onClick={(e) => {
+                                {x===file.id&&isHost&&<div id={file.id} className={style.Close} onClick={(e) => {
                                     e.stopPropagation();
                                     DeleteFile(e)
                                 }}
-                                ><h1 id={file.id}>+</h1></div>
+                                //x버튼
+                                ><h1 id={file.id}>+</h1></div>}
                             </div>
 
                         );

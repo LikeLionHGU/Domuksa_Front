@@ -243,6 +243,7 @@ function Vote({ token, isHost, onChange, clickedAgendaId }) {
             {
                 Newvote === true && isHost &&
                 <VoteNew
+                token={token}
                     setNewvote={setNewvote}
                     Voteobj={Voteobj}
                 />

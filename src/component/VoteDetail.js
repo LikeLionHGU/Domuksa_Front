@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import style from "../CSS/Vote_detail_modal.module.css";
 
-import winner from "../asset/icon-result.png";
+import hammer from "../asset/icon-hammer.png";
 
 function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote }) {
 
@@ -13,14 +13,16 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
     const [ChosenOption, setChosenOption] = useState(null);
     const [showBtn, setShowBtn] = useState(false);
 
-    //결과
+    //결과상태값
     const [result, setResult] = useState(false);
-    //1등한 결과
+    //결과목록
     const [ResultOption, setResultOption] = useState([]);
+    //1등 항목들
+    const [Most, setMost] = useState([]);
 
     //제출한적있으면edit
     const [Edit, setEdit] = useState(false);
-    const [Editting, setEditting] = useState(false);
+    const [Editting, setEditting] = useState(true);
 
     useEffect(() => {
         //투표 상태확인
@@ -47,7 +49,6 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
                 },
             })
             .then((res) => {
-                console.log(res);
                 if (res.status === 200 || res.status === 201) {
                     setOptions(res.data.voteOptions);
                     if (res.data.voteSelection === null) {
@@ -72,9 +73,13 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
             })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
-                    console.log(res.data);
                     setResultOption(res.data);
-                    console.log(ResultOption);
+                    const HighCount = Math.max(...res.data.map(item => item.selectCount));
+                    const HighCounts = res.data.filter(item => item.selectCount === HighCount);
+                    const format = HighCounts.map(item => ({
+                        id: item.voteOptionId,
+                    }));
+                    setMost(format);
                 }
             })
             .catch((error) => {
@@ -100,6 +105,7 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
                     // setResult(true);
                     setEdit(true);
                     setShowBtn(false);
+                    setEditting(false);
                 }
             })
             .catch((error) => {
@@ -136,13 +142,14 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
                 if (res.status === 200 || res.status === 201) {
                     setEdit(true);
                     setShowBtn(false);
+                    setEditting(false);
                 }
             })
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
     }
-    function HandleEdit(){
+    function HandleEdit() {
         setEditting(true);
     }
     function ChangeVoteState() {
@@ -191,13 +198,14 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
                     </div>
 
                     <div className={style.Votelist}>
-
+                        {/* <div onClick={() => console.log(Most.map((item)=>item.id))}>aaaa</div> */}
                         {options.map((option) => {
                             return (
-                                <div id={option.voteOptionId} key={option.voteOptionId} className={ResultOption === option.voteOptionId ? style.ResultVote : style.Vote} onClick={(e) => handleOptionBlock(option.voteOptionId)}>
+                                <div id={option.voteOptionId} key={option.voteOptionId} className={Most.map(item=>item.id).includes(option.voteOptionId) ? style.ResultVote : style.Vote} onClick={(e) => handleOptionBlock(option.voteOptionId)}>
                                     <div className={style.VoteText}>
-                                        <h6>{option.content}</h6><h5>몇명투표했는지</h5>
+                                        <h6>{option.content}</h6><h5>{option.selectCount}명 투표</h5>
                                     </div>
+                                    {Most.map(item=>item.id).includes(option.voteOptionId) && <img className={style.resultHammer} src={hammer} />}
                                 </div>
                             );
                         })}
@@ -218,7 +226,7 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
                     <div className={style.Votelist}>
                         {options.map((option) => {
                             return (
-                                <div id={option.voteOptionId} key={option.voteOptionId} className={ChosenOption === option.voteOptionId ? style.ChosenVote : style.Vote} onClick={(e) => handleOptionBlock(option.voteOptionId)}>
+                                <div id={option.voteOptionId} key={option.voteOptionId} className={ChosenOption === option.voteOptionId ? style.ChosenVote : style.Vote} onClick={(e) => Editting === true && handleOptionBlock(option.voteOptionId)}>
                                     <div className={style.VoteText}>
                                         <h6>{option.content}</h6>
                                     </div>
@@ -228,27 +236,38 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
 
 
                         <div className={style.Buttons}>
-                            <button className={style.Cancel} style={
-                                showBtn === true
-                                    ? {}
-                                    : Edit === true
-                                        ? {}
-                                        : { visibility: "hidden" }
+                            <button className={style.Cancel} onClick={() =>
+                                Edit === true ? CancelChoise() : setDetail(false)
                             }>{Edit === true ? "취소하기" : "뒤로가기"}</button>
 
-                            <button className={showBtn === true ? style.CreateEdit : style.BeforeEdit}
-                                onClick={()=>
-                                    showBtn === true?
-                                        Edit === true? 
+                            <button className={style.CreateEdit}
+                                style={
+                                    //수정 하고 싶으면 
+                                    Editting === true ?
+                                        //선택을 하면 
+                                        showBtn === true ?
+                                            //선택을 한적 있으면 
+                                            Edit === true ?
+                                                {}
+                                                :
+                                                {}
+
+                                            : { visibility: "hidden" }
+                                        : { visibility: "hidden" }
+                                }
+                                onClick={() =>
+                                    Edit === true ?
                                         EditChoise()
                                         :
                                         SubmitChoise()
-                                         
-                                    :HandleEdit()
-
                                 }
-                                >{Edit === true ? "수정하기" : "선택하기"}</button>
-                            {Editting === true && isHost === true && Edit === true ? <button onClick={() => ChangeVoteState()} className={style.FinishVote}>확정하기</button> : <></>}
+                            >{Edit === true ? "수정하기" : "선택하기"}</button>
+                            {Editting === false && Edit === true && <button className={style.BeforeEdit} onClick={() => HandleEdit()}>수정하기</button>}
+
+                            {Editting === false && isHost === true && Edit === true && <button
+                                onClick={() => ChangeVoteState()}
+                                className={style.FinishVote}
+                            >확정하기</button>}
                         </div>
                     </div>
                 </div>

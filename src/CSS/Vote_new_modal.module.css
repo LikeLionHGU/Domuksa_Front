@@ -106,7 +106,7 @@
 
     .Votelist {
         width: 900px;
-        height: 600px;
+        height: 350px;
         overflow: scroll;
         display: flex;
         flex-direction: column;
@@ -167,26 +167,28 @@
             }
         }
 
-        .Buttons {
-            button {
-                width: 98px;
-                height: 40px;
-                border-radius: 15px;
-                font-size: 14px;
-            }
 
-            .Cancel {
-                margin-right: 207.5px;
-                background-color: #ffffff;
-                border: 1px solid #B4B3B3;
-            }
+    }
 
-            .Create {
-                margin-left:207.5px;
-                background-color: #5043E7;
-                border: none;
-                color: #ffffff;
-            }
+    .Buttons {
+        button {
+            width: 98px;
+            height: 40px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .Cancel {
+            margin-right: 207.5px;
+            background-color: #ffffff;
+            border: 1px solid #B4B3B3;
+        }
+
+        .Create {
+            margin-left: 207.5px;
+            background-color: #5043E7;
+            border: none;
+            color: #ffffff;
         }
     }
 }

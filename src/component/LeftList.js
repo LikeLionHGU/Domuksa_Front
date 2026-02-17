@@ -19,10 +19,11 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
   const [blockId, setBlockId] = useState(null);
   const [agendas, setAgendas] = useState([]);
 
-  //[현재 안건]
-
   //[안건이름변경]
   const [Changed, setChanged] = useState(null);
+
+  //안건 hover전용
+  const [hover,setHover]=useState(null);
 
   //[방설정]
   const [Setting, setSetting] = useState(false);
@@ -30,8 +31,11 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
   //[모달]
   const [ModalId, setModalId] = useState(null);
 
+  //Ref
   const ModalRef = useRef(null);
   const inputRef = useRef(null);
+
+  
 
 
   useEffect(() => {
@@ -332,6 +336,8 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
 
             {agendas.map((agenda) => (
               <div
+                onMouseEnter={()=>setHover(agenda.id)}
+                onMouseLeave={()=>setHover(null)}
                 key={agenda.id}
                 id={agenda.id}
                 className={blockId === agenda.id && isHost ? style.ChosenBlock : style.Block}
@@ -340,7 +346,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
                 <div className={style.Text} onDoubleClick={() => setChanged(agenda.id)}>
                   <span>•</span> {Changed === agenda.id ? <input id="newAgendaName" ref={inputRef} onKeyDown={(e) => isHost && EditAgenda(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.name}</h1>}
                 </div>
-                {isHost && <h3 alt="option"
+                {hover===agenda.id&&isHost && <h3 alt="option"
                   onClick={(e) => {
                     handleOption(e, agenda.id);
                   }} >⋮</h3>}
