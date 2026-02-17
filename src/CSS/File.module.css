@@ -135,8 +135,8 @@
 
             .Close {
                 position: absolute;
-                top: -5%;
-                left: -5%;
+                top: 5%;
+                right: 5%;
 
                 width: 10px;
                 height: 10px;
@@ -151,10 +151,6 @@
                     color: rgb(0, 0, 0);
                     transform: rotate(45deg);
                 }
-
-                h1:hover {
-                    font-size: 30px;
-                }
             }
         }
 
@@ -162,4 +158,7 @@
             border: 1px solid #555555;
         }
     }
+}
+.resultBlock{
+    display:flex;
 }
