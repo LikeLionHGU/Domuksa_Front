@@ -137,6 +137,7 @@ function RightList({ token, isHost, roomId, clickedAgendaId }) {
     />,
     Comment: <Comment
       token={token}
+      clickedAgendaId={clickedAgendaId}
       onChange={setMode}
     />,
     Vote: <Vote
