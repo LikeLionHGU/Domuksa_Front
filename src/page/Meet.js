@@ -135,6 +135,7 @@ function Meet() {
             setName={setName}
             setEmail={setEmail}
             setPicture={setPicture}
+            setState={setState}
             setLogoutmodal={setLogoutmodal}
             token={token}
             isHost={isHost}
