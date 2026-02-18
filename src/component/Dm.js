@@ -9,7 +9,7 @@ import send from "../asset/icon-send.png";
 import emoji from "../asset/icon-emoji.png";
 import DM from "../asset/icon-DM.png";
 
-function Dm({ token,roomId, isHost }) {
+function Dm({ token,roomId,isHost }) {
 
     const [EmojiModal, setEmojiModal] = useState(false);
 
@@ -52,12 +52,16 @@ function Dm({ token,roomId, isHost }) {
 
     // }, []);
 
+    useEffect(()=>{
+    },[])
+
     function sendMessage() {
 
         const Newmessage = document.getElementById("newMessage").value;
 
+        console.log(Newmessage);
         axios
-            .post(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/dm`, {
+            .post(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -65,7 +69,8 @@ function Dm({ token,roomId, isHost }) {
             })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
-                    setMessage(prev => [...prev, res.data])
+                    // setMessage(prev => [...prev, res.data]);
+                    Newmessage.value=null;
                 }
             })
             .catch((error) => {
@@ -75,7 +80,7 @@ function Dm({ token,roomId, isHost }) {
     function buttonSendMessage(e) {
         const Newmessage = e.target.value;
         axios
-            .post(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/dm`, {
+            .post(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
