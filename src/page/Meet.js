@@ -16,6 +16,16 @@ import SockJS from "sockjs-client";
 import { Client } from "@stomp/stompjs";
 
 function Meet() {
+  //시간 현재!
+  const [now, setNow] = useState(Date.now());
+  useEffect(() => {
+    const Now = setInterval(() => {
+      setNow(Date.now());
+    }, 1000);
+
+    return () => clearInterval(Now);
+  }, []);
+
   const [clickedAgendaId, setClickedAgendaId] = useState(null);
 
   const [roomId, setRoomId] = useState(null);
@@ -73,7 +83,7 @@ function Meet() {
         console.log(Format);
         setStateObj(Format);
       });
-      
+
     }
 
     //연결시도
@@ -165,6 +175,7 @@ function Meet() {
             clickedAgendaId={clickedAgendaId}
           />
           <Right
+          now={now}
             RoomName={RoomName}
             token={token}
             isHost={isHost}
@@ -173,6 +184,7 @@ function Meet() {
           />
         </div>
         <DM
+        now={now}
           token={token}
           isHost={isHost}
           roomId={roomId} />

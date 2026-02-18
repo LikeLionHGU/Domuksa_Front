@@ -9,7 +9,7 @@ import send from "../asset/icon-send.png";
 import emoji from "../asset/icon-emoji.png";
 import DM from "../asset/icon-DM.png";
 
-function Dm({ token, roomId, isHost }) {
+function Dm({ now, token, roomId, isHost }) {
 
     const [EmojiModal, setEmojiModal] = useState(false);
 
@@ -54,40 +54,26 @@ function Dm({ token, roomId, isHost }) {
 
     // }, []);
 
-    useEffect(() => {
-        let Now = new Date();
-        setDate();
-        // console.log(Now.getFullYear());
-        // console.log(Now.getMonth());
-        // console.log(Now.getDate());
-        const formattedDate = `${Now.getFullYear()}년 ${Now.getMonth() + 1}월 ${Now.getDate()}일`;
-        // console.log(formattedDate);
-    }, []);
 
     useEffect(() => {
-        // console.log(token);
-        // console.log(roomId);
-
-        // axios
-        //     .get(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`, {
-        //         headers: {
-        //             Authorization: `Bearer ${token}`,
-        //         },
-        //     })
-        //     .then((res) => {
-        //         if (res.status === 200 || res.status === 201) {
-        //             // setMessage(prev => [...prev, res.data]);
-        //             // console.log(res.data.messages);
-        //             const format = res.data.messages.map(item => ({
-        //                 time: item.createdAt,
-        //                 content:item.content,
-        //             }));
-        //             setMessage(format);
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         console.error("마이페이지 정보 가져오기 실패:", error);
-        //     });
+        axios
+            .get(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) => {
+                if (res.status === 200 || res.status === 201) {
+                    const format = res.data.messages.map(item => ({
+                        time: item.createdAt,
+                        content: item.content,
+                    }));
+                    setMessage(format);
+                }
+            })
+            .catch((error) => {
+                console.error("마이페이지 정보 가져오기 실패:", error);
+            });
     }, [token, roomId])
 
     function sendMessage() {
@@ -140,6 +126,13 @@ function Dm({ token, roomId, isHost }) {
         const messageInput = document.getElementById("newMessage");
         messageInput.value = messageInput.value + emoji.emoji;
     }
+
+    function handleFormat(amount) {
+        if (amount < 60) return `${amount}초`;
+        if (amount < 3600) return `${amount / 60}분`;
+        if (amount < 86400) return `${Math.floor(amount / 3600)}시간 전`;
+        return `${Math.floor(amount / 86400)}일 전`;
+    }
     return (
         <div className={style.DM} onClick={() => setModalChat(true)}>
             {EmojiModal &&
@@ -160,15 +153,17 @@ function Dm({ token, roomId, isHost }) {
                     <hr />
                     <div className={style.ChatList}>
                         {message.map((message) => {
+                            //1000ms=1s 초단위
+                            const diff = Math.floor((now - new Date(message.time).getTime()) / 1000);
                             return (
                                 (isHost ?
                                     <div id={message.dmId} key={message.dmId} className={style.HostTextBox}>
                                         <div className={style.Text}>{message.content}</div>
-                                        {message.time}
+                                        {handleFormat(diff)}
                                     </div>
                                     :
                                     <div id={message.dmId} key={message.dmId} className={style.TextBox}>
-                                        {message.time}
+                                        {handleFormat(diff)}
                                         <div className={style.Text}>{message.content}</div>
                                     </div>
                                 )

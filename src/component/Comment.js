@@ -6,7 +6,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import style from "../CSS/Comment.module.css";
 
-function Comment({ token, clickedAgendaId, onChange }) {
+function Comment({ now, token, clickedAgendaId, onChange }) {
 
     const [comments, setComments] = useState([]);
 
@@ -18,6 +18,7 @@ function Comment({ token, clickedAgendaId, onChange }) {
                 },
             })
             .then((res) => {
+                console.log(res);
                 if (res.status === 200 || res.status === 201) {
                     console.log(res);
                     setComments(res.data.reverse());
@@ -50,6 +51,13 @@ function Comment({ token, clickedAgendaId, onChange }) {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
     }
+
+    function handleFormat(amount) {
+        if (amount < 60) return `${amount}초 전`;
+        if (amount < 3600) return `${Math.floor(amount / 60)}분 전`;
+        if (amount < 86400) return `${Math.floor(amount / 3600)}시간 전`;
+        return `${Math.floor(amount / 86400)}일 전`;
+    }
     return (
         <div className={style.Maindiv}>
             <div className={style.Maintitle}>
@@ -74,15 +82,19 @@ function Comment({ token, clickedAgendaId, onChange }) {
                 </form>
 
                 <div className={style.Chat}>
-                    {comments.map((comment) => (
-                        <div key={comment.commentId} id={comment.commentId} className={style.Chatbox}>
-                            <hr />
-                            <p>
-                                <span>{comment.title}</span><br />
-                                {comment.content}
-                            </p>
-                        </div>
-                    ))}
+                    {comments.map((comment) => {
+                        //1000ms=1s 초단위
+                        const diff = Math.floor((now - new Date(comment.createdAt).getTime()) / 1000);
+                        return (
+                            <div key={comment.commentId} id={comment.commentId} className={style.Chatbox}>
+                                <hr />
+                                <p>
+                                    <span>{handleFormat(diff)}</span><br />
+                                    {comment.content}
+                                </p>
+                            </div>
+                        )
+                    })}
                 </div>
 
             </div>
