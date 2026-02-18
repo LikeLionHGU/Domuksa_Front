@@ -347,7 +347,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, stateObj,
                 onMouseLeave={() => setHover(null)}
                 key={agenda.id}
                 id={agenda.sequence}
-                className={blockId === agenda.sequence && isHost ? style.ChosenBlock : style.Block}
+                className={blockId === agenda.sequence ? style.ChosenBlock : style.Block}
                 onClick={(e) => isHost && handleBlock(e)}
               >
                 <div className={style.Text} onDoubleClick={() => setChanged(agenda.id)}>
