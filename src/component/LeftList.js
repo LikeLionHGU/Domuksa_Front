@@ -35,9 +35,6 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
   const ModalRef = useRef(null);
   const inputRef = useRef(null);
 
-  
-
-
   useEffect(() => {
     function HandClickoutsideofModal(e) {
       if (ModalRef.current && !ModalRef.current.contains(e.target)) {
@@ -72,7 +69,6 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
           name: item.agenda.name,
         }));
         setAgendas(format);
-        setClickedAgendaId(res.data[0].agenda.agendaId);
       })
       .catch((error) => {
         console.error("마이페이지 정보 가져오기 실패:", error);
