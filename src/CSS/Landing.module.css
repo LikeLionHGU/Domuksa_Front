@@ -75,25 +75,23 @@
     margin-top: 105px;
   }
 
-  .peoplemom {
-    width: 77px;
-    height: 52px;
-
-    position: absolute;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    top: 160px;
-    margin-right: 1000px;
-  }
-
   .people {
     width: 70px;
     height: 35px;
 
-    transform: rotate(15deg);
+    position: absolute;
+
+    top: 170px;
+    margin-right: 1050px;
+  }
+  .glass {
+    width: 30px;
+    height: 30px;
+
+    position: absolute;
+
+    top: 415px;
+    margin-right: 830px;
   }
 }
 

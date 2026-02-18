@@ -6,7 +6,8 @@ import file from "../asset/Mainicon-color-file.png";
 import comment from "../asset/Mainicon-color-comment.png";
 import vote from "../asset/Mainicon-color-vote.png";
 import ai from "../asset/Mainicon-color-Ai.png";
-import people from "../asset/icon-meetingroom.png";
+import people from "../asset/icon-people-blue.png";
+import glass from "../asset/icon-glass.png";
 
 function Landing() {
   localStorage.removeItem("accessToken");
@@ -29,9 +30,9 @@ function Landing() {
 
           <div className={styles.first}>
             <img className={styles.line} src={landingBg} alt="라인" />
-            <div className={styles.peoplemom}>
-              <img className={styles.people} src={people} alt="사람들" />
-            </div>
+
+            <img className={styles.people} src={people} alt="사람들" />
+            <img className={styles.glass} src={glass} alt="돋보기" />
 
             <div className={styles.icon}>
               <div className={styles.progress}>• 진행중</div>
