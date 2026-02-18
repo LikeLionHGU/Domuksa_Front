@@ -63,7 +63,7 @@
   display: flex;
   justify-content: center;
   width: 1440px;
-  height: 7033px;
+  height: 733px;
 
   .line {
     width: 1129px;
@@ -217,4 +217,31 @@
 
     color: #ffffff;
   }
+}
+
+.firstLine {
+  width: 100vw;
+  height: 156px;
+
+  display: grid;
+  grid-template-rows: 25px 25px;
+  row-gap: 20px;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+
+  left: 0px;
+  padding-top: 86px;
+
+  background-color: #5043e7;
+
+  text-align: center;
+  font-size: 22px;
+  color: #ffffff;
+}
+
+.second {
+  width: 1440px;
+  height: 900px;
 }
