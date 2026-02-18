@@ -5,13 +5,13 @@
 
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   background: linear-gradient(to right bottom, #ffffff, #e3e7fb);
 }
 
 .Maindiv {
   width: 1440px;
-  height: 872px;
+  height: auto;
   background-color: none;
 }
 
@@ -21,10 +21,13 @@
   align-items: center;
   background-color: #ffffff;
 
-  width: 1336px;
+  width: 1270px;
   height: 60px;
 
-  border-radius: 30px;
+  margin-top: 21px;
+  margin-left: 6%;
+
+  border-radius: 15px;
 
   .logoImg {
     width: 129px;
@@ -42,7 +45,7 @@
     height: 40px;
     border-radius: 30px;
 
-    background-color: #5043E7;
+    background-color: #5043e7;
 
     color: white;
     font-size: 16px;
@@ -54,5 +57,109 @@
       height: 13px;
       margin-right: 10px;
     }
+  }
+}
+
+.first {
+  display: flex;
+  justify-content: center;
+  width: 1440px;
+  height: 7033px;
+
+  .line {
+    width: 1129px;
+    height: 228px;
+
+    position: absolute;
+
+    margin-top: 105px;
+  }
+
+  .peoplemom {
+    width: 77px;
+    height: 52px;
+
+    position: absolute;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    top: 160px;
+    margin-right: 1000px;
+  }
+
+  .people {
+    width: 70px;
+    height: 35px;
+
+    transform: rotate(15deg);
+  }
+}
+
+.icon {
+  width: 1270px;
+
+  position: absolute;
+
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+
+  margin-top: 165px;
+
+  .progress {
+    width: 78px;
+    height: 40px;
+
+    margin-right: 222px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 15px;
+    background-color: #e3e7fb;
+
+    font-size: 12px;
+    font-weight: 900;
+    color: #5071fb;
+  }
+
+  .file {
+    width: 77px;
+    height: auto;
+    margin-right: 107px;
+  }
+  .comment {
+    width: 104px;
+    height: auto;
+    margin-right: 104px;
+  }
+  .vote {
+    width: 101px;
+    height: auto;
+    margin-right: 100px;
+  }
+  .ai {
+    width: 94px;
+    height: auto;
+    margin-right: 204px;
+  }
+
+  .complete {
+    width: 78px;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 15px;
+    background-color: #ddfce6;
+
+    font-size: 12px;
+    font-weight: 900;
+    color: #2a8242;
   }
 }
