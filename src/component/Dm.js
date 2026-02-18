@@ -1,5 +1,5 @@
 
-import { useState, useEffect,useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import EmojiPicker from 'emoji-picker-react';
 
@@ -9,14 +9,16 @@ import send from "../asset/icon-send.png";
 import emoji from "../asset/icon-emoji.png";
 import DM from "../asset/icon-DM.png";
 
-function Dm({ token,roomId,isHost }) {
+function Dm({ token, roomId, isHost }) {
 
     const [EmojiModal, setEmojiModal] = useState(false);
 
     const [modalChat, setModalChat] = useState(false);
     const [Notice, setNotice] = useState(true);
     const [message, setMessage] = useState([]);
-    const ModalRef=useRef(null);
+    const ModalRef = useRef(null);
+
+    const [date, setDate] = useState(null);
     //외부클릭시 닫히게 지정해주기Ref!!
     // useEffect(() => {
 
@@ -52,8 +54,41 @@ function Dm({ token,roomId,isHost }) {
 
     // }, []);
 
-    useEffect(()=>{
-    },[])
+    useEffect(() => {
+        let Now = new Date();
+        setDate();
+        // console.log(Now.getFullYear());
+        // console.log(Now.getMonth());
+        // console.log(Now.getDate());
+        const formattedDate = `${Now.getFullYear()}년 ${Now.getMonth() + 1}월 ${Now.getDate()}일`;
+        // console.log(formattedDate);
+    }, []);
+
+    useEffect(() => {
+        // console.log(token);
+        // console.log(roomId);
+
+        // axios
+        //     .get(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`, {
+        //         headers: {
+        //             Authorization: `Bearer ${token}`,
+        //         },
+        //     })
+        //     .then((res) => {
+        //         if (res.status === 200 || res.status === 201) {
+        //             // setMessage(prev => [...prev, res.data]);
+        //             // console.log(res.data.messages);
+        //             const format = res.data.messages.map(item => ({
+        //                 time: item.createdAt,
+        //                 content:item.content,
+        //             }));
+        //             setMessage(format);
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         console.error("마이페이지 정보 가져오기 실패:", error);
+        //     });
+    }, [token, roomId])
 
     function sendMessage() {
 
@@ -70,7 +105,7 @@ function Dm({ token,roomId,isHost }) {
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
                     // setMessage(prev => [...prev, res.data]);
-                    Newmessage.value=null;
+                    Newmessage.value = null;
                 }
             })
             .catch((error) => {
@@ -121,13 +156,13 @@ function Dm({ token,roomId,isHost }) {
                         {message.map((message) => {
                             return (
                                 (isHost ?
-                                    <div className={style.HostTextBox}>
+                                    <div id={message.dmId} key={message.dmId} className={style.HostTextBox}>
                                         <div className={style.Text}>{message.content}</div>
-                                        {message.createdAt}
+                                        {message.time}
                                     </div>
                                     :
-                                    <div className={style.TextBox}>
-                                        {message.createdAt}
+                                    <div id={message.dmId} key={message.dmId} className={style.TextBox}>
+                                        {message.time}
                                         <div className={style.Text}>{message.content}</div>
                                     </div>
                                 )
@@ -135,7 +170,7 @@ function Dm({ token,roomId,isHost }) {
                         })}
 
                     </div>
-                    {!isHost&&<div className={style.Bottom}>
+                    {!isHost && <div className={style.Bottom}>
                         <div className={style.Buttons}>
                             <button onClick={(e) => buttonSendMessage(e)}>천천히해주세요...</button>
                             <button onClick={(e) => buttonSendMessage(e)}>5분만쉬어요</button>
