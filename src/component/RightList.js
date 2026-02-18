@@ -28,7 +28,7 @@ function RightList({ token, isHost, roomId, clickedAgendaId }) {
 
   useEffect(() => {
 
-    if (clickedAgendaId === null||token===null) {
+    if (clickedAgendaId === null || token === null) {
       return;
     }
     axios
@@ -148,6 +148,7 @@ function RightList({ token, isHost, roomId, clickedAgendaId }) {
       onChange={setMode}
     />,
     AI: <AI
+      clickedAgendaId={clickedAgendaId}
       token={token}
       onChange={setMode}
     />
