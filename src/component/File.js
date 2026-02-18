@@ -17,7 +17,6 @@ function File({ isHost,token,onChange, clickedAgendaId }) {
     const [x,setX]=useState(null);
 
     useEffect(() => {
-        console.log(window.crossOriginIsolated);
         axios
             .get(`${process.env.REACT_APP_HOST_URL}/file/${clickedAgendaId}`, {
                 headers: {
@@ -26,7 +25,6 @@ function File({ isHost,token,onChange, clickedAgendaId }) {
             })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
-                    console.log(res.data);
                     setFiles(res.data);
                 }
             })
@@ -47,7 +45,6 @@ function File({ isHost,token,onChange, clickedAgendaId }) {
             {
                 headers: {
                     Authorization: `Bearer ${token}`
-                    // Content-Type 굳이 안 써도 됨
                 }
             }
         )
@@ -64,10 +61,8 @@ function File({ isHost,token,onChange, clickedAgendaId }) {
         setIsPdf(file.isPdf);
         setFileChosenUrl(file.fileUrl);
     }
-    function DeleteFile(e) {
-        console.log(e.target);
-        const DeleteTarget = e.target.id;
-        axios.delete(`${process.env.REACT_APP_HOST_URL}/file/${DeleteTarget}`,
+    function DeleteFile(target) {
+        axios.delete(`${process.env.REACT_APP_HOST_URL}/file/${target}`,
             {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -75,8 +70,7 @@ function File({ isHost,token,onChange, clickedAgendaId }) {
             })
             .then(res => {
                 if (res.status === 200 || res.status === 201) {
-                    console.log(res);
-                    setFiles(prev => prev.filter(file => file.id !== DeleteTarget));
+                    setFiles(prev => prev.filter(file => file.id !== target.id));
                 }
             })
             .catch(error => {
@@ -118,21 +112,21 @@ function File({ isHost,token,onChange, clickedAgendaId }) {
                     {Files.map((file) => {
                         return (
                             <div 
-                            id={file.id} 
-                            key={file.id} 
+                            id={file.fileId} 
+                            key={file.fileId} 
                             className={style.box} 
-                            onMouseEnter={()=>setX(file.id)}
+                            onMouseEnter={()=>setX(file.fileId)}
                             onMouseLeave={()=>setX(null)}
                             onClick={(e) => {
                                 HandleChoise(file)
                             }}>
-                                <img id={file.id} src={file.fileUrl} />
-                                {x===file.id&&isHost&&<div id={file.id} className={style.Close} onClick={(e) => {
+                                <img id={file.fileId} src={file.fileUrl} />
+                                {x===file.fileId&&isHost&&<div id={file.fileId} className={style.Close} onClick={(e) => {
                                     e.stopPropagation();
-                                    DeleteFile(e)
+                                    DeleteFile(file.fileId)
                                 }}
                                 //x버튼
-                                ><h1 id={file.id}>+</h1></div>}
+                                ><h1 id={file.fileId}>+</h1></div>}
                             </div>
 
                         );

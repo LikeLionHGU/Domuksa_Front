@@ -209,7 +209,6 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
                 id: item.agenda.agendaId,
                 name: item.agenda.name,
               }));
-              setBlockId(null);
               setAgendas(Agendaformat);
             })
             .catch((error) => {
@@ -222,7 +221,6 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
       });
   }
   function EditAgenda(e, id) {
-    console.log(e);
     if (e.key === "Enter") {
       axios
         .patch(`${process.env.REACT_APP_HOST_URL}/agenda/${id}`, {
@@ -232,7 +230,6 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
           name: e.target.value,
         })
         .then((res) => {
-          console.log(res);
           if (res.status === 200) {
             // setAgendas(prev => prev.map(agenda => agenda.id === id ? { ...agenda, name: e.target.value } : agenda));
             axios
@@ -244,7 +241,6 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
                   },
                 })
               .then((res) => {
-                console.log(res);
                 const format = res.data.map(item => ({
                   id: item.agenda.agendaId,
                   name: item.agenda.name,
