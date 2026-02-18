@@ -90,7 +90,11 @@ function Header({
         console.log(msg.body);
         const data = JSON.parse(msg.body);
         console.log(data);
-        setState(data);
+        if (data === complete) {
+          setState("complete");
+        }else{
+          setState("running");
+        }
       });
     }
 
