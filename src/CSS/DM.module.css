@@ -73,6 +73,7 @@
             }
 
             .ChatList {
+                overflow: scroll;
                 margin-right: 10px;
                 margin-top: 20px;
                 margin-bottom: 8px;
