@@ -72,12 +72,15 @@ function Vote({ token, isHost, onChange, clickedAgendaId }) {
     }, [Newvote]);
     function addVote() {
         axios
-            .post(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+            .post(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`,
+                {
+                    title: "찬반투표",
                 },
-                title: "찬반투표",
-            })
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
 
@@ -243,7 +246,7 @@ function Vote({ token, isHost, onChange, clickedAgendaId }) {
             {
                 Newvote === true && isHost &&
                 <VoteNew
-                token={token}
+                    token={token}
                     setNewvote={setNewvote}
                     Voteobj={Voteobj}
                 />

@@ -90,7 +90,6 @@ function Header({
           },
         })
       .then((res) => {
-        console.log(res);
         setState("running");
       })
       .catch((error) => {

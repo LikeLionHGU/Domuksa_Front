@@ -130,12 +130,15 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
     }
     function EditChoise() {
         axios
-            .patch(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/voteSelect`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+            .patch(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/voteSelect`,
+                {
+                    voteOptionId: ChosenOption,
                 },
-                voteOptionId: ChosenOption,
-            },)
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                },)
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
                     setEdit(true);
@@ -169,9 +172,9 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
                         })
                         .then((res) => {
                             if (res.status === 200 || res.status === 201) {
-                                
+
                                 setResultOption(res.data);
-                        
+
                             }
                         })
                         .catch((error) => {
@@ -199,11 +202,11 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
                         {/* <div onClick={() => console.log(Most.map((item)=>item.id))}>aaaa</div> */}
                         {options.map((option) => {
                             return (
-                                <div id={option.voteOptionId} key={option.voteOptionId} className={Most.map(item=>item.id).includes(option.voteOptionId) ? style.ResultVote : style.Vote} onClick={(e) => handleOptionBlock(option.voteOptionId)}>
+                                <div id={option.voteOptionId} key={option.voteOptionId} className={Most.map(item => item.id).includes(option.voteOptionId) ? style.ResultVote : style.Vote} onClick={(e) => handleOptionBlock(option.voteOptionId)}>
                                     <div className={style.VoteText}>
                                         <h6>{option.content}</h6><h5>{option.selectCount}명 투표</h5>
                                     </div>
-                                    {Most.map(item=>item.id).includes(option.voteOptionId) && <img className={style.resultHammer} src={hammer} />}
+                                    {Most.map(item => item.id).includes(option.voteOptionId) && <img className={style.resultHammer} src={hammer} />}
                                 </div>
                             );
                         })}

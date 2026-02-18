@@ -9,12 +9,15 @@ function NewVote({ token, setNewvote, Voteobj }) {
     function addOption() {
 
         axios
-            .post(`${process.env.REACT_APP_HOST_URL}/vote/${Voteobj.vote.voteId}/option`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+            .post(`${process.env.REACT_APP_HOST_URL}/vote/${Voteobj.vote.voteId}/option`,
+                {
+                    contents: "옵션",
                 },
-                contents: "옵션",
-            })
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
                     setOptions([...options, res.data]);
@@ -27,12 +30,15 @@ function NewVote({ token, setNewvote, Voteobj }) {
 
     function editOption(e) {
         axios
-            .patch(`${process.env.REACT_APP_HOST_URL}/vote/${e.target.id}/option`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+            .patch(`${process.env.REACT_APP_HOST_URL}/vote/${e.target.id}/option`,
+                {
+                    content: e.target.value,
                 },
-                content: e.target.value,
-            })
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
                     setOptions(prev =>
@@ -78,12 +84,15 @@ function NewVote({ token, setNewvote, Voteobj }) {
         }
         const newtitle = document.getElementById("newVoteName").value;
         axios
-            .patch(`${process.env.REACT_APP_HOST_URL}/vote/${Voteobj.vote.voteId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+            .patch(`${process.env.REACT_APP_HOST_URL}/vote/${Voteobj.vote.voteId}`,
+                {
+                    title: newtitle,
                 },
-                title: newtitle,
-            })
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
                     setNewvote(false);
