@@ -48,8 +48,13 @@ function Landing() {
             </div>
 
             <div className={styles.firstText}>
-              <h1>이음</h1>
-              <p>침묵은 짧게, 아이디어는 깊게, 회의의 흐름을 잇다</p>
+              <div className={styles.textEmmm}>이음</div>
+              <div className={styles.text2}>
+                침묵은 짧게, 아이디어는 깊게, 회의의 흐름을 잇다
+              </div>
+              <div className={styles.start}>
+                시작하기
+              </div>
             </div>
           </div>
         </div>
