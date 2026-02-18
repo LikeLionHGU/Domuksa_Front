@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useRef,useEffect, useState } from "react";
 
 import axios from "axios";
 import Left from "../component/LeftList";
@@ -10,6 +10,10 @@ import CreateModal from "../component/CreateRoom.js";
 import LogoutModal from "../component/LogoutModal.js";
 
 import style from "../CSS/Meet.module.css";
+
+//웹소켓+ stomp관련된 imports
+import SockJS from "sockjs-client";
+import { Client } from "@stomp/stompjs";
 
 function Meet() {
   const [clickedAgendaId, setClickedAgendaId] = useState(null);
@@ -31,6 +35,56 @@ function Meet() {
   const [deleteModal, setDeleteModal] = useState(false);
   const [Logoutmodal, setLogoutmodal] = useState(false);
 
+  //websocket
+  const BackWebsocket = `${process.env.REACT_APP_HOST_URL}/ws`;
+
+  //안건 선언한거 저장
+  const clientRef = useRef(null);
+
+  //웹소켓
+  useEffect(() => {
+
+    if (!token || !roomId) return;
+    console.log(token);
+    const client = new Client({
+      webSocketFactory: () => new SockJS(BackWebsocket),
+      connectHeaders: {
+        Authorization: `Bearer ${token}`,
+      },
+      //다시 연결시도 빈도수
+      reconnectDelay: 5000,
+      // debug: (str) => {
+      //   console.log("STOMP DEBUG:", str);
+      // }
+    });
+    //연결성공시
+    client.onConnect = () => {
+      console.log("연결성공");
+      //방상태 변경
+      client.subscribe(`/topic/room/state/${roomId}`, (msg) => {
+        console.log(msg.body);
+        setState(msg.body);
+      });
+    }
+
+    //연결시도
+    client.activate();
+
+    clientRef.current = client;
+
+    client.onStompError = (res) => {
+      console.log(res);
+    }
+
+    client.onWebSocketError = () => {
+      console.log("실패");
+    }
+    client.onWebSocketClose = () => {
+      console.log("연결 끝");
+    }
+
+  }, [token, roomId])
+
   useEffect(() => {
     setToken(localStorage.getItem("accessToken"));
   }, [])
@@ -47,10 +101,12 @@ function Meet() {
           },
         })
         .then((res) => {
+          console.log(res);
           setCode(res.data.code);
           setState(res.data.state);
           setRoomId(res.data.roomId);
           setRoomName(res.data.roomName);
+          setClickedAgendaId(res.data.currentAgendaSequence);
 
           if (res.data.role === "host") {
             setIshost(true);

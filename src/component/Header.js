@@ -8,9 +8,7 @@ import copy from "../asset/icon-copy.png";
 import logo from "../asset/icon-logo.png";
 import out from "../asset/icon-out.png";
 
-//웹소켓+ stomp관련된 imports
-import SockJS from "sockjs-client";
-import { Client } from "@stomp/stompjs";
+
 
 
 
@@ -21,15 +19,12 @@ function Header({
   token, isHost, code, state, roomId, name, email, picture
 }) {
 
-  //websocket
-  const BackWebsocket = `${process.env.REACT_APP_HOST_URL}/ws`;
+
 
   const navigate = useNavigate();
   const [State, setState] = useState("");
   const [profileOpen, setProfileOpen] = useState(false);
   const ModalRef = useRef(null);
-
-  const clientRef = useRef(null);
 
 
   useEffect(() => {
@@ -65,59 +60,6 @@ function Header({
     setPicture(JSON.parse(user).profileUrl);
 
   }, []);
-
-  //웹소켓
-  useEffect(() => {
-
-    if (!token || !roomId) return;
-    console.log(token);
-    const client = new Client({
-      webSocketFactory: () => new SockJS(BackWebsocket),
-      connectHeaders: {
-        Authorization: `Bearer ${token}`,
-      },
-      //다시 연결시도 빈도수
-      reconnectDelay: 5000,
-      debug: (str) => {
-        console.log("STOMP DEBUG:", str);
-      }
-    });
-
-    //연결성공시
-    client.onConnect = () => {
-      console.log("연결성공");
-      client.subscribe(`/topic/room/state/${roomId}`, (msg) => {
-        console.log(msg.body);
-        const data = JSON.parse(msg.body);
-        console.log(data);
-        if (data === complete) {
-          setState("complete");
-        }else{
-          setState("running");
-        }
-      });
-    }
-
-    //연결시도
-    client.activate();
-
-    clientRef.current = client;
-
-    client.onStompError = (res) => {
-      console.log(res);
-    }
-
-    client.onWebSocketError = () => {
-      console.log("실패");
-    }
-    client.onWebSocketClose = () => {
-      console.log("연결 끝");
-    }
-    if (client.connected) {
-      console.log("연결되어 있음");
-    }
-
-  }, [token, roomId])
 
   function handleButton() {
     if (State === "running") {
