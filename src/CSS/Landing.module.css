@@ -93,6 +93,24 @@
     top: 415px;
     margin-right: 830px;
   }
+  .clock {
+    width: 39px;
+    height: 47px;
+
+    position: absolute;
+
+    top: 150px;
+    margin-left: 930px;
+  }
+  .dm {
+    width: 50px;
+    height: 50px;
+
+    position: absolute;
+
+    top: 382px;
+    margin-left: 1030px;
+  }
 }
 
 .icon {

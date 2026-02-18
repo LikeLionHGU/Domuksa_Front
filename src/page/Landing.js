@@ -8,6 +8,8 @@ import vote from "../asset/Mainicon-color-vote.png";
 import ai from "../asset/Mainicon-color-Ai.png";
 import people from "../asset/icon-people-blue.png";
 import glass from "../asset/icon-glass.png";
+import clock from "../asset/icon-clock.png";
+import dm from "../asset/icon-dm-landing.png";
 
 function Landing() {
   localStorage.removeItem("accessToken");
@@ -33,6 +35,8 @@ function Landing() {
 
             <img className={styles.people} src={people} alt="사람들" />
             <img className={styles.glass} src={glass} alt="돋보기" />
+            <img className={styles.clock} src={clock} alt="시계" />
+            <img className={styles.dm} src={dm} alt="디엠" />
 
             <div className={styles.icon}>
               <div className={styles.progress}>• 진행중</div>
@@ -41,6 +45,11 @@ function Landing() {
               <img className={styles.vote} src={vote} alt="투표" />
               <img className={styles.ai} src={ai} alt="ai" />
               <div className={styles.complete}>• 완료</div>
+            </div>
+
+            <div className={styles.firstText}>
+              <h1>이음</h1>
+              <p>침묵은 짧게, 아이디어는 깊게, 회의의 흐름을 잇다</p>
             </div>
           </div>
         </div>
