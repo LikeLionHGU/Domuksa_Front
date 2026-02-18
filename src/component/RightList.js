@@ -31,6 +31,7 @@ function RightList({ token, isHost, roomId, clickedAgendaId }) {
     if (clickedAgendaId === null || token === null) {
       return;
     }
+    console.log(clickedAgendaId);
     axios
       .get(
         `${process.env.REACT_APP_HOST_URL}/agenda/${clickedAgendaId}`,
@@ -40,10 +41,10 @@ function RightList({ token, isHost, roomId, clickedAgendaId }) {
           },
         })
       .then((res) => {
-        if (res.data.config.voteEnabled) setVoteState(true);
-        if (res.data.config.commentEnabled) setChatState(true);
-        if (res.data.config.fileEnabled) setFileState(true);
-        if (res.data.config.aiSummaryEnabled) setAIState(true);
+        if (res.data.config.voteEnabled) setVoteState(true);else{setVoteState(false)}
+        if (res.data.config.commentEnabled) setChatState(true);else{setChatState(false)}
+        if (res.data.config.fileEnabled) setFileState(true);else{setFileState(false)}
+        if (res.data.config.aiSummaryEnabled) setAIState(true);else{setAIState(false)}
       })
       .catch((error) => {
         if (error.status === 500) {

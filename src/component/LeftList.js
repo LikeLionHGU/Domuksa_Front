@@ -65,7 +65,9 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, stateObj,
           },
         })
       .then((res) => {
+        console.log(res);
         const format = res.data.map(item => ({
+          sequence:item.agenda.sequence,
           id: item.agenda.agendaId,
           name: item.agenda.name,
         }));
@@ -77,13 +79,16 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, stateObj,
 
   }, [roomId, stateObj]);
 
-  // useEffect(() => {
-  //   //아직 첫 안건 번호가 없다면, 실행하지 않는다, 첫안건 번호 세팅후 실행
-  //   if (clickedAgendaId === null) {
-  //     return;
-  //   }
-  //   setBlockId(clickedAgendaId)
-  // }, [clickedAgendaId]);
+  useEffect(() => {
+    
+  }, [])
+  useEffect(() => {
+    //아직 첫 안건 번호가 없다면, 실행하지 않는다, 첫안건 번호 세팅후 실행
+    if (clickedAgendaId === null) {
+      return;
+    }
+    setBlockId(clickedAgendaId)
+  }, [clickedAgendaId]);
 
   function handleSetting() {
     if (Setting === true) {
@@ -341,8 +346,8 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, stateObj,
                 onMouseEnter={() => setHover(agenda.id)}
                 onMouseLeave={() => setHover(null)}
                 key={agenda.id}
-                id={agenda.id}
-                className={blockId === agenda.id && isHost ? style.ChosenBlock : style.Block}
+                id={agenda.sequence}
+                className={blockId === agenda.sequence && isHost ? style.ChosenBlock : style.Block}
                 onClick={(e) => isHost && handleBlock(e)}
               >
                 <div className={style.Text} onDoubleClick={() => setChanged(agenda.id)}>
