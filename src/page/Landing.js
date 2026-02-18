@@ -1,4 +1,4 @@
-import GoogleLogin from "../component/loginPage";
+import googleLogoImg from "../asset/googleLogo.png";
 import styles from "../CSS/Landing.module.css";
 import logoImg from "../asset/icon-logo.png";
 import landingBg from "../asset/background_line-landing.png";
@@ -17,6 +17,10 @@ function Landing() {
   localStorage.removeItem("userInfo");
   localStorage.removeItem("roomId");
 
+  const handleGoogleLogin = () => {
+    window.location.href = `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_AUTH_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_GOOGLE_AUTH_REDIRECT_URI}&response_type=code&scope=email profile`;
+  };
+
   return (
     <>
       <div className={styles.extradiv}>
@@ -27,7 +31,18 @@ function Landing() {
             <div className={styles.emmm}>이음</div>
             <div className={styles.service}>서비스</div>
             <div className={styles.ask}>문의</div>
-            <GoogleLogin />
+            <div
+              className={styles.loginButton}
+              alt=""
+              onClick={handleGoogleLogin}
+            >
+              <img
+                className={styles.googleLogo}
+                src={googleLogoImg}
+                alt="구글로고"
+              />
+              로그인
+            </div>
           </div>
 
           <div className={styles.first}>
@@ -48,8 +63,31 @@ function Landing() {
             </div>
 
             <div className={styles.firstText}>
-              <h1>이음</h1>
-              <p>침묵은 짧게, 아이디어는 깊게, 회의의 흐름을 잇다</p>
+              <div className={styles.textEmmm}>이음</div>
+              <div className={styles.text2}>
+                침묵은 짧게, 아이디어는 깊게, 회의의 흐름을 잇다
+              </div>
+              <div className={styles.start} onClick={handleGoogleLogin}>
+                시작하기
+              </div>
+            </div>
+          </div>
+          <div className={styles.firstLine}>
+            <div>
+              “혹시 오늘도 ‘음...’ 하다가 <strong>회의 </strong>
+              끝나셨나요?”
+            </div>
+            <div>
+              대학생 <strong>93%</strong>가 겪는 회의의 비효율, 가장 절실했던
+              당사자들이 직접 <strong>마침표</strong>를 찍습니다
+            </div>
+          </div>
+          <div className={styles.second}>
+            <div className={styles.secondText}>
+              <div className={styles.secondText1}>이음 만의 기능</div>
+              <div className={styles.secondText2}>
+                복잡한 건 빼고, 결론만 남기는 주요 기능
+              </div>
             </div>
           </div>
         </div>

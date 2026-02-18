@@ -1,11 +1,10 @@
 .extradiv {
   display: flex;
   width: 100vw;
-  height: 100vh;
+  height: auto;
 
   flex-direction: column;
   align-items: center;
-  /* justify-content: center; */
   background: linear-gradient(to right bottom, #ffffff, #e3e7fb);
 }
 
@@ -64,7 +63,7 @@
   display: flex;
   justify-content: center;
   width: 1440px;
-  height: 7033px;
+  height: 733px;
 
   .line {
     width: 1129px;
@@ -178,4 +177,84 @@
     font-weight: 900;
     color: #2a8242;
   }
+}
+
+.firstText {
+  width: 338px;
+  height: 205px;
+
+  display: grid;
+  place-items: center;
+  align-items: center;
+
+  position: absolute;
+
+  top: 409px;
+
+  /* text-align: center; */
+
+  .textEmmm {
+    font-size: 80px;
+    font-weight: 800;
+    margin-bottom: 20px;
+  }
+
+  .text2 {
+    font-size: 16px;
+    margin-bottom: 35px;
+  }
+
+  .start {
+    width: 120px;
+    height: 40px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    background-color: #5043e7;
+    border-radius: 30px;
+
+    color: #ffffff;
+  }
+}
+
+.firstLine {
+  width: 100vw;
+  height: 156px;
+
+  display: grid;
+  grid-template-rows: 25px 25px;
+  row-gap: 20px;
+  justify-content: center;
+  align-items: center;
+
+  position: absolute;
+
+  left: 0px;
+  padding-top: 86px;
+
+  background-color: #5043e7;
+
+  text-align: center;
+  font-size: 22px;
+  color: #ffffff;
+}
+
+.second {
+  width: 1440px;
+  height: 900px;
+
+  display: grid;
+
+  justify-content: center;
+
+  position: absolute;
+
+  top: 1056px;
+}
+
+.secondText {
+  margin-top: 150px;
+  text-align: center;
 }
