@@ -53,11 +53,7 @@ function Meet() {
       connectHeaders: {
         Authorization: `Bearer ${token}`,
       },
-      //다시 연결시도 빈도수
       reconnectDelay: 5000,
-      // debug: (str) => {
-      //   console.log("STOMP DEBUG:", str);
-      // }
     });
     //연결성공시
     client.onConnect = () => {
@@ -77,6 +73,7 @@ function Meet() {
         console.log(Format);
         setStateObj(Format);
       });
+      
     }
 
     //연결시도
@@ -113,6 +110,7 @@ function Meet() {
           },
         })
         .then((res) => {
+          console.log(res.data);
           setCode(res.data.code);
           setState(res.data.state);
           setRoomId(res.data.roomId);
