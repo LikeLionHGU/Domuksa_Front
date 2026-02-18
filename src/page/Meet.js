@@ -25,6 +25,9 @@ function Meet() {
   const [state, setState] = useState(null);
   const [token, setToken] = useState(null);
 
+  //Right의 리스트
+  const [stateObj, setStateObj] = useState([]);
+
   //header state
   const [name, setName] = useState(null);
   const [email, setEmail] = useState(null);
@@ -45,7 +48,6 @@ function Meet() {
   useEffect(() => {
 
     if (!token || !roomId) return;
-    console.log(token);
     const client = new Client({
       webSocketFactory: () => new SockJS(BackWebsocket),
       connectHeaders: {
@@ -67,7 +69,12 @@ function Meet() {
       });
 
       client.subscribe(`/topic/agenda/list/${roomId}`, (msg) => {
-        console.log(msg);
+        const Format = JSON.parse(msg.body).map(item => ({
+          id: item.agenda.agendaId,
+          name: item.agenda.name,
+        }));
+        console.log(Format);
+        setStateObj(Format);
       });
     }
 
@@ -105,7 +112,6 @@ function Meet() {
           },
         })
         .then((res) => {
-          console.log(res);
           setCode(res.data.code);
           setState(res.data.state);
           setRoomId(res.data.roomId);
@@ -152,6 +158,7 @@ function Meet() {
             setRoomName={setRoomName}
             deleteModal={setDeleteModal}
             setClickedAgendaId={setClickedAgendaId}
+            stateObj={stateObj}
             token={token}
             isHost={isHost}
             roomId={roomId}

@@ -96,12 +96,15 @@ function Dm({ token, roomId, isHost }) {
 
         console.log(Newmessage);
         axios
-            .post(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+            .post(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`,
+                {
+                    content: Newmessage,
                 },
-                content: Newmessage,
-            })
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
                     // setMessage(prev => [...prev, res.data]);
@@ -115,12 +118,15 @@ function Dm({ token, roomId, isHost }) {
     function buttonSendMessage(e) {
         const Newmessage = e.target.value;
         axios
-            .post(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+            .post(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`,
+                {
+                    content: Newmessage,
                 },
-                content: Newmessage,
-            })
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
                     setMessage(prev => [...prev, res.data])

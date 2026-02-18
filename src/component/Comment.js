@@ -32,12 +32,15 @@ function Comment({ token, clickedAgendaId, onChange }) {
         const Input = document.getElementById("input").value;
 
         axios
-            .post(`${process.env.REACT_APP_HOST_URL}/comment/${clickedAgendaId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+            .post(`${process.env.REACT_APP_HOST_URL}/comment/${clickedAgendaId}`,
+                {
+                    content: Input,
                 },
-                content: Input,
-            })
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
                     setComments(prev => [res.data, ...prev]);

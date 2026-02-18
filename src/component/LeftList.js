@@ -11,7 +11,7 @@ import bin from "../asset/icon-trashbin.png";
 import visible from "../asset/icon-visible.png";
 import add from "../asset/icon-add.png";
 
-function LeftList({ token, isHost, roomId, roomName, deleteModal,
+function LeftList({ token, isHost, roomId, roomName, deleteModal, stateObj,
   setClickedAgendaId, clickedAgendaId, setRoomName
 }) {
 
@@ -23,7 +23,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
   const [Changed, setChanged] = useState(null);
 
   //안건 hover전용
-  const [hover,setHover]=useState(null);
+  const [hover, setHover] = useState(null);
 
   //[방설정]
   const [Setting, setSetting] = useState(false);
@@ -34,6 +34,10 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
   //Ref
   const ModalRef = useRef(null);
   const inputRef = useRef(null);
+
+  // useEffect(() => {
+  //   setAgendas(stateObj);
+  // }, [stateObj])
 
   useEffect(() => {
     function HandClickoutsideofModal(e) {
@@ -74,7 +78,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
         console.error("마이페이지 정보 가져오기 실패:", error);
       });
 
-  }, [roomId]);
+  }, [roomId,stateObj]);
 
   useEffect(() => {
     //아직 첫 안건 번호가 없다면, 실행하지 않는다, 첫안건 번호 세팅후 실행
@@ -114,13 +118,16 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
     const newRoomName = e.target.querySelector("#newRoomName").value;
     const newPassword = e.target.querySelector("#newPassword").value;
     axios
-      .patch(`${process.env.REACT_APP_HOST_URL}/room/${roomId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      .patch(`${process.env.REACT_APP_HOST_URL}/room/${roomId}`,
+        {
+          name: newRoomName,
+          password: newPassword,
         },
-        name: newRoomName,
-        password: newPassword,
-      })
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
       .then((res) => {
         console.log(res);
         if (res.status === 200) {
@@ -138,13 +145,16 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
     const roomId = localStorage.getItem("roomId");
 
     axios
-      .post(`${process.env.REACT_APP_HOST_URL}/agenda/${roomId}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      .post(`${process.env.REACT_APP_HOST_URL}/agenda/${roomId}`,
+        {
+          name: "안건 제목",
+          sequence: 1
         },
-        name: "안건 제목",
-        sequence: 1
-      })
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
       .then((res) => {
         if (res.status === 200) {
           axios
@@ -160,7 +170,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
                 id: item.agenda.agendaId,
                 name: item.agenda.name,
               }));
-              if(agendas===null){
+              if (agendas === null) {
                 setAgendas(format);
                 console.log(agendas);
                 setClickedAgendaId(agendas.id);
@@ -219,12 +229,15 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
   function EditAgenda(e, id) {
     if (e.key === "Enter") {
       axios
-        .patch(`${process.env.REACT_APP_HOST_URL}/agenda/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        .patch(`${process.env.REACT_APP_HOST_URL}/agenda/${id}`,
+          {
+            name: e.target.value,
           },
-          name: e.target.value,
-        })
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
         .then((res) => {
           if (res.status === 200) {
             // setAgendas(prev => prev.map(agenda => agenda.id === id ? { ...agenda, name: e.target.value } : agenda));
@@ -328,8 +341,8 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
 
             {agendas.map((agenda) => (
               <div
-                onMouseEnter={()=>setHover(agenda.id)}
-                onMouseLeave={()=>setHover(null)}
+                onMouseEnter={() => setHover(agenda.id)}
+                onMouseLeave={() => setHover(null)}
                 key={agenda.id}
                 id={agenda.id}
                 className={blockId === agenda.id && isHost ? style.ChosenBlock : style.Block}
@@ -338,7 +351,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal,
                 <div className={style.Text} onDoubleClick={() => setChanged(agenda.id)}>
                   <span>•</span> {Changed === agenda.id ? <input id="newAgendaName" ref={inputRef} onKeyDown={(e) => isHost && EditAgenda(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.name}</h1>}
                 </div>
-                {hover===agenda.id&&isHost && <h3 alt="option"
+                {hover === agenda.id && isHost && <h3 alt="option"
                   onClick={(e) => {
                     handleOption(e, agenda.id);
                   }} >⋮</h3>}
