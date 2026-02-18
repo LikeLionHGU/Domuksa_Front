@@ -69,6 +69,7 @@ function Meet() {
       });
 
       client.subscribe(`/topic/agenda/list/${roomId}`, (msg) => {
+        console.log(msg.body);
         const Format = JSON.parse(msg.body).map(item => ({
           id: item.agenda.agendaId,
           name: item.agenda.name,

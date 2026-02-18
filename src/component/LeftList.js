@@ -16,7 +16,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, stateObj,
 }) {
 
   //[안건]
-  const [blockId, setBlockId] = useState(null);
+  const [blockId, setBlockId] = useState(clickedAgendaId);
   const [agendas, setAgendas] = useState([]);
 
   //[안건이름변경]
@@ -35,10 +35,6 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, stateObj,
   const ModalRef = useRef(null);
   const inputRef = useRef(null);
 
-  // useEffect(() => {
-  //   setAgendas(stateObj);
-  // }, [stateObj])
-
   useEffect(() => {
     function HandClickoutsideofModal(e) {
       if (ModalRef.current && !ModalRef.current.contains(e.target)) {
@@ -55,6 +51,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, stateObj,
     }
   }, [ModalId, inputRef]);
 
+  //리스브 불러오는거
   useEffect(() => {
     if (roomId === null) {
       return;
@@ -78,15 +75,15 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, stateObj,
         console.error("마이페이지 정보 가져오기 실패:", error);
       });
 
-  }, [roomId,stateObj]);
+  }, [roomId, stateObj]);
 
-  useEffect(() => {
-    //아직 첫 안건 번호가 없다면, 실행하지 않는다, 첫안건 번호 세팅후 실행
-    if (clickedAgendaId === null) {
-      return;
-    }
-    setBlockId(clickedAgendaId)
-  }, [clickedAgendaId]);
+  // useEffect(() => {
+  //   //아직 첫 안건 번호가 없다면, 실행하지 않는다, 첫안건 번호 세팅후 실행
+  //   if (clickedAgendaId === null) {
+  //     return;
+  //   }
+  //   setBlockId(clickedAgendaId)
+  // }, [clickedAgendaId]);
 
   function handleSetting() {
     if (Setting === true) {
