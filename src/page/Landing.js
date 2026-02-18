@@ -82,7 +82,14 @@ function Landing() {
               당사자들이 직접 <strong>마침표</strong>를 찍습니다
             </div>
           </div>
-          <div className={styles.second}></div>
+          <div className={styles.second}>
+            <div className={styles.secondText}>
+              <div className={styles.secondText1}>이음 만의 기능</div>
+              <div className={styles.secondText2}>
+                복잡한 건 빼고, 결론만 남기는 주요 기능
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </>

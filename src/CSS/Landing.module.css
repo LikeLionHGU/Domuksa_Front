@@ -244,4 +244,17 @@
 .second {
   width: 1440px;
   height: 900px;
+
+  display: grid;
+
+  justify-content: center;
+
+  position: absolute;
+
+  top: 1056px;
+}
+
+.secondText {
+  margin-top: 150px;
+  text-align: center;
 }
