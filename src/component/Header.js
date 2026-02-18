@@ -15,14 +15,13 @@ import out from "../asset/icon-out.png";
 
 //사이트 메인 아이콘 + 구글 아이콘 + 방번호 + 완료/진행중 상태
 function Header({
-  setLogoutmodal, setEmail, setName, setPicture,
+  setLogoutmodal, setEmail, setName, setPicture,setState,
   token, isHost, code, state, roomId, name, email, picture
 }) {
 
 
 
   const navigate = useNavigate();
-  const [State, setState] = useState("");
   const [profileOpen, setProfileOpen] = useState(false);
   const ModalRef = useRef(null);
 
@@ -62,7 +61,7 @@ function Header({
   }, []);
 
   function handleButton() {
-    if (State === "running") {
+    if (state === "running") {
       axios
         .patch(`
           ${process.env.REACT_APP_HOST_URL}/room/${roomId}/state`,
@@ -117,7 +116,7 @@ function Header({
       </div>
 
       <div className={style.Right}>
-        <div id="state" className={State === "running" ? style.StateIng : style.StateFinish} onClick={() => isHost && handleButton()}><strong>•</strong>&nbsp;{State === "running" ? "진행중" : "완료"}</div>
+        <div id="state" className={state === "running" ? style.StateIng : style.StateFinish} onClick={() => isHost && handleButton()}><strong>•</strong>&nbsp;{state === "running" ? "진행중" : "완료"}</div>
         <div id="RoomNumber" className={style.Number} onClick={() => handleRoomNumber()}>{code}<img alt="copy" src={copy} /></div>
         <img alt="profileicon" src={picture} onClick={() => setProfileOpen(true)} />
 

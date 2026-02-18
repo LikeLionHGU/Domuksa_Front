@@ -1,4 +1,4 @@
-import { useRef,useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 
 import axios from "axios";
 import Left from "../component/LeftList";
@@ -64,6 +64,10 @@ function Meet() {
       client.subscribe(`/topic/room/state/${roomId}`, (msg) => {
         console.log(msg.body);
         setState(msg.body);
+      });
+
+      client.subscribe(`/topic/agenda/list/${roomId}`, (msg) => {
+        console.log(msg);
       });
     }
 
