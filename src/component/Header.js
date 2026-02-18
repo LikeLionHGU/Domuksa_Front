@@ -87,9 +87,10 @@ function Header({
     client.onConnect = () => {
       console.log("연결성공");
       client.subscribe(`/topic/room/state/${roomId}`, (msg) => {
-        console.log(msg);
+        console.log(msg.body);
         const data = JSON.parse(msg.body);
-        setState(data.state);
+        console.log(data);
+        setState(data);
       });
     }
 
