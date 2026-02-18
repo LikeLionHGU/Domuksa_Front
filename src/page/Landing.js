@@ -10,6 +10,9 @@ import people from "../asset/icon-people-blue.png";
 import glass from "../asset/icon-glass.png";
 import clock from "../asset/icon-clock.png";
 import dm from "../asset/icon-dm-landing.png";
+import fimg1 from "../asset/landing-function1.png";
+import fimg2 from "../asset/landing-function2.png";
+import fimg3 from "../asset/landing-function3.png";
 
 function Landing() {
   localStorage.removeItem("accessToken");
@@ -84,9 +87,36 @@ function Landing() {
           </div>
           <div className={styles.second}>
             <div className={styles.secondText}>
-              <div className={styles.secondText1}>이음 만의 기능</div>
+              <div className={styles.secondText1}>
+                <span>이음 </span>만의 기능
+              </div>
               <div className={styles.secondText2}>
                 복잡한 건 빼고, 결론만 남기는 주요 기능
+              </div>
+            </div>
+            <div className={styles.functions}>
+              <div className={styles.function}>
+                <img className={styles.functionImg} src={fimg1} alt="기능1" />
+                <div className={styles.functionTitle}>익명 기반 소통</div>
+                <div className={styles.functionDetail}>
+                  모든 툴 익명 보장. 목소리 큰 팀원이 이끄는 회의는 끝났습니다.
+                  당신의 ‘진짜’ 생각을 편하게 던지세요
+                </div>
+              </div>
+              <div className={styles.function}>
+                <img className={styles.functionImg} src={fimg2} alt="기능2" />
+                <div className={styles.functionTitle}>안건보드</div>
+                <div className={styles.functionDetail}>
+                  회의 주제가 한눈에 안건보드가 흐름을 잡아줘요
+                </div>
+              </div>
+              <div className={styles.function}>
+                <img className={styles.functionImg} src={fimg3} alt="기능3" />
+                <div className={styles.functionTitle}>회의 툴 블록</div>
+                <div className={styles.functionDetail}>
+                  의견 제시에서 결론까지 블록 하나로<br/> 더 이상 툴 사이에서 길을
+                  잃지 마세요
+                </div>
               </div>
             </div>
           </div>
