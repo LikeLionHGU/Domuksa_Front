@@ -54,6 +54,7 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
                     if (res.data.voteSelection === null) {
                         setEdit(false);
                     } else {
+                        setEditting(false);
                         setEdit(true);
                         setChosenOption(res.data.voteSelection.voteOptionId);
                     }
@@ -100,7 +101,6 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
                 voteOptionId: ChosenOption,
             },)
             .then((res) => {
-                console.log(res);
                 if (res.status === 200 || res.status === 201) {
                     // setResult(true);
                     setEdit(true);
@@ -120,7 +120,6 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
                 },
             },)
             .then((res) => {
-                console.log(res);
                 if (res.status === 200 || res.status === 201) {
                     setDetail(false);
                 }
@@ -138,7 +137,6 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
                 voteOptionId: ChosenOption,
             },)
             .then((res) => {
-                console.log(res);
                 if (res.status === 200 || res.status === 201) {
                     setEdit(true);
                     setShowBtn(false);
@@ -171,9 +169,9 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
                         })
                         .then((res) => {
                             if (res.status === 200 || res.status === 201) {
-                                console.log(res.data);
+                                
                                 setResultOption(res.data);
-                                console.log(ResultOption);
+                        
                             }
                         })
                         .catch((error) => {
