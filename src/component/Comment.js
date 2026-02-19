@@ -74,14 +74,14 @@ function Comment({ now, token, clickedAgendaId, onChange, socketComment }) {
 
                 <form>
                     <label>
-                        <textarea 
-                        placeholder="여기에 의견 남겨주세요" 
-                        id="input" 
-                        value={input} 
-                        onChange={(e)=>setInput(e.target.value)}
-                        onKeyDown={(e)=>{
-                            if(e.key==="Enter")commentWrite();
-                        }}
+                        <textarea
+                            placeholder="여기에 의견 남겨주세요"
+                            id="input"
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            onKeyDown={(e) => {
+                                if (e.key === "Enter") { e.preventDefault(); commentWrite(); }
+                            }}
                         />
                         <button onClick={(e) => {
                             e.preventDefault();
