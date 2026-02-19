@@ -89,12 +89,17 @@ function Home() {
     }
 
     axios
-      .get(`${process.env.REACT_APP_HOST_URL}/user/me/running`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      .get(
+        `${process.env.REACT_APP_HOST_URL}/user/me/running`,
+        {
+          userId: userId,
         },
-        userId: userId,
-      })
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
       .then((res) => {
         setProgressRooms(res.data);
       })
@@ -103,12 +108,17 @@ function Home() {
       });
 
     axios
-      .get(`${process.env.REACT_APP_HOST_URL}/user/me/complete`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      .get(
+        `${process.env.REACT_APP_HOST_URL}/user/me/complete`,
+        {
+          userId: userId,
         },
-        userId: userId,
-      })
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+      )
       .then((res) => {
         setCompleteRooms(res.data);
       })
@@ -120,12 +130,17 @@ function Home() {
   useEffect(() => {
     if (code !== null && code.length === 10) {
       axios
-        .get(`${process.env.REACT_APP_HOST_URL}/room/code?code=${code}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        .get(
+          `${process.env.REACT_APP_HOST_URL}/room/code?code=${code}`,
+          {
+            code: code,
           },
-          code: code,
-        })
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
         .then((res) => {
           setRoomId(res.data.roomId);
           setIsPassword(res.data.password);
