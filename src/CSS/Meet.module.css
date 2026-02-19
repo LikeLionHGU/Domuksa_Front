@@ -18,9 +18,11 @@ body {
     input {
         outline: none;
     }
+}
 
-    scrollbar-width: none;
-    -ms-overflow-style: none;
+/* 기본 스크롤 이상한회색 부분 빼기 */
+body::-webkit-scrollbar {
+    display: none;
 }
 
 .extradiv {

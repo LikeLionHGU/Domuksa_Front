@@ -162,7 +162,9 @@ function Meet() {
 
     //페이지 꺼지면 소켓 연결 끝
     window.addEventListener('beforeunload', () => client.deactivate());
-
+    return (() => {
+      client.deactivate();
+    })
   }, [token, roomId])
 
   //투표 결과 구독은 따로,
@@ -170,7 +172,7 @@ function Meet() {
     if (!clientRef.current || !socketVoteId) return;
 
     const sub = clientRef.current.subscribe(
-      `/topic/vote/${socketVoteId}`,(msg) => {
+      `/topic/vote/${socketVoteId}`, (msg) => {
         console.log("구독 작동");
         setSocketVoteResult(msg.body);
       }

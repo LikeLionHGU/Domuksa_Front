@@ -20,16 +20,27 @@ function Dm({ socketDm, now, token, roomId, isHost }) {
     const ChatRef = useRef(null);
 
     const [input, setInput] = useState("");
+
+    useEffect(() => {
+        function HandClickoutsideofModal(e) {
+            if (ModalRef.current && !ModalRef.current.contains(e.target)) {
+                setEmojiModal(false);
+            }
+        }
+        document.addEventListener("mousedown", HandClickoutsideofModal);
+
+        return () => {
+            document.removeEventListener("mousedown", HandClickoutsideofModal);
+        }
+    }, [EmojiModal]);
+
     useEffect(() => {
         if (ChatRef.current) {
             ChatRef.current.scrollTop = ChatRef.current.scrollHeight;
         }
-    }, [message,modalChat])
+    }, [message, modalChat])
 
     useEffect(() => {
-        // if (ChatRef.current !== null) {
-        //     ChatRef.currentscrollTop = ChatRef.current.scrollHeight;
-        // }
         axios
             .get(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`, {
                 headers: {
@@ -72,8 +83,7 @@ function Dm({ socketDm, now, token, roomId, isHost }) {
             });
     }
     function buttonSendMessage(e) {
-        console.log(e.target.value);
-        const Newmessage = e.target.value;
+        const Newmessage = e.target.innerText;
         axios
             .post(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`,
                 {
@@ -155,7 +165,8 @@ function Dm({ socketDm, now, token, roomId, isHost }) {
                                 value={input}
                                 onChange={(e) => setInput(e.target.value)}
                                 onKeyDown={(e) => {
-                                    if(e.key==="Enter"){
+                                    if (e.key === "Enter") {
+                                        e.preventDefault();
                                         sendMessage();
                                     }
                                 }} />
