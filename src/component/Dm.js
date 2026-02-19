@@ -72,6 +72,7 @@ function Dm({ socketDm, now, token, roomId, isHost }) {
             });
     }
     function buttonSendMessage(e) {
+        console.log(e.target.value);
         const Newmessage = e.target.value;
         axios
             .post(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`,

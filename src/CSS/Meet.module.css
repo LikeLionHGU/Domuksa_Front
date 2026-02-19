@@ -18,6 +18,9 @@ body {
     input {
         outline: none;
     }
+
+    scrollbar-width: none;
+    -ms-overflow-style: none;
 }
 
 .extradiv {
