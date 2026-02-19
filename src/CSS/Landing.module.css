@@ -259,6 +259,7 @@ html {
 
   position: absolute;
 
+  top: 814px;
   left: 0px;
   padding-top: 86px;
 
@@ -326,18 +327,30 @@ html {
     }
     .functionDetail1 {
       width: 345px;
+      height: 36px;
     }
 
     .functionDetail2 {
       width: 324px;
+      height: 36px;
     }
 
     .functionDetail3 {
       width: 255px;
+      height: 36px;
     }
 
+    .strength1 {
+      width: 315px;
+      height: 42px;
+    }
     .strength2 {
       width: 315px;
+      height: 42px;
+    }
+    .strength3 {
+      width: 315px;
+      height: 42px;
     }
   }
 }
@@ -370,7 +383,7 @@ html {
   height: 900px;
 
   display: grid;
-  grid-template-rows: 320px 500px;
+  grid-template-rows: 300px 500px;
 
   justify-content: center;
 
@@ -380,9 +393,10 @@ html {
 }
 
 .thirdText {
-  height: 170px;
+  height: auto;
 
   margin-top: 150px;
+  margin-bottom: 68px;
   text-align: center;
 
   .thirdText1 {
@@ -410,7 +424,7 @@ html {
 
   position: absolute;
 
-  top: 3075px;
+  top: 3144px;
   left: 0px;
   padding-top: 69px;
 
@@ -446,7 +460,7 @@ html {
   grid-template-rows: 49px 28px 28px 18px auto;
 
   position: absolute;
-  top: 3346px;
+  top: 3415px;
   left: 0px;
 
   background-color: #ced6ff;
