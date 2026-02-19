@@ -85,7 +85,7 @@ html {
 
     position: absolute;
 
-    margin-top: 105px;
+    margin-top: 186px;
   }
 
   .people {
@@ -135,7 +135,7 @@ html {
   align-items: center;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
 
-  margin-top: 165px;
+  margin-top: 257px;
 
   .progress {
     width: 78px;
@@ -160,20 +160,36 @@ html {
     height: auto;
     margin-right: 107px;
   }
+  .file:hover {
+    transform: scale(1.2);
+    transition: transform 0.5s;
+  }
   .comment {
     width: 104px;
     height: auto;
     margin-right: 104px;
+  }
+  .comment:hover {
+    transform: scale(1.2);
+    transition: transform 0.5s;
   }
   .vote {
     width: 101px;
     height: auto;
     margin-right: 100px;
   }
+  .vote:hover {
+    transform: scale(1.2);
+    transition: transform 0.5s;
+  }
   .ai {
     width: 94px;
     height: auto;
     margin-right: 204px;
+  }
+  .ai:hover {
+    transform: scale(1.2);
+    transition: transform 0.5s;
   }
 
   .complete {
