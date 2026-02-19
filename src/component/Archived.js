@@ -3,16 +3,12 @@ import backIcon from "../asset/icon-backArrow.png";
 import roomImg from "../asset/icon-meetingroom.png";
 import roomHostImg from "../asset/icon-meetinghost.png";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 function Archived({ onChange, completeRoomList }) {
   const navigate = useNavigate();
 
-  // 나중에 검색창 만들때 써야됨
-  //   function activeEnter(e) {
-  //     if (e.key === "Enter") {
-  //       setCode(value);
-  //     }
-  //   }
+  const [searchTerm, setSearchTerm] = useState("");
 
   function getRoomId(e) {
     localStorage.setItem("roomId", e.currentTarget.id);
@@ -27,31 +23,57 @@ function Archived({ onChange, completeRoomList }) {
             <img
               className={styles.backIcon}
               src={backIcon}
+              alt="뒤로가기"
               onClick={(e) => onChange(false)}
             />
-            <input placeholder="🔍︎ 검색"></input>
+            <input
+              placeholder="🔍︎ 검색"
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+            ></input>
           </div>
 
           <div className={styles.rooms}>
-            {completeRoomList.map((completeRoomList) => (
-              <div
-                id={completeRoomList.roomId}
-                key={completeRoomList.roomId}
-                className={styles.room}
-                onClick={(e) => getRoomId(e)}
-              >
-                {completeRoomList.role === "host" ? (
-                  <img className={styles.roomHostImg} src={roomHostImg} />
-                ) : (
-                  <img className={styles.roomImg} src={roomImg} />
-                )}
-                <div className={styles.roomName}>
-                  {completeRoomList.roomName.length > 9
-                    ? `${completeRoomList.roomName.slice(0, 9)}...`
-                    : completeRoomList.roomName}
+            {completeRoomList
+              .filter((completeRoomList) => {
+                if (searchTerm === "") {
+                  return completeRoomList;
+                } else if (
+                  completeRoomList.roomName
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
+                ) {
+                  return completeRoomList;
+                }
+              })
+              .map((completeRoomList) => (
+                <div
+                  id={completeRoomList.roomId}
+                  key={completeRoomList.roomId}
+                  className={styles.room}
+                  onClick={(e) => getRoomId(e)}
+                >
+                  {completeRoomList.role === "host" ? (
+                    <img
+                      className={styles.roomHostImg}
+                      src={roomHostImg}
+                      alt="호스트룸"
+                    />
+                  ) : (
+                    <img
+                      className={styles.roomImg}
+                      src={roomImg}
+                      alt="참여자룸"
+                    />
+                  )}
+                  <div className={styles.roomName}>
+                    {completeRoomList.roomName.length > 9
+                      ? `${completeRoomList.roomName.slice(0, 9)}...`
+                      : completeRoomList.roomName}
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
         </div>
       </div>
