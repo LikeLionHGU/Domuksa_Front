@@ -46,7 +46,7 @@
   font-size: 14px;
 
   border: #dcdddf;
-  border-radius: 15px;
+  border-radius: 20px;
 
   font-size: 14px;
 
@@ -55,6 +55,9 @@
     height: auto;
     margin: 51px 93px 14px 92px;
   }
+}
+.archive:hover {
+  cursor: pointer;
 }
 
 .room {
@@ -68,7 +71,7 @@
   width: 217px;
   height: 157px;
   background-color: #ffffff;
-  border-radius: 15px;
+  border-radius: 20px;
 
   .roomHostImg {
     width: 70px;
@@ -89,4 +92,8 @@
     margin-bottom: 18px;
     text-align: center;
   }
+}
+
+.room:hover {
+  cursor: pointer;
 }

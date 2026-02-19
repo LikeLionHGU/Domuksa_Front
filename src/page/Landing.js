@@ -33,12 +33,12 @@ function Landing() {
     <>
       <div className={styles.extradiv}>
         <div className={styles.Maindiv}>
-          <div className={styles.menu}>
+          <div className={styles.menubar}>
             <img className={styles.logoImg} src={logoImg} alt="이음 로고" />
-            <div className={styles.dms}>두먹사</div>
-            <div className={styles.emmm}>이음</div>
-            <div className={styles.service}>서비스</div>
-            <div className={styles.ask}>문의</div>
+            <a className={styles.menu} href="#menu1">이음</a>
+            <a className={styles.menu} href="#menu2">기능</a>
+            <a className={styles.menu} href="#menu3">강점</a>
+            <a className={styles.menu} href="#menu4">서비스</a>
             <div
               className={styles.loginButton}
               alt=""
@@ -53,7 +53,7 @@ function Landing() {
             </div>
           </div>
 
-          <div className={styles.first}>
+          <div id="menu1" className={styles.first}>
             <img className={styles.line} src={landingBg} alt="라인" />
 
             <img className={styles.people} src={people} alt="사람들" />
@@ -92,7 +92,7 @@ function Landing() {
             </div>
           </div>
 
-          <div className={styles.second}>
+          <div id="menu2" className={styles.second}>
             <div className={styles.secondText}>
               <div className={styles.secondText1}>
                 <span>이음 </span>만의 기능
@@ -139,7 +139,7 @@ function Landing() {
             </div>
           </div>
 
-          <div className={styles.third}>
+          <div id="menu3" className={styles.third}>
             <div className={styles.thirdText}>
               <div className={styles.thirdText1}>익명이 중요한 이유</div>
               <div className={styles.thirdText2}>
@@ -184,7 +184,7 @@ function Landing() {
             </div>
           </div>
 
-          <div className={styles.footer}>
+          <div id="menu4" className={styles.footer}>
             <div className={styles.logos}>
               <img className={styles.handong} src={handong} alt="한동대" />
               <img className={styles.mutsa} src={mutsa} alt="멋사" />

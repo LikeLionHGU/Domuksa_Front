@@ -148,12 +148,7 @@ function Home() {
           ) : null}
 
           <div className={styles.header}>
-            <img
-              className={styles.logo}
-              src={logoImg}
-              alt="이음로고"
-              onClick={(e) => navigate("/")}
-            />
+            <img className={styles.logo} src={logoImg} alt="이음로고" />
 
             <div></div>
             <div className={styles.profile}>
@@ -179,6 +174,7 @@ function Home() {
           {isArchiveOpen === true ? (
             <Archived
               onChange={setIsArchiveOpen}
+              isOpen={isArchiveOpen}
               completeRoomList={completeRooms}
             />
           ) : null}

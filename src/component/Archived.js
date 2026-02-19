@@ -3,10 +3,11 @@ import backIcon from "../asset/icon-backArrow.png";
 import roomImg from "../asset/icon-meetingroom.png";
 import roomHostImg from "../asset/icon-meetinghost.png";
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-function Archived({ onChange, completeRoomList }) {
+function Archived({ onChange, isOpen, completeRoomList }) {
   const navigate = useNavigate();
+  const [inAndOut, setInAndOut] = useState("MaindivIn");
 
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -15,16 +16,23 @@ function Archived({ onChange, completeRoomList }) {
     navigate("/meet");
   }
 
+  function changeState() {
+    setInAndOut("MaindivOut");
+    setTimeout(function () {
+      onChange(false);
+    }, 800);
+  }
+
   return (
     <div>
       <div className={styles.extradiv}>
-        <div className={styles.Maindiv}>
+        <div className={styles[inAndOut]}>
           <div className={styles.archiveHeader}>
             <img
               className={styles.backIcon}
               src={backIcon}
               alt="뒤로가기"
-              onClick={(e) => onChange(false)}
+              onClick={changeState}
             />
             <input
               placeholder="🔍︎ 검색"
