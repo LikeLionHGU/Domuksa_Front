@@ -7,7 +7,6 @@ function NewVote({ token, setNewvote, Voteobj }) {
     const [options, setOptions] = useState([]);
 
     function addOption() {
-
         axios
             .post(`${process.env.REACT_APP_HOST_URL}/vote/${Voteobj.vote.voteId}/option`,
                 {

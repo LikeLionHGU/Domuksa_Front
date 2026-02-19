@@ -8,14 +8,9 @@ import copy from "../asset/icon-copy.png";
 import logo from "../asset/icon-logo.png";
 import out from "../asset/icon-out.png";
 
-
-
-
-
-
 //사이트 메인 아이콘 + 구글 아이콘 + 방번호 + 완료/진행중 상태
 function Header({
-  setLogoutmodal, setEmail, setName, setPicture,setState,
+  setLogoutmodal, setEmail, setName, setPicture, setState,
   token, isHost, code, state, roomId, name, email, picture
 }) {
 
@@ -70,31 +65,25 @@ function Header({
               Authorization: `Bearer ${token}`,
             },
           })
-        .then((res) => {
-          console.log(res);
-          setState("completed");
-        })
         .catch((error) => {
           console.error("마이페이지 정보 가져오기 실패:", error);
         });
       return;
-    }
+    } else {
 
 
-    axios
-      .patch(`
+      axios
+        .patch(`
           ${process.env.REACT_APP_HOST_URL}/room/${roomId}/state`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-      .then((res) => {
-        setState("running");
-      })
-      .catch((error) => {
-        console.error("마이페이지 정보 가져오기 실패:", error);
-      });
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+        .catch((error) => {
+          console.error("마이페이지 정보 가져오기 실패:", error);
+        });
+    }
   }
 
   function handleRoomNumber() {
