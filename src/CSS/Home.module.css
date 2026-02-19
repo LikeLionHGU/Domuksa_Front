@@ -54,7 +54,7 @@
     width: 217px;
     height: 134px;
 
-    border-radius: 30px;
+    border-radius: 20px;
 
     font-size: 50px;
 
@@ -81,7 +81,7 @@
 
     background-color: #edf2fe;
 
-    border-radius: 15px;
+    border-radius: 0px 30px 30px 30px;
 
     input {
       width: 264px;

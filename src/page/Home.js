@@ -174,6 +174,7 @@ function Home() {
           {isArchiveOpen === true ? (
             <Archived
               onChange={setIsArchiveOpen}
+              isOpen={isArchiveOpen}
               completeRoomList={completeRooms}
             />
           ) : null}

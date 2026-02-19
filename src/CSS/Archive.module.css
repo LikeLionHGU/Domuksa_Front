@@ -6,11 +6,48 @@
   justify-content: center;
 }
 
-.Maindiv {
+.MaindivIn {
+  z-index: 500;
+  width: 1440px;
+  height: 872px;
+  background-color: #fafafa;
+
+  animation-duration: 1s;
+  animation-name: slidein;
+}
+
+.MaindivOut {
   z-index: 5;
   width: 1440px;
   height: 872px;
   background-color: #fafafa;
+
+  animation-duration: 1s;
+  animation-name: slideout;
+}
+
+@keyframes slidein {
+  from {
+    margin-top: 100%;
+    height: 300%;
+  }
+
+  to {
+    margin-top: 0%;
+    height: 100%;
+  }
+}
+
+@keyframes slideout {
+  from {
+    margin-top: 0%;
+    height: 100%;
+  }
+
+  to {
+    margin-top: 100%;
+    height: 300%;
+  }
 }
 
 .archiveHeader {
@@ -65,7 +102,7 @@
   width: 217px;
   height: 157px;
   background-color: #ffffff;
-  border-radius: 15px;
+  border-radius: 20px;
 
   .roomHostImg {
     width: 70px;
