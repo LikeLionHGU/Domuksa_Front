@@ -388,9 +388,14 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
           </div>}
         </div>
       }
-      <hr />
+     {!isHost&&<div className={style.space}></div>}
+      <hr/>
 
-      <Timer />
+      <Timer 
+      isHost={isHost}
+      roomId={roomId}
+      token={token}
+      />
     </div >
   );
 }

@@ -41,6 +41,7 @@ function Dm({ socketDm, now, token, roomId, isHost }) {
     }, [message, modalChat])
 
     useEffect(() => {
+        if(token===null||roomId===null)return;
         axios
             .get(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`, {
                 headers: {
