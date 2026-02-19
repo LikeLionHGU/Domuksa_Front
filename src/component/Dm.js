@@ -9,7 +9,7 @@ import send from "../asset/icon-send.png";
 import emoji from "../asset/icon-emoji.png";
 import DM from "../asset/icon-DM.png";
 
-function Dm({ now, token, roomId, isHost }) {
+function Dm({ socketDm,now, token, roomId, isHost }) {
 
     const [EmojiModal, setEmojiModal] = useState(false);
 
@@ -74,7 +74,7 @@ function Dm({ now, token, roomId, isHost }) {
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
-    }, [token, roomId])
+    }, [token, roomId,socketDm])
 
     function sendMessage() {
 
