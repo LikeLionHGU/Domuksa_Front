@@ -56,6 +56,7 @@ function Meet() {
   //웹소켓의 상태 동작값
 
   const [socketAgendas, setSocketAgendas] = useState([]); //안건
+  const [socketcurrentAgendas, setSocketcurrentAgendas] = useState([]); //안건
   const [socketFile, setSocketFile] = useState(); //파일
   const [socketComment, setSocketComment] = useState(); //코멘트
   const [socketVote,setSocketVote] = useState(); //투표
@@ -89,13 +90,21 @@ function Meet() {
         setSocketAgendas(msg.body);
       });
 
-      //파일 구독
-      client.subscribe(`/topic/file/list/${roomId}`, (msg) => {
-        setSocketFile(msg.body);
+      //현재안건 구독
+      client.subscribe(`/topic/agenda/current/${roomId}`, (msg) => {
+        console.log(msg.body);
+        setSocketcurrentAgendas(msg.body);
       });
 
       //파일 구독
-      client.subscribe(`/topic/comment/list/${roomId}`, (msg) => {
+      client.subscribe(`/topic/file/list/${clickedAgendaId}`, (msg) => {
+        console.log(msg.body);
+        setSocketFile(msg.body);
+      });
+
+      //코멘트 구독
+      client.subscribe(`/topic/comment/list/${clickedAgendaId}`, (msg) => {
+        console.log(msg.body);
         setSocketComment(msg.body);
       });
     }
@@ -139,7 +148,7 @@ function Meet() {
           setState(res.data.state);
           setRoomId(res.data.roomId);
           setRoomName(res.data.roomName);
-          setClickedAgendaId(res.data.currentAgendaSequence);
+          setClickedAgendaId(res.data.currentAgendaId);
 
           if (res.data.role === "host") {
             setIshost(true);
@@ -154,7 +163,7 @@ function Meet() {
     if (roomId === null) {
       setModalNew(true);
     }
-  }, [roomId]);
+  }, [roomId,socketcurrentAgendas]);
 
   return (
     <div className={style.extradiv}>

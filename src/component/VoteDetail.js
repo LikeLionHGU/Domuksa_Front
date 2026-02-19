@@ -68,6 +68,9 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
     }, [socketVoteOption])
 
     useEffect(() => {
+        if(result===false){
+            return;
+        }
         axios
             .get(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/result`, {
                 headers: {

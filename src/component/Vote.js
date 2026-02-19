@@ -11,7 +11,7 @@ import edit from "../asset/icon-edit.png";
 import bin from "../asset/icon-trashbin.png";
 import addBtn from "../asset/icon-addBtn.png";
 
-function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVoteOption ,socketVoteResult}) {
+function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVoteOption, socketVoteResult }) {
 
     //[투표리스트]
     const [votes, setVotes] = useState([]);
@@ -63,6 +63,7 @@ function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVote
             })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
+                    console.log(res.data);
                     setVotes(res.data);
                 }
             })
@@ -81,6 +82,9 @@ function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVote
                         Authorization: `Bearer ${token}`,
                     },
                 })
+            .then((res) => {
+                setVoteobj(res.data);
+            })
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
