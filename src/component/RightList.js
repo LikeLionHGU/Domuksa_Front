@@ -31,7 +31,6 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
     if (clickedAgendaId === null || token === null) {
       return;
     }
-    console.log(clickedAgendaId);
     axios
       .get(
         `${process.env.REACT_APP_HOST_URL}/agenda/${clickedAgendaId}`,

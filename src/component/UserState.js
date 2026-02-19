@@ -18,8 +18,6 @@ function UserState({ roomId, token,socketUser}) {
                     },
                 })
             .then((res) => {
-                console.log(res.data);
-                console.log(res);
                 setUsers(res.data);
             })
             .catch((error) => {
@@ -27,7 +25,7 @@ function UserState({ roomId, token,socketUser}) {
             })
     }, [roomId, token,socketUser])
     function haneldeState() {
-        console.log(User);
+
     }
     return (
         <div className={style.Userlist}>
