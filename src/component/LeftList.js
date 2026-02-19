@@ -349,7 +349,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
                 className={blockId === agenda.id ? style.ChosenBlock : style.Block}
                 onClick={(e) => isHost && handleBlock(e)}
               >
-                <div className={style.Text} onDoubleClick={() => setChanged(agenda.id)}>
+                <div className={style.Text} onDoubleClick={() => isHost&&setChanged(agenda.id)}>
                   <span>•</span> {Changed === agenda.id ? <input id="newAgendaName" ref={inputRef} onKeyDown={(e) => isHost && EditAgenda(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.name}</h1>}
                 </div>
                 {hover === agenda.id && isHost && <h3 alt="option"
