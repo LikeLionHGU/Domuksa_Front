@@ -76,9 +76,9 @@ function Meet() {
         Authorization: `Bearer ${token}`,
       },
 
-      debug: (str) => {
-        console.log("STOMP DEBUG:", str);
-      },
+      // debug: (str) => {
+      //   console.log("STOMP DEBUG:", str);
+      // },
       reconnectDelay: 5000, //연결 안될시, 다시 연결하는 딜레이
     });
     //연결성공시
@@ -117,7 +117,7 @@ function Meet() {
       //투표 구독
       client.subscribe(`/topic/vote/${clickedAgendaId}`, (msg) => {
         console.log(msg.body);
-        setSocketComment(msg.body);
+        setSocketVote(msg.body);
       });
 
       //DM 구독
