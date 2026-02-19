@@ -153,9 +153,9 @@ function Meet() {
       console.log("연결 끝");
     }
 
-    window.addEventListener('beforeunload', client.deactivate());
-
-
+    //페이지 꺼지면 소켓 연결 끝
+    window.addEventListener('beforeunload', ()=>client.deactivate());
+    
   }, [token, roomId])
 
   useEffect(() => {
