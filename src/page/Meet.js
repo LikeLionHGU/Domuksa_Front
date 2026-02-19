@@ -62,7 +62,8 @@ function Meet() {
   const [socketVote,setSocketVote] = useState(); //투표
   const [socketVoteOption,setSocketVoteOption] = useState(); //투표
   const [socketVoteResult,setSocketVoteResult] = useState(); //투표
-  const [socketAI,setSocket] = useState(); //s파일
+  const [socketAI,setSocket] = useState(); //AI
+  const [socketDm,setSocketDm] = useState(); //Dm
 
   //웹소켓
   useEffect(() => {
@@ -106,6 +107,12 @@ function Meet() {
       client.subscribe(`/topic/comment/list/${clickedAgendaId}`, (msg) => {
         console.log(msg.body);
         setSocketComment(msg.body);
+      });
+
+      //DM 구독
+      client.subscribe(`/topic/dm/${roomId}`, (msg) => {
+        console.log(msg.body);
+        setSocketDm(msg.body);
       });
     }
 
@@ -216,6 +223,7 @@ function Meet() {
           />
         </div>
         <DM
+        socketDm={socketDm}
           now={now}
           token={token}
           isHost={isHost}
