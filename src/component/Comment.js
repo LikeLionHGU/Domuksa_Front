@@ -6,7 +6,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import style from "../CSS/Comment.module.css";
 
-function Comment({ now, token, clickedAgendaId, onChange }) {
+function Comment({ now, token, clickedAgendaId, onChange, socketComment }) {
 
     const [comments, setComments] = useState([]);
 
@@ -27,7 +27,7 @@ function Comment({ now, token, clickedAgendaId, onChange }) {
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
-    }, [])
+    }, [socketComment])
 
     function commentWrite() {
         const Input = document.getElementById("input").value;
@@ -42,11 +42,6 @@ function Comment({ now, token, clickedAgendaId, onChange }) {
                         Authorization: `Bearer ${token}`,
                     },
                 })
-            .then((res) => {
-                if (res.status === 200 || res.status === 201) {
-                    setComments(prev => [res.data, ...prev]);
-                }
-            })
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });

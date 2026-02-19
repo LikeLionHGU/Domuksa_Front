@@ -6,7 +6,7 @@ import axios from "axios";
 // import { PDFViewer } from '@embedpdf/react-pdf-viewer';
 import fileIcon from "../asset/icon-filelist.png";
 
-function File({ isHost,token,onChange, clickedAgendaId }) {
+function File({ isHost,token,onChange, clickedAgendaId,socketFile }) {
 
     const [listModal, setListModal] = useState(false);
     const [Files, setFiles] = useState([]);
@@ -31,7 +31,7 @@ function File({ isHost,token,onChange, clickedAgendaId }) {
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
-    }, [])
+    }, [socketFile])
     function addNewfile(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -48,11 +48,6 @@ function File({ isHost,token,onChange, clickedAgendaId }) {
                 }
             }
         )
-            .then(res => {
-                if (res.status === 200 || res.status === 201) {
-                    setFiles(prev => [...prev, res.data]);
-                }
-            })
             .catch(error => {
                 console.error("파일 업로드 실패:", error);
             });

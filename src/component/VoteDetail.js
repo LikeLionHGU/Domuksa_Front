@@ -4,7 +4,7 @@ import style from "../CSS/Vote_detail_modal.module.css";
 
 import hammer from "../asset/icon-hammer.png";
 
-function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote }) {
+function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, socketVoteOption,socketVoteResult}) {
 
     //욥션들
     const [options, setOptions] = useState([]);
@@ -40,7 +40,9 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
+    }, [Newvote, DetailId,socketVoteResult])
 
+    useEffect(() => {
         //투표 옵션가져오기 (나의 선택포함)
         axios
             .get(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/option`, {
@@ -63,7 +65,7 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
-    }, [Newvote, DetailId])
+    }, [socketVoteOption])
 
     useEffect(() => {
         axios
@@ -102,7 +104,6 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
             },)
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
-                    // setResult(true);
                     setEdit(true);
                     setShowBtn(false);
                     setEditting(false);
@@ -172,9 +173,7 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote })
                         })
                         .then((res) => {
                             if (res.status === 200 || res.status === 201) {
-
                                 setResultOption(res.data);
-
                             }
                         })
                         .catch((error) => {
