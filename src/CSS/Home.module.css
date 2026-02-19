@@ -19,8 +19,8 @@
   .logo {
     margin-left: 20px;
     margin-top: 20px;
-    width: 170px;
-    height: 53px;
+    width: 144px;
+    height: 45px;
   }
   .profile {
     display: flex;
@@ -33,6 +33,9 @@
   width: 53px;
   height: 53px;
   border-radius: 50px;
+}
+.profileImg:hover {
+  cursor: pointer;
 }
 
 .menu {
@@ -59,6 +62,10 @@
       width: 24px;
       height: 24px;
     }
+  }
+  .new:hover {
+    background-color: #493dd5;
+    cursor: pointer;
   }
   .join {
     margin-left: 20px;

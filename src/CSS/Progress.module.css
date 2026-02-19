@@ -56,6 +56,9 @@
     margin: 51px 93px 14px 92px;
   }
 }
+.archive:hover {
+  cursor: pointer;
+}
 
 .room {
   z-index: 0;
@@ -89,4 +92,8 @@
     margin-bottom: 18px;
     text-align: center;
   }
+}
+
+.room:hover {
+  cursor: pointer;
 }

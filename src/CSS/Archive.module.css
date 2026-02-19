@@ -26,6 +26,9 @@
     width: 10px;
     height: 18px;
   }
+  .backIcon:hover {
+    cursor: pointer;
+  }
 
   input {
     width: 379px;
@@ -49,32 +52,6 @@
 
   overflow-x: hidden;
   overflow-y: auto;
-}
-.archive {
-  display: grid;
-  justify-content: center;
-
-  grid-template-rows: 1fr 1fr;
-
-  width: 217px;
-  height: 157px;
-
-  background-color: #ffffff;
-
-  text-align: center;
-  color: #5043e7;
-  font-size: 14px;
-
-  border: #dcdddf;
-  border-radius: 15px;
-
-  font-size: 14px;
-
-  .completeImg {
-    width: 32px;
-    height: auto;
-    margin: 51px 93px 14px 92px;
-  }
 }
 
 .room {
@@ -109,4 +86,8 @@
     margin-bottom: 18px;
     text-align: center;
   }
+}
+
+.room:hover {
+  cursor: pointer;
 }
