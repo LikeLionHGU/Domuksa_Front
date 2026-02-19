@@ -18,7 +18,7 @@ import iconChatColor from "../asset/Mainicon-color-comment.png";
 import iconVoteColor from "../asset/Mainicon-color-vote.png";
 import iconAIColor from "../asset/Mainicon-color-Ai.png";
 
-function RightList({ now, token, isHost, roomId, clickedAgendaId }) {
+function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI }) {
   const [mode, setMode] = useState("basic");
   const [hover, setHover] = useState("");
   const [FileState, setFileState] = useState(false);
@@ -131,18 +131,23 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId }) {
       </div>
     </>,
     File: <File
+      socketFile={socketFile}
       isHost={isHost}
       clickedAgendaId={clickedAgendaId}
       token={token}
       onChange={setMode}
     />,
     Comment: <Comment
+      socketComment={socketComment}
       now={now}
       token={token}
       clickedAgendaId={clickedAgendaId}
       onChange={setMode}
     />,
     Vote: <Vote
+      socketVote={socketVote}
+      socketVoteOption={socketVoteOption}
+      socketVoteResult={socketVoteResult}
       token={token}
       isHost={isHost}
       clickedAgendaId={clickedAgendaId}
@@ -150,6 +155,7 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId }) {
       onChange={setMode}
     />,
     AI: <AI
+      socketAI={socketAI}
       clickedAgendaId={clickedAgendaId}
       token={token}
       onChange={setMode}

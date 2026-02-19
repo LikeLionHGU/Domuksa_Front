@@ -35,8 +35,6 @@ function Meet() {
   const [state, setState] = useState(null);
   const [token, setToken] = useState(null);
 
-  //Right의 리스트
-  const [stateObj, setStateObj] = useState([]);
 
   //header state
   const [name, setName] = useState(null);
@@ -54,6 +52,17 @@ function Meet() {
   //안건 선언한거 저장
   const clientRef = useRef(null);
 
+
+  //웹소켓의 상태 동작값
+
+  const [socketAgendas, setSocketAgendas] = useState([]); //안건
+  const [socketFile, setSocketFile] = useState(); //파일
+  const [socketComment, setSocketComment] = useState(); //코멘트
+  const [socketVote,setSocketVote] = useState(); //투표
+  const [socketVoteOption,setSocketVoteOption] = useState(); //투표
+  const [socketVoteResult,setSocketVoteResult] = useState(); //투표
+  const [socketAI,setSocket] = useState(); //s파일
+
   //웹소켓
   useEffect(() => {
 
@@ -63,7 +72,7 @@ function Meet() {
       connectHeaders: {
         Authorization: `Bearer ${token}`,
       },
-      reconnectDelay: 5000,
+      reconnectDelay: 5000, //연결 안될시, 다시 연결하는 딜레이
     });
     //연결성공시
     client.onConnect = () => {
@@ -74,16 +83,21 @@ function Meet() {
         setState(msg.body);
       });
 
+      //=================[구독 리스트]=================//
+      //안건 구독
       client.subscribe(`/topic/agenda/list/${roomId}`, (msg) => {
-        console.log(msg.body);
-        const Format = JSON.parse(msg.body).map(item => ({
-          id: item.agenda.agendaId,
-          name: item.agenda.name,
-        }));
-        console.log(Format);
-        setStateObj(Format);
+        setSocketAgendas(msg.body);
       });
 
+      //파일 구독
+      client.subscribe(`/topic/file/list/${roomId}`, (msg) => {
+        setSocketFile(msg.body);
+      });
+
+      //파일 구독
+      client.subscribe(`/topic/comment/list/${roomId}`, (msg) => {
+        setSocketComment(msg.body);
+      });
     }
 
     //연결시도
@@ -167,7 +181,7 @@ function Meet() {
             setRoomName={setRoomName}
             deleteModal={setDeleteModal}
             setClickedAgendaId={setClickedAgendaId}
-            stateObj={stateObj}
+            socketAgendas={socketAgendas}
             token={token}
             isHost={isHost}
             roomId={roomId}
@@ -175,7 +189,16 @@ function Meet() {
             clickedAgendaId={clickedAgendaId}
           />
           <Right
-          now={now}
+            //웹소켓 반응 state 들
+            socketFile={socketFile} //파일
+            socketComment={socketComment} //코멘트
+            socketVote={socketVote} //투표
+            socketVoteOption={socketVoteOption} //투표욥션
+            socketVoteResult={socketVoteResult} //투표결과
+            socketAI={socketAI} //AI
+
+            //
+            now={now}
             RoomName={RoomName}
             token={token}
             isHost={isHost}
@@ -184,7 +207,7 @@ function Meet() {
           />
         </div>
         <DM
-        now={now}
+          now={now}
           token={token}
           isHost={isHost}
           roomId={roomId} />

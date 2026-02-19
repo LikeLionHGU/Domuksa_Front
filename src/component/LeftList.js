@@ -11,7 +11,7 @@ import bin from "../asset/icon-trashbin.png";
 import visible from "../asset/icon-visible.png";
 import add from "../asset/icon-add.png";
 
-function LeftList({ token, isHost, roomId, roomName, deleteModal, stateObj,
+function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
   setClickedAgendaId, clickedAgendaId, setRoomName
 }) {
 
@@ -77,7 +77,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, stateObj,
         console.error("마이페이지 정보 가져오기 실패:", error);
       });
 
-  }, [roomId, stateObj]);
+  }, [roomId, socketAgendas]);
 
   useEffect(() => {
     

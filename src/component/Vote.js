@@ -11,7 +11,7 @@ import edit from "../asset/icon-edit.png";
 import bin from "../asset/icon-trashbin.png";
 import addBtn from "../asset/icon-addBtn.png";
 
-function Vote({ token, isHost, onChange, clickedAgendaId }) {
+function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVoteOption ,socketVoteResult}) {
 
     //[투표리스트]
     const [votes, setVotes] = useState([]);
@@ -69,7 +69,7 @@ function Vote({ token, isHost, onChange, clickedAgendaId }) {
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
-    }, [Newvote]);
+    }, [socketVote]);
     function addVote() {
         axios
             .post(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`,
@@ -81,27 +81,6 @@ function Vote({ token, isHost, onChange, clickedAgendaId }) {
                         Authorization: `Bearer ${token}`,
                     },
                 })
-            .then((res) => {
-                if (res.status === 200 || res.status === 201) {
-
-                    setVoteobj(res.data);
-
-                    axios
-                        .get(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`, {
-                            headers: {
-                                Authorization: `Bearer ${token}`,
-                            },
-                        })
-                        .then((res) => {
-                            if (res.status === 200 || res.status === 201) {
-                                setVotes(res.data);
-                            }
-                        })
-                        .catch((error) => {
-                            console.error("마이페이지 정보 가져오기 실패:", error);
-                        });
-                }
-            })
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
@@ -120,26 +99,6 @@ function Vote({ token, isHost, onChange, clickedAgendaId }) {
                         Authorization: `Bearer ${token}`,
                     },
                 })
-            .then((res) => {
-                console.log(res);
-                if (res.status === 200 || res.status === 201) {
-                    axios
-                        .get(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`, {
-                            headers: {
-                                Authorization: `Bearer ${token}`,
-                            },
-                        })
-                        .then((res) => {
-                            console.log(res);
-                            if (res.status === 200 || res.status === 201) {
-                                setVotes(res.data);
-                            }
-                        })
-                        .catch((error) => {
-                            console.error("마이페이지 정보 가져오기 실패:", error);
-                        });
-                }
-            })
             .catch((error) => {
                 console.error("실패:", error);
             });
@@ -154,26 +113,6 @@ function Vote({ token, isHost, onChange, clickedAgendaId }) {
                         Authorization: `Bearer ${token}`,
                     },
                     title: e.target.value,
-                })
-                .then((res) => {
-                    console.log(res);
-                    if (res.status === 200 || res.status === 201) {
-                        axios
-                            .get(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`, {
-                                headers: {
-                                    Authorization: `Bearer ${token}`,
-                                },
-                            })
-                            .then((res) => {
-                                console.log(res);
-                                if (res.status === 200 || res.status === 201) {
-                                    setVotes(res.data);
-                                }
-                            })
-                            .catch((error) => {
-                                console.error("마이페이지 정보 가져오기 실패:", error);
-                            });
-                    }
                 })
                 .catch((error) => {
                     console.error("실패:", error);
@@ -254,6 +193,9 @@ function Vote({ token, isHost, onChange, clickedAgendaId }) {
             {
                 Detail === true &&
                 <VoteDetail
+                    //웹소켓 욥션
+                    socketVoteOption={socketVoteOption}
+                    socketVoteResult={socketVoteResult}
                     token={token}
                     isHost={isHost}
                     Newvote={Newvote}
