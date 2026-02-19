@@ -9,6 +9,7 @@ import style from "../CSS/Comment.module.css";
 function Comment({ now, token, clickedAgendaId, onChange, socketComment }) {
 
     const [comments, setComments] = useState([]);
+    const [input, setInput] = useState("");
 
     useEffect(() => {
 
@@ -31,15 +32,13 @@ function Comment({ now, token, clickedAgendaId, onChange, socketComment }) {
     }, [socketComment])
 
     function commentWrite() {
-        const Input = document.getElementById(`input`).value;
-        if (Input === null) {
+        if (input === null) {
             return;
         }
-
         axios
             .post(`${process.env.REACT_APP_HOST_URL}/comment/${clickedAgendaId}`,
                 {
-                    content: Input,
+                    content: input,
                 },
                 {
                     headers: {
@@ -47,7 +46,7 @@ function Comment({ now, token, clickedAgendaId, onChange, socketComment }) {
                     },
                 })
             .then(() => {
-                Input = "";
+                setInput("");
             })
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
@@ -75,7 +74,15 @@ function Comment({ now, token, clickedAgendaId, onChange, socketComment }) {
 
                 <form>
                     <label>
-                        <textarea placeholder="여기에 의견 남겨주세요" id="input" />
+                        <textarea 
+                        placeholder="여기에 의견 남겨주세요" 
+                        id="input" 
+                        value={input} 
+                        onChange={(e)=>setInput(e.target.value)}
+                        onKeyDown={(e)=>{
+                            if(e.key==="Enter")commentWrite();
+                        }}
+                        />
                         <button onClick={(e) => {
                             e.preventDefault();
                             commentWrite();
