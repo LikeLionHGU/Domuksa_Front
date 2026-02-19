@@ -4,7 +4,7 @@ import style from "../CSS/Vote_detail_modal.module.css";
 
 import hammer from "../asset/icon-hammer.png";
 
-function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, socketVoteOption,socketVoteResult}) {
+function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, socketVoteOption, socketVoteResult }) {
 
     //욥션들
     const [options, setOptions] = useState([]);
@@ -40,7 +40,7 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
-    }, [Newvote, DetailId,socketVoteResult])
+    }, [Newvote, DetailId, socketVoteResult])
 
     useEffect(() => {
         //투표 옵션가져오기 (나의 선택포함)
@@ -68,7 +68,7 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
     }, [socketVoteOption])
 
     useEffect(() => {
-        if(result===false){
+        if (result === false) {
             return;
         }
         axios
@@ -99,12 +99,15 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
     }
     function SubmitChoise() {
         axios
-            .post(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/voteSelect`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+            .post(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/voteSelect`,
+                {
+                    voteOptionId: ChosenOption,
                 },
-                voteOptionId: ChosenOption,
-            },)
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                },)
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
                     setEdit(true);
@@ -159,12 +162,15 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
     }
     function ChangeVoteState() {
         axios
-            .patch(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/voteStatus`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
+            .patch(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/voteStatus`,
+                {
+                    voteStatus: "comfirm",
                 },
-                voteStatus: "comfirm",
-            })
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
                     setResult(true);
