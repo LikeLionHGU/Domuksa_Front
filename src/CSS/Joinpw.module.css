@@ -9,7 +9,6 @@
 }
 
 .maindiv {
-  
   backdrop-filter: blur(10px);
   width: 1440px;
   height: 872px;
@@ -62,12 +61,28 @@
   justify-content: center;
   margin-bottom: 15px;
 
-  .pw {
+  .pwNomal {
     padding: 0px;
     width: 97px;
     height: 119px;
     border-radius: 30px;
     border: #dcdddf solid 1px;
+
+    transition: 0.5s all ease-in-out;
+
+    text-align: center;
+
+    color: #5043e7;
+
+    font-size: 90px;
+  }
+
+  .pwWrong {
+    padding: 0px;
+    width: 97px;
+    height: 119px;
+    border-radius: 30px;
+    border: #ff7373 solid 1px;
 
     text-align: center;
 
