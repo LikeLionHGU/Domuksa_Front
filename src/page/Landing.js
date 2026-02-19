@@ -16,6 +16,8 @@ import fimg3 from "../asset/landing-function3.png";
 import simg1 from "../asset/landing-strength1.png";
 import simg2 from "../asset/landing-strength2.png";
 import simg3 from "../asset/landing-strength3.png";
+import handong from "../asset/icon-handong.png";
+import mutsa from "../asset/icon-mutsa.png";
 
 function Landing() {
   localStorage.removeItem("accessToken");
@@ -182,7 +184,23 @@ function Landing() {
             </div>
           </div>
 
-          <div className={styles.footer}></div>
+          <div className={styles.footer}>
+            <div className={styles.logos}>
+              <img className={styles.handong} src={handong} alt="한동대" />
+              <img className={styles.mutsa} src={mutsa} alt="멋사" />
+            </div>
+            <div className={styles.member}>
+              기획: 이세은 | 디자이너: 김예준 | 프론트엔드: 김진성 | 프론트엔드:
+              임청명 | 백엔드: 김민제 | 백엔드: 박주아
+            </div>
+            <div className={styles.call}>연락처: 010-4126-7930</div>
+            <div className={styles.adress}>
+              주소: 경상북도 포항시 북구 흥해읍 한동로 558, 한동대학교
+            </div>
+            <div className={styles.copyright}>
+              Copyright: © 2026 이음. All rights reserved.
+            </div>
+          </div>
         </div>
       </div>
     </>
