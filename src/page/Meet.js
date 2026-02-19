@@ -59,11 +59,12 @@ function Meet() {
   const [socketcurrentAgendas, setSocketcurrentAgendas] = useState([]); //안건
   const [socketFile, setSocketFile] = useState(); //파일
   const [socketComment, setSocketComment] = useState(); //코멘트
-  const [socketVote,setSocketVote] = useState(); //투표
-  const [socketVoteOption,setSocketVoteOption] = useState(); //투표
-  const [socketVoteResult,setSocketVoteResult] = useState(); //투표
-  const [socketAI,setSocket] = useState(); //AI
-  const [socketDm,setSocketDm] = useState(); //Dm
+  const [socketVote, setSocketVote] = useState(); //투표
+  const [socketVoteOption, setSocketVoteOption] = useState(); //투표
+  const [socketVoteResult, setSocketVoteResult] = useState(); //투표
+  const [socketAI, setSocket] = useState(); //AI
+  const [socketDm, setSocketDm] = useState(); //Dm
+  const [socketUser, setSocketUser] = useState(); //User
 
   //웹소켓
   useEffect(() => {
@@ -73,6 +74,10 @@ function Meet() {
       webSocketFactory: () => new SockJS(BackWebsocket),
       connectHeaders: {
         Authorization: `Bearer ${token}`,
+      },
+
+      debug: (str) => {
+        console.log("STOMP DEBUG:", str);
       },
       reconnectDelay: 5000, //연결 안될시, 다시 연결하는 딜레이
     });
@@ -109,10 +114,22 @@ function Meet() {
         setSocketComment(msg.body);
       });
 
+      //투표 구독
+      client.subscribe(`/topic/vote/${clickedAgendaId}`, (msg) => {
+        console.log(msg.body);
+        setSocketComment(msg.body);
+      });
+
       //DM 구독
       client.subscribe(`/topic/dm/${roomId}`, (msg) => {
         console.log(msg.body);
         setSocketDm(msg.body);
+      });
+
+      //StateUsers 구독
+      client.subscribe(`/topic/room/online/${roomId}`, (msg) => {
+        console.log(msg);
+        setSocketUser(msg.body);
       });
     }
 
@@ -150,7 +167,6 @@ function Meet() {
           },
         })
         .then((res) => {
-          console.log(res.data);
           setCode(res.data.code);
           setState(res.data.state);
           setRoomId(res.data.roomId);
@@ -170,7 +186,7 @@ function Meet() {
     if (roomId === null) {
       setModalNew(true);
     }
-  }, [roomId,socketcurrentAgendas]);
+  }, [roomId, socketcurrentAgendas]);
 
   return (
     <div className={style.extradiv}>
@@ -212,6 +228,7 @@ function Meet() {
             socketVoteOption={socketVoteOption} //투표욥션
             socketVoteResult={socketVoteResult} //투표결과
             socketAI={socketAI} //AI
+            socketUser={socketUser} //Users
 
             //
             now={now}
@@ -223,7 +240,7 @@ function Meet() {
           />
         </div>
         <DM
-        socketDm={socketDm}
+          socketDm={socketDm}
           now={now}
           token={token}
           isHost={isHost}
