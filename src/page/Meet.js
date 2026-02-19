@@ -170,15 +170,11 @@ function Meet() {
     if (!clientRef.current || !socketVoteId) return;
 
     const sub = clientRef.current.subscribe(
-      `/topic/vote/${socketVoteId}`,
-      (msg) => {
-        setSocketVoteResult(JSON.parse(msg.body));
+      `/topic/vote/${socketVoteId}`,(msg) => {
+        console.log("구독 작동");
+        setSocketVoteResult(msg.body);
       }
     );
-
-    return () => {
-      sub.unsubscribe();
-    };
 
   }, [socketVoteId]);
 
