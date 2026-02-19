@@ -59,12 +59,12 @@ function Meet() {
   const [socketcurrentAgendas, setSocketcurrentAgendas] = useState([]); //안건
   const [socketFile, setSocketFile] = useState(); //파일
   const [socketComment, setSocketComment] = useState(); //코멘트
-  const [socketVote,setSocketVote] = useState(); //투표
-  const [socketVoteOption,setSocketVoteOption] = useState(); //투표
-  const [socketVoteResult,setSocketVoteResult] = useState(); //투표
-  const [socketAI,setSocket] = useState(); //AI
-  const [socketDm,setSocketDm] = useState(); //Dm
-  const [socketUser,setSocketUser] = useState(); //User
+  const [socketVote, setSocketVote] = useState(); //투표
+  const [socketVoteOption, setSocketVoteOption] = useState(); //투표
+  const [socketVoteResult, setSocketVoteResult] = useState(); //투표
+  const [socketAI, setSocket] = useState(); //AI
+  const [socketDm, setSocketDm] = useState(); //Dm
+  const [socketUser, setSocketUser] = useState(); //User
 
   //웹소켓
   useEffect(() => {
@@ -74,6 +74,10 @@ function Meet() {
       webSocketFactory: () => new SockJS(BackWebsocket),
       connectHeaders: {
         Authorization: `Bearer ${token}`,
+      },
+
+      debug: (str) => {
+        console.log("STOMP DEBUG:", str);
       },
       reconnectDelay: 5000, //연결 안될시, 다시 연결하는 딜레이
     });
@@ -106,6 +110,12 @@ function Meet() {
 
       //코멘트 구독
       client.subscribe(`/topic/comment/list/${clickedAgendaId}`, (msg) => {
+        console.log(msg.body);
+        setSocketComment(msg.body);
+      });
+
+      //투표 구독
+      client.subscribe(`/topic/vote/${clickedAgendaId}`, (msg) => {
         console.log(msg.body);
         setSocketComment(msg.body);
       });
@@ -176,7 +186,7 @@ function Meet() {
     if (roomId === null) {
       setModalNew(true);
     }
-  }, [roomId,socketcurrentAgendas]);
+  }, [roomId, socketcurrentAgendas]);
 
   return (
     <div className={style.extradiv}>
@@ -230,7 +240,7 @@ function Meet() {
           />
         </div>
         <DM
-        socketDm={socketDm}
+          socketDm={socketDm}
           now={now}
           token={token}
           isHost={isHost}
