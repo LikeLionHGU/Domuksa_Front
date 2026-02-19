@@ -11,6 +11,7 @@ function Comment({ now, token, clickedAgendaId, onChange, socketComment }) {
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
+
         axios
             .get(`${process.env.REACT_APP_HOST_URL}/comment/${clickedAgendaId}`, {
                 headers: {
@@ -30,7 +31,10 @@ function Comment({ now, token, clickedAgendaId, onChange, socketComment }) {
     }, [socketComment])
 
     function commentWrite() {
-        const Input = document.getElementById("input").value;
+        const Input = document.getElementById(`input`).value;
+        if (Input === null) {
+            return;
+        }
 
         axios
             .post(`${process.env.REACT_APP_HOST_URL}/comment/${clickedAgendaId}`,
@@ -42,13 +46,16 @@ function Comment({ now, token, clickedAgendaId, onChange, socketComment }) {
                         Authorization: `Bearer ${token}`,
                     },
                 })
+            .then(() => {
+                Input = "";
+            })
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
     }
 
     function handleFormat(amount) {
-        if (amount < 60) return `${amount}초 전`;
+        if (amount < 60) return "1분미만";
         if (amount < 3600) return `${Math.floor(amount / 60)}분 전`;
         if (amount < 86400) return `${Math.floor(amount / 3600)}시간 전`;
         return `${Math.floor(amount / 86400)}일 전`;

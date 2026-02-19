@@ -18,7 +18,7 @@ import iconChatColor from "../asset/Mainicon-color-comment.png";
 import iconVoteColor from "../asset/Mainicon-color-vote.png";
 import iconAIColor from "../asset/Mainicon-color-Ai.png";
 
-function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI }) {
+function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI ,socketUser}) {
   const [mode, setMode] = useState("basic");
   const [hover, setHover] = useState("");
   const [FileState, setFileState] = useState(false);
@@ -125,7 +125,11 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
             className={style.SmallBlock}
             id="users"
           >
-            <Users />
+            <Users
+            socketUser={socketUser}
+              token={token}
+              roomId={roomId}
+            />
           </div>
         </div>
       </div>

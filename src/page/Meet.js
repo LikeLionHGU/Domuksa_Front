@@ -64,6 +64,7 @@ function Meet() {
   const [socketVoteResult,setSocketVoteResult] = useState(); //투표
   const [socketAI,setSocket] = useState(); //AI
   const [socketDm,setSocketDm] = useState(); //Dm
+  const [socketUser,setSocketUser] = useState(); //User
 
   //웹소켓
   useEffect(() => {
@@ -114,6 +115,12 @@ function Meet() {
         console.log(msg.body);
         setSocketDm(msg.body);
       });
+
+      //StateUsers 구독
+      client.subscribe(`/topic/room/online/${roomId}`, (msg) => {
+        console.log(msg);
+        setSocketUser(msg.body);
+      });
     }
 
     //연결시도
@@ -150,7 +157,6 @@ function Meet() {
           },
         })
         .then((res) => {
-          console.log(res.data);
           setCode(res.data.code);
           setState(res.data.state);
           setRoomId(res.data.roomId);
@@ -212,6 +218,7 @@ function Meet() {
             socketVoteOption={socketVoteOption} //투표욥션
             socketVoteResult={socketVoteResult} //투표결과
             socketAI={socketAI} //AI
+            socketUser={socketUser} //Users
 
             //
             now={now}

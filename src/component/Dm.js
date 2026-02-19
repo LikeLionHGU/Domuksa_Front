@@ -9,72 +9,48 @@ import send from "../asset/icon-send.png";
 import emoji from "../asset/icon-emoji.png";
 import DM from "../asset/icon-DM.png";
 
-function Dm({ socketDm,now, token, roomId, isHost }) {
+function Dm({ socketDm, now, token, roomId, isHost }) {
 
     const [EmojiModal, setEmojiModal] = useState(false);
 
     const [modalChat, setModalChat] = useState(false);
-    const [Notice, setNotice] = useState(true);
     const [message, setMessage] = useState([]);
     const ModalRef = useRef(null);
 
     const [date, setDate] = useState(null);
-    //외부클릭시 닫히게 지정해주기Ref!!
-    // useEffect(() => {
 
-    //     function HandClickoutsideofModal(e) {
-    //         if (ModalRef.current && !ModalRef.current.contains(e.target)) {
-    //             setEmojiModal(false);
-    //         }
-    //     }
 
-    //     document.addEventListener("mousedown", HandClickoutsideofModal);
-
-    //     return () => document.removeEventListener("mousedown", HandClickoutsideofModal);
-    // }, [ModalRef]);
-
-    // useEffect(() => {
-
-    //     if (isHost) {
-    //         axios
-    //             .get(`${process.env.REACT_APP_HOST_URL}/room/${roomId}/dm`, {
-    //                 headers: {
-    //                     Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    //                 },
-    //             })
-    //             .then((res) => {
-    //                 if (res.status === 200 || res.status === 201) {
-    //                     setMessage(res.data);
-    //                 }
-    //             })
-    //             .catch((error) => {
-    //                 console.error("마이페이지 정보 가져오기 실패:", error);
-    //             });
-    //     }
-
-    // }, []);
-
+    const ChatRef = useRef(null);
 
     useEffect(() => {
-        axios
-            .get(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            })
-            .then((res) => {
-                if (res.status === 200 || res.status === 201) {
-                    const format = res.data.messages.map(item => ({
-                        time: item.createdAt,
-                        content: item.content,
-                    }));
-                    setMessage(format);
-                }
-            })
-            .catch((error) => {
-                console.error("마이페이지 정보 가져오기 실패:", error);
-            });
-    }, [token, roomId,socketDm])
+        if (ChatRef.current !== null) {
+            ChatRef.currentscrollTop = ChatRef.current.scrollHeight;
+        }
+    }, [modalChat])
+
+    useEffect(() => {
+        // if (ChatRef.current !== null) {
+        //     ChatRef.currentscrollTop = ChatRef.current.scrollHeight;
+        // }
+        // axios
+        //     .get(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`, {
+        //         headers: {
+        //             Authorization: `Bearer ${token}`,
+        //         },
+        //     })
+        //     .then((res) => {
+        //         if (res.status === 200 || res.status === 201) {
+        //             const format = res.data.messages.map(item => ({
+        //                 time: item.createdAt,
+        //                 content: item.content,
+        //             }));
+        //             setMessage(format);
+        //         }
+        //     })
+        //     .catch((error) => {
+        //         console.error("마이페이지 정보 가져오기 실패:", error);
+        //     });
+    }, [token, roomId, socketDm])
 
     function sendMessage() {
 
@@ -94,7 +70,7 @@ function Dm({ socketDm,now, token, roomId, isHost }) {
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
                     // setMessage(prev => [...prev, res.data]);
-                    Newmessage.value = null;
+                    Newmessage = "";
                 }
             })
             .catch((error) => {
@@ -128,8 +104,8 @@ function Dm({ socketDm,now, token, roomId, isHost }) {
     }
 
     function handleFormat(amount) {
-        if (amount < 60) return `${amount}초`;
-        if (amount < 3600) return `${amount / 60}분`;
+        if (amount < 60) return "1분미만";
+        if (amount < 3600) return `${Math.floor(amount / 60)}분`;
         if (amount < 86400) return `${Math.floor(amount / 3600)}시간 전`;
         return `${Math.floor(amount / 86400)}일 전`;
     }
@@ -151,7 +127,7 @@ function Dm({ socketDm,now, token, roomId, isHost }) {
                         }}>+</p>
                     </div>
                     <hr />
-                    <div className={style.ChatList}>
+                    <div ref={ChatRef} className={style.ChatList}>
                         {message.map((message) => {
                             //1000ms=1s 초단위
                             const diff = Math.floor((now - new Date(message.time).getTime()) / 1000);
