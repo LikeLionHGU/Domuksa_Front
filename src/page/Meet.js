@@ -128,7 +128,6 @@ function Meet() {
 
       //StateUsers 구독
       client.subscribe(`/topic/room/online/${roomId}`, (msg) => {
-        console.log(msg);
         setSocketUser(msg.body);
       });
     }
@@ -139,13 +138,16 @@ function Meet() {
     clientRef.current = client;
 
     client.onStompError = (res) => {
+      client.deactivate();
       console.log(res);
     }
 
     client.onWebSocketError = () => {
+      client.deactivate();
       console.log("실패");
     }
     client.onWebSocketClose = () => {
+      client.deactivate();
       console.log("연결 끝");
     }
 

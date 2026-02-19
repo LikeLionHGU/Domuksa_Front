@@ -65,7 +65,6 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
           },
         })
       .then((res) => {
-        console.log(res);
         const format = res.data.map(item => ({
           sequence:item.agenda.sequence,
           id: item.agenda.agendaId,
