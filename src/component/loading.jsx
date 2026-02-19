@@ -16,7 +16,6 @@ const Loading = () => {
 
         if (!code) {
           console.error("Authorization code가 URL에 없습니다.");
-          alert("로그인에 실패했습니다. 다시 시도해주세요.");
           navigate("/");
           return;
         }
@@ -27,7 +26,6 @@ const Loading = () => {
         navigate("/home");
       } catch (error) {
         console.error("로그인 과정에서 에러가 발생했습니다.", error);
-        alert("로그인에 실패했습니다. 다시 시도해주세요.");
         navigate("/");
       }
     };
