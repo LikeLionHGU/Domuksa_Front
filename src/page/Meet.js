@@ -59,12 +59,13 @@ function Meet() {
   const [socketcurrentAgendas, setSocketcurrentAgendas] = useState([]); //안건
   const [socketFile, setSocketFile] = useState(); //파일
   const [socketComment, setSocketComment] = useState(); //코멘트
-  const [socketVote, setSocketVote] = useState(); //투표
-  const [socketVoteOption, setSocketVoteOption] = useState(); //투표
-  const [socketVoteResult, setSocketVoteResult] = useState(); //투표
   const [socketAI, setSocket] = useState(); //AI
   const [socketDm, setSocketDm] = useState(); //Dm
   const [socketUser, setSocketUser] = useState(); //User
+  const [socketVote, setSocketVote] = useState(); //투표
+  const [socketVoteOption, setSocketVoteOption] = useState(); //투표
+  const [socketVoteResult, setSocketVoteResult] = useState(); //투표
+  const [socketVoteId, setSocketVoteId] = useState(null);
 
   //웹소켓
   useEffect(() => {
@@ -121,6 +122,12 @@ function Meet() {
         setSocketVote(msg.body);
       });
 
+      // //투표 결과 구독
+      // client.subscribe(`/topic/vote/${socketVoteId}`, (msg) => {
+      //   console.log("투표결과 변동");
+      //   setSocketVoteResult(msg.body);
+      // });
+
       //DM 구독
       client.subscribe(`/topic/dm/${roomId}`, (msg) => {
         console.log("Dm 변동");
@@ -154,9 +161,26 @@ function Meet() {
     }
 
     //페이지 꺼지면 소켓 연결 끝
-    window.addEventListener('beforeunload', ()=>client.deactivate());
-    
+    window.addEventListener('beforeunload', () => client.deactivate());
+
   }, [token, roomId])
+
+  //투표 결과 구독은 따로,
+  useEffect(() => {
+    if (!clientRef.current || !socketVoteId) return;
+
+    const sub = clientRef.current.subscribe(
+      `/topic/vote/${socketVoteId}`,
+      (msg) => {
+        setSocketVoteResult(JSON.parse(msg.body));
+      }
+    );
+
+    return () => {
+      sub.unsubscribe();
+    };
+
+  }, [socketVoteId]);
 
   useEffect(() => {
     setToken(localStorage.getItem("accessToken"));
@@ -228,6 +252,8 @@ function Meet() {
             clickedAgendaId={clickedAgendaId}
           />
           <Right
+            socketVoteId={socketVoteId}
+            setSocketVoteId={setSocketVoteId}
             //웹소켓 반응 state 들
             socketFile={socketFile} //파일
             socketComment={socketComment} //코멘트
