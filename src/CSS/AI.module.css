@@ -27,12 +27,27 @@
             color: #111111;
         }
     }
-    .MarkdownBody {
-        display:flex;
-        align-items: center;
-        margin-left:200px;
 
-        width:1045px;
-        height:auto;
+    .MarkdownBody {
+        display: flex;
+        flex-direction: column;
+        /* align-items: center; */
+        margin-left: 200px;
+
+        width: 1045px;
+        height: auto;
+
+        h5 {
+            font-size: 25px;
+        }
+
+        h1 {
+            font-size: 20px;
+        }
+
+        h2 {
+            font-size: 15px;
+            margin-left: 25px;
+        }
     }
 }
