@@ -18,7 +18,7 @@
 
   .logo {
     margin-left: 20px;
-    margin-top: 20px;
+    margin-top: 28px;
     width: 144px;
     height: 45px;
   }
@@ -32,7 +32,7 @@
   margin-right: 20px;
   width: 53px;
   height: 53px;
-  border-radius: 50px;
+  border-radius: 20px;
 }
 .profileImg:hover {
   cursor: pointer;
