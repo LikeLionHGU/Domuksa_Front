@@ -35,10 +35,21 @@ function Landing() {
         <div className={styles.Maindiv}>
           <div className={styles.menubar}>
             <img className={styles.logoImg} src={logoImg} alt="이음 로고" />
-            <a className={styles.menu} href="#menu1">이음</a>
-            <a className={styles.menu} href="#menu2">기능</a>
-            <a className={styles.menu} href="#menu3">강점</a>
-            <a className={styles.menu} href="#menu4">서비스</a>
+            <div className={styles.menus}>
+              <a className={styles.menu} href="#menu1">
+                이음
+              </a>
+              <a className={styles.menu} href="#menu2">
+                기능
+              </a>
+              <a className={styles.menu} href="#menu3">
+                강점
+              </a>
+              <a className={styles.menu} href="#menu4">
+                서비스
+              </a>
+            </div>
+
             <div
               className={styles.loginButton}
               alt=""

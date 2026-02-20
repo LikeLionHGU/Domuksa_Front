@@ -20,7 +20,7 @@ html {
 
 .menubar {
   display: grid;
-  grid-template-columns: auto 1fr 1fr 1fr 1fr auto;
+  grid-template-columns: auto auto auto;
   align-items: center;
   text-align: center;
   background-color: rgba(255, 255, 255, 0.5);
@@ -37,6 +37,12 @@ html {
 
   border-radius: 10px;
 
+  .menus {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    column-gap: 130px;
+  }
+
   .menu {
     color: #000000;
     text-decoration: none;
@@ -47,6 +53,7 @@ html {
     height: 39px;
 
     margin-left: 15px;
+    margin-right: 227px;
   }
 
   .loginButton {
@@ -63,6 +70,7 @@ html {
     color: white;
     font-size: 16px;
 
+    margin-left: 245px;
     margin-right: 15px;
 
     .googleLogo {
@@ -70,6 +78,10 @@ html {
       height: 13px;
       margin-right: 10px;
     }
+  }
+  .loginButton:hover {
+    background-color: #493dd5;
+    cursor: pointer;
   }
 }
 
@@ -245,6 +257,10 @@ html {
 
     color: #ffffff;
   }
+  .start:hover {
+    background-color: #493dd5;
+    cursor: pointer;
+  }
 }
 
 .firstLine {
@@ -313,6 +329,7 @@ html {
     display: grid;
 
     place-items: center;
+    text-align: center;
 
     font-size: 16px;
 
@@ -452,6 +469,10 @@ html {
 
     font-size: 16px;
     color: #ffffff;
+  }
+  .start:hover {
+    background-color: #493dd5;
+    cursor: pointer;
   }
 }
 
