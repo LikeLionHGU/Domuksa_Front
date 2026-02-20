@@ -66,7 +66,7 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
-    }, [socketVoteOption])
+    }, [socketVoteOption,socketVoteResult])
 
     useEffect(() => {
         if (result === false) {

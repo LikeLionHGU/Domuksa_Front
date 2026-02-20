@@ -41,7 +41,6 @@ function File({ isHost, token, onChange, clickedAgendaId, socketFile }) {
                         setIsPdf(res.data[0].isPdf);
                         setFileChosenUrl(res.data[0].fileUrl);
                     }
-
                 }
             })
             .catch((error) => {
