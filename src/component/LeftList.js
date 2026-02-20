@@ -11,7 +11,7 @@ import bin from "../asset/icon-trashbin.png";
 import visible from "../asset/icon-visible.png";
 import add from "../asset/icon-add.png";
 
-function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
+function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,socketTimer,
   setClickedAgendaId, clickedAgendaId, setRoomName, setclickedAgendaName
 }) {
 
@@ -394,6 +394,9 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
       <hr />
 
       <Timer
+        //웹소켓 타이머
+        socketTimer={socketTimer}
+        //
         isHost={isHost}
         roomId={roomId}
         token={token}
