@@ -60,6 +60,7 @@ function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVote
 
     //[투표list]
     useEffect(() => {
+        if(clickedAgendaId===null||token===null)return;
         axios
             .get(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`, {
                 headers: {
