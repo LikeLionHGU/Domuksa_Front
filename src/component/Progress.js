@@ -48,29 +48,62 @@ function Progress({ progressRoomList, onChange }) {
               return progressRoomList;
             }
           })
-          .map((progressRoomList) => (
-            <div
-              id={progressRoomList.roomId}
-              key={progressRoomList.roomId}
-              className={styles.room}
-              onClick={(e) => getRoomId(e)}
-            >
-              {progressRoomList.role === "host" ? (
-                <img
-                  className={styles.roomHostImg}
-                  src={roomHostImg}
-                  alt="호스트룸"
-                />
-              ) : (
-                <img className={styles.roomImg} src={roomImg} alt="참여자룸" />
-              )}
-              <div className={styles.roomName}>
-                {progressRoomList.roomName.length > 9
-                  ? `${progressRoomList.roomName.slice(0, 9)}...`
-                  : progressRoomList.roomName}
-              </div>
-            </div>
-          ))}
+          .map((progressRoomList) => {
+            if (progressRoomList.role === "host") {
+              return (
+                <div
+                  id={progressRoomList.roomId}
+                  key={progressRoomList.roomId}
+                  className={styles.room}
+                  onClick={(e) => getRoomId(e)}
+                >
+                  <img
+                    className={styles.roomHostImg}
+                    src={roomHostImg}
+                    alt="호스트룸"
+                  />
+
+                  <div className={styles.roomName}>
+                    {progressRoomList.roomName.length > 9
+                      ? `${progressRoomList.roomName.slice(0, 9)}...`
+                      : progressRoomList.roomName}
+                  </div>
+                </div>
+              );
+            }
+          })}
+        {progressRoomList
+          .filter((progressRoomList) => {
+            if (searchTerm === "") {
+              return progressRoomList;
+            } else if (
+              progressRoomList.roomName
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase())
+            ) {
+              return progressRoomList;
+            }
+          })
+          .map((progressRoomList) => {
+            if (progressRoomList.role === "member") {
+              return (
+                <div
+                  id={progressRoomList.roomId}
+                  key={progressRoomList.roomId}
+                  className={styles.room}
+                  onClick={(e) => getRoomId(e)}
+                >
+                  <img className={styles.roomImg} src={roomImg} alt="멤버룸" />
+
+                  <div className={styles.roomName}>
+                    {progressRoomList.roomName.length > 9
+                      ? `${progressRoomList.roomName.slice(0, 9)}...`
+                      : progressRoomList.roomName}
+                  </div>
+                </div>
+              );
+            }
+          })}
       </div>
     </div>
   );
