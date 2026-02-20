@@ -174,14 +174,6 @@ function Home() {
             </div>
           </div>
 
-          {isArchiveOpen === true ? (
-            <Archived
-              onChange={setIsArchiveOpen}
-              isOpen={isArchiveOpen}
-              completeRoomList={completeRooms}
-            />
-          ) : null}
-
           <div className={styles.menu}>
             <div className={styles.new} onClick={(e) => navigate("/meet")}>
               <img className={styles.addBtn} src={addImg} alt="추가" />
@@ -202,7 +194,13 @@ function Home() {
               onChange={setIsArchiveOpen}
               progressRoomList={progressRooms}
             />
-          ) : null}
+          ) : (
+            <Archived
+              onChange={setIsArchiveOpen}
+              isOpen={isArchiveOpen}
+              completeRoomList={completeRooms}
+            />
+          )}
         </div>
         {Logoutmodal === true ? (
           <LogoutModal

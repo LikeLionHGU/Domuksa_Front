@@ -1,3 +1,37 @@
+/* .MaindivIn {
+  width: 1440px;
+  height: 872px;
+  background-color: #fafafa;
+
+  animation: fadein 0.1s;
+}
+
+.MaindivOut {
+  width: 1440px;
+  height: 872px;
+  background-color: #fafafa;
+
+  animation: fadeout 0.1s;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeout {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+} */
+
 .process {
   display: grid;
   grid-template-columns: 1fr auto;
