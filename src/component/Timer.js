@@ -11,7 +11,7 @@ import TimerStop from "../asset/icon-timer-stop.png";
 function Timer({ isHost, socketTimer, roomId, token }) {
 
 
-    const [State, setState] = useState("STOP");
+    const [State, setState] = useState("stop");
     const [total, setTotal] = useState(60);
     const hour = Math.floor(total / 3600);
     const min = Math.floor((total % 3600) / 60);
@@ -38,7 +38,24 @@ function Timer({ isHost, socketTimer, roomId, token }) {
                     Time.current = setInterval(() => { //1초식 줄어들기
                         setTotal(pre => {
                             if (pre === 1 || pre === 0) { //0초되면 멈추기
-                                setState("stop");
+                                axios
+                                    .patch(
+                                        `${process.env.REACT_APP_HOST_URL}/timer/${roomId}/status`,
+                                        {
+                                            state: "stop",
+                                        },
+                                        {
+                                            headers: {
+                                                Authorization: `Bearer ${token}`,
+                                            },
+                                        }
+                                    )
+                                    .then((res) => {
+                                        console.log(res.data);
+                                    })
+                                    .catch((error) => {
+                                        console.error("마이페이지 정보 가져오기 실패:", error);
+                                    });
                                 clearInterval(Time.current);
                                 return 0;
                             }
@@ -51,30 +68,63 @@ function Timer({ isHost, socketTimer, roomId, token }) {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
 
+        return () => {
+            if (Time.current) {
+                clearInterval(Time.current);
+                Time.current = null;
+            }
+        };
+
     }, [socketTimer, roomId, token])
 
     //불러와서 작동하기
 
     function ChangeState() {
-        axios
-            .patch(
-                `${process.env.REACT_APP_HOST_URL}/timer/${roomId}/status`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
+        if (State === "stop") {
+            axios
+                .patch(
+                    `${process.env.REACT_APP_HOST_URL}/timer/${roomId}/status`,
+                    {
+                        state: "play",
                     },
-                }
-            )
-            .then((res) => {
-                console.log(res.data);
-            })
-            .catch((error) => {
-                console.error("마이페이지 정보 가져오기 실패:", error);
-            });
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                )
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch((error) => {
+                    console.error("마이페이지 정보 가져오기 실패:", error);
+                });
+        } else {
+            axios
+                .patch(
+                    `${process.env.REACT_APP_HOST_URL}/timer/${roomId}/status`,
+                    {
+                        state: "stop",
+                    },
+                    {
+                        headers: {
+                            Authorization: `Bearer ${token}`,
+                        },
+                    }
+                )
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch((error) => {
+                    console.error("마이페이지 정보 가져오기 실패:", error);
+                });
+        }
+
+
     }
 
     function addThreemin(e) {
-        const time =parseInt(e.currentTarget.id)*60;
+        const time = parseInt(e.currentTarget.id) * 60;
         axios
             .patch(
                 `${process.env.REACT_APP_HOST_URL}/timer/${roomId}/time`,
