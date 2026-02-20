@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 function Progress({ progressRoomList, onChange }) {
   const navigate = useNavigate();
+  const [inAndOut, setInAndOut] = useState("MaindivIn");
 
   const [searchTerm, setSearchTerm] = useState("");
 

@@ -20,7 +20,7 @@ function Archived({ onChange, isOpen, completeRoomList }) {
     setInAndOut("MaindivOut");
     setTimeout(function () {
       onChange(false);
-    }, 800);
+    }, 200);
   }
 
   return (
@@ -55,33 +55,66 @@ function Archived({ onChange, isOpen, completeRoomList }) {
                   return completeRoomList;
                 }
               })
-              .map((completeRoomList) => (
-                <div
-                  id={completeRoomList.roomId}
-                  key={completeRoomList.roomId}
-                  className={styles.room}
-                  onClick={(e) => getRoomId(e)}
-                >
-                  {completeRoomList.role === "host" ? (
-                    <img
-                      className={styles.roomHostImg}
-                      src={roomHostImg}
-                      alt="호스트룸"
-                    />
-                  ) : (
-                    <img
-                      className={styles.roomImg}
-                      src={roomImg}
-                      alt="참여자룸"
-                    />
-                  )}
-                  <div className={styles.roomName}>
-                    {completeRoomList.roomName.length > 9
-                      ? `${completeRoomList.roomName.slice(0, 9)}...`
-                      : completeRoomList.roomName}
-                  </div>
-                </div>
-              ))}
+              .map((completeRoomList) => {
+                if (completeRoomList.role === "host") {
+                  return (
+                    <div
+                      id={completeRoomList.roomId}
+                      key={completeRoomList.roomId}
+                      className={styles.room}
+                      onClick={(e) => getRoomId(e)}
+                    >
+                      <img
+                        className={styles.roomHostImg}
+                        src={roomHostImg}
+                        alt="호스트룸"
+                      />
+
+                      <div className={styles.roomName}>
+                        {completeRoomList.roomName.length > 9
+                          ? `${completeRoomList.roomName.slice(0, 9)}...`
+                          : completeRoomList.roomName}
+                      </div>
+                    </div>
+                  );
+                }
+              })}
+            {completeRoomList
+              .filter((completeRoomList) => {
+                if (searchTerm === "") {
+                  return completeRoomList;
+                } else if (
+                  completeRoomList.roomName
+                    .toLowerCase()
+                    .includes(searchTerm.toLowerCase())
+                ) {
+                  return completeRoomList;
+                }
+              })
+              .map((completeRoomList) => {
+                if (completeRoomList.role === "member") {
+                  return (
+                    <div
+                      id={completeRoomList.roomId}
+                      key={completeRoomList.roomId}
+                      className={styles.room}
+                      onClick={(e) => getRoomId(e)}
+                    >
+                      <img
+                        className={styles.roomImg}
+                        src={roomImg}
+                        alt="멤버룸"
+                      />
+
+                      <div className={styles.roomName}>
+                        {completeRoomList.roomName.length > 9
+                          ? `${completeRoomList.roomName.slice(0, 9)}...`
+                          : completeRoomList.roomName}
+                      </div>
+                    </div>
+                  );
+                }
+              })}
           </div>
         </div>
       </div>
