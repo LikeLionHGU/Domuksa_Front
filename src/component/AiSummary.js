@@ -77,6 +77,7 @@ function AI({ isHost, token, onChange, clickedAgendaId, AIState }) {
             <p>{summary}</p> */}
 
             <div className={style.MarkdownBody}>
+                <h5>{title}</h5>
                 <ReactMarkdown>
                     {summary}
                 </ReactMarkdown>
