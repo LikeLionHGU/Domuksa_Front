@@ -18,7 +18,7 @@ import iconChatColor from "../asset/Mainicon-color-comment.png";
 import iconVoteColor from "../asset/Mainicon-color-vote.png";
 import iconAIColor from "../asset/Mainicon-color-Ai.png";
 
-function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI ,socketUser}) {
+function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI, socketUser,socketVoteId, setSocketVoteId }) {
   const [mode, setMode] = useState("basic");
   const [hover, setHover] = useState("");
   const [FileState, setFileState] = useState(false);
@@ -31,7 +31,6 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
     if (clickedAgendaId === null || token === null) {
       return;
     }
-    console.log(clickedAgendaId);
     axios
       .get(
         `${process.env.REACT_APP_HOST_URL}/agenda/${clickedAgendaId}`,
@@ -126,7 +125,8 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
             id="users"
           >
             <Users
-            socketUser={socketUser}
+            socketVoteId={socketVoteId}
+              socketUser={socketUser}
               token={token}
               roomId={roomId}
             />
@@ -157,6 +157,7 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
       clickedAgendaId={clickedAgendaId}
       roomId={roomId}
       onChange={setMode}
+      setSocketVoteId={setSocketVoteId}
     />,
     AI: <AI
       socketAI={socketAI}

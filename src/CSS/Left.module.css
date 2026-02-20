@@ -382,5 +382,7 @@ hr {
       width: 14px;
       height: auto;
     }
-  }
+}
+.space{
+    height:70px;
 }

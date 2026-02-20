@@ -12,7 +12,7 @@ function File({ isHost, token, onChange, clickedAgendaId, socketFile }) {
 
     const [listModal, setListModal] = useState(false);
     const [Files, setFiles] = useState([]);
-    const [FileEmpty, setFileEmpty] = useState(false);
+    const [FileEmpty, setFileEmpty] = useState(true);
     const [FileChosenUrl, setFileChosenUrl] = useState(null);
     const [isPdf, setIsPdf] = useState();
 

@@ -11,7 +11,7 @@ import edit from "../asset/icon-edit.png";
 import bin from "../asset/icon-trashbin.png";
 import addBtn from "../asset/icon-addBtn.png";
 
-function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVoteOption, socketVoteResult }) {
+function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVoteOption, socketVoteResult,setSocketVoteId }) {
 
     //[투표리스트]
     const [votes, setVotes] = useState([]);
@@ -127,6 +127,7 @@ function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVote
     }
 
     function openDetail(id) {
+        setSocketVoteId(id);
         setDetailId(id);
         setDetail(true);
     }

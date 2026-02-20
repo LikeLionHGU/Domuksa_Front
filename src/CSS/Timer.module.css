@@ -10,8 +10,8 @@
 
     .margin {
         Margin: 0 35px;
-        width:205px;
-        height:138px;
+        width: 205px;
+        height: 138px;
 
         .TImerBody {
             display: flex;
@@ -95,12 +95,41 @@
             button {
                 font-size: 14px;
                 width: 68.3333333333px;
-                height:32px;
+                height: 32px;
                 border: 1px solid #EDEDED;
                 background-color: #ffffff;
             }
         }
     }
+}
 
+.Userdiv {
+    height: 112px;
+    margin: 15px 30px 20px 30px;
 
+    .TimerWord {
+        width: 66px;
+        height: 18px;
+        margin-bottom: 10px;
+    }
+    .margin {
+        Margin: 0 35px;
+        width: 205px;
+        
+        .TImerBody {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            margin-bottom: 8px;
+            width: 204.73px;
+            height: 46px;
+
+            h1 {
+                font-size: 40px;
+                margin: 0;
+            }
+        }
+
+    }
 }

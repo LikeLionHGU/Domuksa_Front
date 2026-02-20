@@ -15,52 +15,59 @@ function Dm({ socketDm, now, token, roomId, isHost }) {
 
     const [modalChat, setModalChat] = useState(false);
     const [message, setMessage] = useState([]);
+
     const ModalRef = useRef(null);
-
-    const [date, setDate] = useState(null);
-
-
     const ChatRef = useRef(null);
 
-    useEffect(() => {
-        if (ChatRef.current !== null) {
-            ChatRef.currentscrollTop = ChatRef.current.scrollHeight;
-        }
-    }, [modalChat])
+    const [input, setInput] = useState("");
 
     useEffect(() => {
-        // if (ChatRef.current !== null) {
-        //     ChatRef.currentscrollTop = ChatRef.current.scrollHeight;
-        // }
-        // axios
-        //     .get(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`, {
-        //         headers: {
-        //             Authorization: `Bearer ${token}`,
-        //         },
-        //     })
-        //     .then((res) => {
-        //         if (res.status === 200 || res.status === 201) {
-        //             const format = res.data.messages.map(item => ({
-        //                 time: item.createdAt,
-        //                 content: item.content,
-        //             }));
-        //             setMessage(format);
-        //         }
-        //     })
-        //     .catch((error) => {
-        //         console.error("마이페이지 정보 가져오기 실패:", error);
-        //     });
+        function HandClickoutsideofModal(e) {
+            if (ModalRef.current && !ModalRef.current.contains(e.target)) {
+                setEmojiModal(false);
+            }
+        }
+        document.addEventListener("mousedown", HandClickoutsideofModal);
+
+        return () => {
+            document.removeEventListener("mousedown", HandClickoutsideofModal);
+        }
+    }, [EmojiModal]);
+
+    useEffect(() => {
+        if (ChatRef.current) {
+            ChatRef.current.scrollTop = ChatRef.current.scrollHeight;
+        }
+    }, [message, modalChat])
+
+    useEffect(() => {
+        if(token===null||roomId===null)return;
+        axios
+            .get(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            })
+            .then((res) => {
+                if (res.status === 200 || res.status === 201) {
+                    const format = res.data.messages.map(item => ({
+                        time: item.createdAt,
+                        content: item.content,
+                    }));
+                    setMessage(format);
+                }
+            })
+            .catch((error) => {
+                console.error("마이페이지 정보 가져오기 실패:", error);
+            });
     }, [token, roomId, socketDm])
 
     function sendMessage() {
 
-        const Newmessage = document.getElementById("newMessage").value;
-
-        console.log(Newmessage);
         axios
             .post(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`,
                 {
-                    content: Newmessage,
+                    content: input,
                 },
                 {
                     headers: {
@@ -69,8 +76,7 @@ function Dm({ socketDm, now, token, roomId, isHost }) {
                 })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
-                    // setMessage(prev => [...prev, res.data]);
-                    Newmessage = "";
+                    setInput("");
                 }
             })
             .catch((error) => {
@@ -78,7 +84,7 @@ function Dm({ socketDm, now, token, roomId, isHost }) {
             });
     }
     function buttonSendMessage(e) {
-        const Newmessage = e.target.value;
+        const Newmessage = e.target.innerText;
         axios
             .post(`${process.env.REACT_APP_HOST_URL}/dm/${roomId}`,
                 {
@@ -155,7 +161,16 @@ function Dm({ socketDm, now, token, roomId, isHost }) {
                         </div>
                         <div className={style.Inputdiv}>
                             <img alt="emoji" className={style.Emoji} src={emoji} onClick={() => setEmojiModal(true)} />
-                            <input id="newMessage" />
+                            <input
+                                id="newMessage"
+                                value={input}
+                                onChange={(e) => setInput(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        e.preventDefault();
+                                        sendMessage();
+                                    }
+                                }} />
                             <img alt="send" className={style.Send} src={send} onClick={() => sendMessage()} />
                         </div>
                     </div>}

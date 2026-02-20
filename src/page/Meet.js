@@ -59,12 +59,13 @@ function Meet() {
   const [socketcurrentAgendas, setSocketcurrentAgendas] = useState([]); //안건
   const [socketFile, setSocketFile] = useState(); //파일
   const [socketComment, setSocketComment] = useState(); //코멘트
-  const [socketVote, setSocketVote] = useState(); //투표
-  const [socketVoteOption, setSocketVoteOption] = useState(); //투표
-  const [socketVoteResult, setSocketVoteResult] = useState(); //투표
   const [socketAI, setSocket] = useState(); //AI
   const [socketDm, setSocketDm] = useState(); //Dm
   const [socketUser, setSocketUser] = useState(); //User
+  const [socketVote, setSocketVote] = useState(); //투표
+  const [socketVoteOption, setSocketVoteOption] = useState(); //투표
+  const [socketVoteResult, setSocketVoteResult] = useState(); //투표
+  const [socketVoteId, setSocketVoteId] = useState(null);
 
   //웹소켓
   useEffect(() => {
@@ -86,49 +87,56 @@ function Meet() {
       console.log("연결성공");
       //방상태 변경
       client.subscribe(`/topic/room/state/${roomId}`, (msg) => {
-        console.log(msg.body);
+        console.log("방 상태 변동");
         setState(msg.body);
       });
 
       //=================[구독 리스트]=================//
       //안건 구독
       client.subscribe(`/topic/agenda/list/${roomId}`, (msg) => {
+        console.log("안건 변동");
         setSocketAgendas(msg.body);
       });
 
       //현재안건 구독
       client.subscribe(`/topic/agenda/current/${roomId}`, (msg) => {
-        console.log(msg.body);
+        console.log("선택된 변동");
         setSocketcurrentAgendas(msg.body);
       });
 
       //파일 구독
       client.subscribe(`/topic/file/list/${clickedAgendaId}`, (msg) => {
-        console.log(msg.body);
+        console.log("파일 변동");
         setSocketFile(msg.body);
       });
 
       //코멘트 구독
       client.subscribe(`/topic/comment/list/${clickedAgendaId}`, (msg) => {
-        console.log(msg.body);
+        console.log("코멘트 변동");
         setSocketComment(msg.body);
       });
 
       //투표 구독
       client.subscribe(`/topic/vote/${clickedAgendaId}`, (msg) => {
-        console.log(msg.body);
+        console.log("투표 변동");
         setSocketVote(msg.body);
       });
 
+      // //투표 결과 구독
+      // client.subscribe(`/topic/vote/${socketVoteId}`, (msg) => {
+      //   console.log("투표결과 변동");
+      //   setSocketVoteResult(msg.body);
+      // });
+
       //DM 구독
       client.subscribe(`/topic/dm/${roomId}`, (msg) => {
-        console.log(msg.body);
+        console.log("Dm 변동");
         setSocketDm(msg.body);
       });
 
       //StateUsers 구독
       client.subscribe(`/topic/room/online/${roomId}`, (msg) => {
-        console.log(msg);
+        console.log("사용자 변동");
         setSocketUser(msg.body);
       });
     }
@@ -139,17 +147,38 @@ function Meet() {
     clientRef.current = client;
 
     client.onStompError = (res) => {
+      client.deactivate();
       console.log(res);
     }
 
     client.onWebSocketError = () => {
+      client.deactivate();
       console.log("실패");
     }
     client.onWebSocketClose = () => {
+      client.deactivate();
       console.log("연결 끝");
     }
 
+    //페이지 꺼지면 소켓 연결 끝
+    window.addEventListener('beforeunload', () => client.deactivate());
+    return (() => {
+      client.deactivate();
+    })
   }, [token, roomId])
+
+  //투표 결과 구독은 따로,
+  useEffect(() => {
+    if (!clientRef.current || !socketVoteId) return;
+
+    const sub = clientRef.current.subscribe(
+      `/topic/vote/${socketVoteId}`, (msg) => {
+        console.log("구독 작동");
+        setSocketVoteResult(msg.body);
+      }
+    );
+
+  }, [socketVoteId]);
 
   useEffect(() => {
     setToken(localStorage.getItem("accessToken"));
@@ -221,6 +250,8 @@ function Meet() {
             clickedAgendaId={clickedAgendaId}
           />
           <Right
+            socketVoteId={socketVoteId}
+            setSocketVoteId={setSocketVoteId}
             //웹소켓 반응 state 들
             socketFile={socketFile} //파일
             socketComment={socketComment} //코멘트

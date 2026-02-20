@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from 'axios';
 import style from "../CSS/UserState.module.css";
 
-function UserState({ roomId, token,socketUser}) {
+function UserState({ roomId, token,socketUser,socketVoteId}) {
 
     const [User, setUsers] = useState([]);
 
@@ -18,8 +18,6 @@ function UserState({ roomId, token,socketUser}) {
                     },
                 })
             .then((res) => {
-                console.log(res.data);
-                console.log(res);
                 setUsers(res.data);
             })
             .catch((error) => {
@@ -27,7 +25,7 @@ function UserState({ roomId, token,socketUser}) {
             })
     }, [roomId, token,socketUser])
     function haneldeState() {
-        console.log(User);
+        console.log(socketVoteId);
     }
     return (
         <div className={style.Userlist}>
