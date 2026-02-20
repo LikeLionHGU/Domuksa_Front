@@ -80,6 +80,7 @@ function Timer({ isHost, socketTimer, roomId, token }) {
     //불러와서 작동하기
 
     function ChangeState() {
+        if (total === 0) return;
         if (State === "stop") {
             axios
                 .patch(
@@ -123,8 +124,9 @@ function Timer({ isHost, socketTimer, roomId, token }) {
 
     }
 
-    function addThreemin(e) {
-        const time = parseInt(e.currentTarget.id) * 60;
+    function EditTime(e) {
+        const time = total + parseInt(e.currentTarget.id) * 60;
+
         axios
             .patch(
                 `${process.env.REACT_APP_HOST_URL}/timer/${roomId}/time`,
@@ -166,6 +168,51 @@ function Timer({ isHost, socketTimer, roomId, token }) {
             });
     }
 
+    function UponeMinutes() {
+        const time = total + 60;
+        axios
+            .patch(
+                `${process.env.REACT_APP_HOST_URL}/timer/${roomId}/time`,
+                {
+                    time: time,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((error) => {
+                console.error("마이페이지 정보 가져오기 실패:", error);
+            });
+    }
+    function DownoneMinutes() {
+        if(total<1||total<0){
+            return;
+        }
+        const time = total - 60;
+        axios
+            .patch(
+                `${process.env.REACT_APP_HOST_URL}/timer/${roomId}/time`,
+                {
+                    time: time,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    },
+                }
+            )
+            .then((res) => {
+                console.log(res.data);
+            })
+            .catch((error) => {
+                console.error("마이페이지 정보 가져오기 실패:", error);
+            });
+    }
 
     return (
         (isHost ?
@@ -175,13 +222,8 @@ function Timer({ isHost, socketTimer, roomId, token }) {
                     <div className={style.TImerBody}>
                         <h1>{hour.toString().padStart(2, "0")}:{min.toString().padStart(2, "0")}:{sec.toString().padStart(2, "0")}</h1>
                         <div className={style.UPandDOWN}>
-                            <img alt="keyup" onClick={() => setTotal(pre => pre + 60)} src={TimerUpdown} />
-                            <img alt="keydown" onClick={() => setTotal(pre => {
-                                if (pre <= 59) {
-                                    return 0;
-                                }
-                                return pre - 60;
-                            })} src={TimerUpdown} className={style.imgDown} />
+                            <img alt="keyup" onClick={() => UponeMinutes()} src={TimerUpdown} />
+                            <img alt="keydown" onClick={() => DownoneMinutes()} src={TimerUpdown} className={style.imgDown} />
                         </div>
                     </div>
                     <div className={style.Buttons}>
@@ -189,9 +231,9 @@ function Timer({ isHost, socketTimer, roomId, token }) {
                         <button className={style.Reset} onClick={() => Reset()}><img alt="reset" src={TimerReset} /></button>
                     </div>
                     <div className={style.ExtraButtons}>
-                        <button id="3" onClick={(e) => addThreemin(e)}>+ 3m</button>
-                        <button id="5" onClick={(e) => addThreemin(e)}>+ 5m</button>
-                        <button id="10" onClick={(e) => addThreemin(e)}>+ 10m</button>
+                        <button id="3" onClick={(e) => EditTime(e)}>+ 3m</button>
+                        <button id="5" onClick={(e) => EditTime(e)}>+ 5m</button>
+                        <button id="10" onClick={(e) => EditTime(e)}>+ 10m</button>
                     </div>
                 </div>
             </div>

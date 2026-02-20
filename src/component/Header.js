@@ -68,6 +68,9 @@ function Header({
           `
           ${process.env.REACT_APP_HOST_URL}/room/${roomId}/state`,
           {
+            state: "complete",
+          },
+          {
             headers: {
               Authorization: `Bearer ${token}`,
             },
@@ -82,6 +85,9 @@ function Header({
         .patch(
           `
           ${process.env.REACT_APP_HOST_URL}/room/${roomId}/state`,
+          {
+            state: "running",
+          },
           {
             headers: {
               Authorization: `Bearer ${token}`,
