@@ -18,7 +18,7 @@ import iconChatColor from "../asset/Mainicon-color-comment.png";
 import iconVoteColor from "../asset/Mainicon-color-vote.png";
 import iconAIColor from "../asset/Mainicon-color-Ai.png";
 
-function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI, socketUser, socketVoteId, setSocketVoteId }) {
+function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI, socketUser, socketVoteId, setSocketVoteId, clickedAgendaName }) {
   const [mode, setMode] = useState("basic");
   const [hover, setHover] = useState("");
   const [FileState, setFileState] = useState(false);
@@ -151,6 +151,7 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
       onChange={setMode}
     />,
     Vote: <Vote
+      clickedAgendaName={clickedAgendaName} //투표리스트 title=안건이름
       socketVote={socketVote}
       socketVoteOption={socketVoteOption}
       socketVoteResult={socketVoteResult}
