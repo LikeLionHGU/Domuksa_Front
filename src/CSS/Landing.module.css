@@ -158,7 +158,7 @@ html {
   .file {
     width: 77px;
     height: auto;
-    margin-right: 107px;
+    margin-right: 115px;
   }
   .file:hover {
     transform: scale(1.2);
@@ -167,7 +167,7 @@ html {
   .comment {
     width: 104px;
     height: auto;
-    margin-right: 104px;
+    margin-right: 100px;
   }
   .comment:hover {
     transform: scale(1.2);
@@ -328,6 +328,7 @@ html {
     .functionDetail1 {
       width: 345px;
       height: 36px;
+      line-height: 1.4;
     }
 
     .functionDetail2 {
@@ -338,6 +339,7 @@ html {
     .functionDetail3 {
       width: 255px;
       height: 36px;
+      line-height: 1.4;
     }
 
     .strength1 {
@@ -347,9 +349,10 @@ html {
     .strength2 {
       width: 315px;
       height: 42px;
+      line-height: 1.4;
     }
     .strength3 {
-      width: 315px;
+      width: 320px;
       height: 42px;
     }
   }
