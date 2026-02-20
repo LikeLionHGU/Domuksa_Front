@@ -52,6 +52,8 @@ function Meet() {
   //안건 선언한거 저장
   const clientRef = useRef(null);
 
+  //선택된 안건 
+  const [clickedAgendaName,setclickedAgendaName]=useState();
 
   //웹소켓의 상태 동작값
 
@@ -242,6 +244,8 @@ function Meet() {
             setRoomName={setRoomName}
             deleteModal={setDeleteModal}
             setClickedAgendaId={setClickedAgendaId}
+            setclickedAgendaName={setclickedAgendaName}
+            clickedAgendaName={clickedAgendaName}
             socketAgendas={socketAgendas}
             token={token}
             isHost={isHost}
@@ -261,7 +265,9 @@ function Meet() {
             socketAI={socketAI} //AI
             socketUser={socketUser} //Users
 
-            //
+            //vote에 표시되는 안건 이름
+            clickedAgendaName={clickedAgendaName}
+
             now={now}
             RoomName={RoomName}
             token={token}

@@ -73,9 +73,6 @@ function AI({ isHost, token, onChange, clickedAgendaId, AIState }) {
                 <h3>AI 요약</h3>
                 <h2 onClick={() => onChange("basic")} >+</h2>
             </div>
-            {/* <h2>{title}</h2>
-            <p>{summary}</p> */}
-
             <div className={style.MarkdownBody}>
                 <h5>{title}</h5>
                 <ReactMarkdown>
