@@ -97,7 +97,7 @@ html {
 
     position: absolute;
 
-    margin-top: 186px;
+    margin-top: 187px;
   }
 
   .people {
@@ -150,21 +150,22 @@ html {
   margin-top: 257px;
 
   .progress {
-    width: 78px;
+    width: 80px;
     height: 40px;
 
     margin-right: 222px;
+    margin-bottom: 20px;
 
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
 
-    border-radius: 15px;
     background-color: #e3e7fb;
 
+    font-weight: bold;
     font-size: 12px;
-    font-weight: 900;
     color: #5071fb;
+    border-radius: 15px;
   }
 
   .file {
@@ -205,19 +206,21 @@ html {
   }
 
   .complete {
-    width: 78px;
+    width: 80px;
     height: 40px;
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    margin-bottom: 20px;
 
-    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
     background-color: #ddfce6;
 
+    font-weight: bold;
     font-size: 12px;
-    font-weight: 900;
     color: #2a8242;
+    border-radius: 15px;
   }
 }
 

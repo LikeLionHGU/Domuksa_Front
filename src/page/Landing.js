@@ -73,12 +73,16 @@ function Landing() {
             <img className={styles.dm} src={dm} alt="디엠" />
 
             <div className={styles.icon}>
-              <div className={styles.progress}>• 진행중</div>
+              <div className={styles.progress}>
+                <strong>•</strong> 진행중
+              </div>
               <img className={styles.file} src={file} alt="파일" />
               <img className={styles.comment} src={comment} alt="코멘트" />
               <img className={styles.vote} src={vote} alt="투표" />
               <img className={styles.ai} src={ai} alt="ai" />
-              <div className={styles.complete}>• 완료</div>
+              <div className={styles.complete}>
+                <strong>•</strong> 완료
+              </div>
             </div>
 
             <div className={styles.firstText}>
