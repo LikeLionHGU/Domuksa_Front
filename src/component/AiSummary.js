@@ -6,11 +6,6 @@ import style from "../CSS/AI.module.css";
 import ReactMarkdown from "react-markdown";
 
 function AI({ token, onChange, clickedAgendaId }) {
-  const markdownText = `
-  # 안녕하세요!
-  저는 현재 리액트에서 \`react-markdown\`를 이용하여 **마크다운**을 랜더링하고 있습니다.
-  `;
-
   const [summary, setSummary] = useState();
   const [title, setTitle] = useState();
   useEffect(() => {
@@ -39,8 +34,7 @@ function AI({ token, onChange, clickedAgendaId }) {
       </div>
       <h2>{title}</h2>
       <p>
-        <ReactMarkdown>{markdownText}</ReactMarkdown>
-        {/* <ReactMarkdown>{summary}</ReactMarkdown> */}
+        <ReactMarkdown>{summary}</ReactMarkdown>
       </p>
     </div>
   );
