@@ -12,8 +12,6 @@ const Loading = () => {
         const parsedQuery = new URLSearchParams(window.location.search);
         const code = parsedQuery.get("code");
 
-        console.log("Authorization code:", code);
-
         if (!code) {
           console.error("Authorization code가 URL에 없습니다.");
           navigate("/");

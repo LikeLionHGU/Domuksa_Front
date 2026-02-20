@@ -7,8 +7,6 @@ const sendAccessTokenToBackend = async (code) => {
       { code },
     );
 
-    console.log("Login successful with server response:", response.data);
-
     if (response.data.accessToken) {
       const accessToken = response.data.accessToken;
 

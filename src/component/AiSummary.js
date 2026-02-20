@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import style from "../CSS/AI.module.css";
-import ReactMarkdown from "react-markdown";
 
 function AI({ token, onChange, clickedAgendaId }) {
   const [summary, setSummary] = useState();
@@ -33,9 +32,7 @@ function AI({ token, onChange, clickedAgendaId }) {
         <h2 onClick={() => onChange("basic")}>+</h2>
       </div>
       <h2>{title}</h2>
-      <p>
-        <ReactMarkdown>{summary}</ReactMarkdown>
-      </p>
+      <p>{summary}</p>
     </div>
   );
 }

@@ -93,7 +93,6 @@ function Home() {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        userId: userId,
       })
       .then((res) => {
         setProgressRooms(res.data);
@@ -107,7 +106,6 @@ function Home() {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        userId: userId,
       })
       .then((res) => {
         setCompleteRooms(res.data);
