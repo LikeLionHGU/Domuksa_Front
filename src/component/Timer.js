@@ -34,10 +34,11 @@ function Timer({ isHost, socketTimer, roomId, token }) {
                 setTotal(res.data.time); //시간 받고
                 setState(res.data.state); //상태값 받기
 
-                if (res.data.status !== "stop") {
+                if (res.data.state !== "stop") {
                     Time.current = setInterval(() => { //1초식 줄어들기
                         setTotal(pre => {
                             if (pre === 1 || pre === 0) { //0초되면 멈추기
+                                setState("stop");
                                 clearInterval(Time.current);
                                 return 0;
                             }
