@@ -1,32 +1,38 @@
 .Maindiv {
-    width:1045px;
-    height:726px;
+    width: 1045px;
+    height: 726px;
 
     border-radius: 20px;
     background-color: rgb(255, 255, 255);
     overflow: hidden;
-}
-.Maintitle {
-    display: flex;
-    align-items: center;
-    margin: 40px;
 
-    h3 {
-        margin: 0 auto 0 0;
-        font-size: 20px;
-    }
+    .Maintitle {
+        display: flex;
+        align-items: center;
+        margin: 40px;
 
-    h2 {
-        margin: 0 0 0 auto;
-        transform: rotate(45deg);
-        font-size: 26px;
-        color: #B4B3B3;
-    }
+        h3 {
+            margin: 0 auto 0 0;
+            font-size: 20px;
+        }
 
-    h2:hover {
-        color: #111111;
+        h2 {
+            margin: 0 0 0 auto;
+            transform: rotate(45deg);
+            font-size: 26px;
+            color: #B4B3B3;
+        }
+
+        h2:hover {
+            color: #111111;
+        }
     }
-}
-p{
-    margin:100px 227px;
+    .MarkdownBody {
+        display:flex;
+        align-items: center;
+        margin-left:200px;
+
+        width:1045px;
+        height:auto;
+    }
 }

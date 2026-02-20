@@ -6,6 +6,31 @@
     overflow: hidden;
     position: relative;
 
+    .Nofile {
+        height: 540px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .Nofilediv {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 117.26px;
+                height: 146.58px;
+            }
+
+            h3 {
+                margin-top: 30px;
+                font-size: 14px;
+                color: #C5C5C5;
+            }
+        }
+    }
+
     .Iconbox {
         position: absolute;
         left: 88.8%;

@@ -18,7 +18,7 @@ import iconChatColor from "../asset/Mainicon-color-comment.png";
 import iconVoteColor from "../asset/Mainicon-color-vote.png";
 import iconAIColor from "../asset/Mainicon-color-Ai.png";
 
-function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI, socketUser,socketVoteId, setSocketVoteId }) {
+function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI, socketUser, socketVoteId, setSocketVoteId }) {
   const [mode, setMode] = useState("basic");
   const [hover, setHover] = useState("");
   const [FileState, setFileState] = useState(false);
@@ -40,17 +40,19 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
           },
         })
       .then((res) => {
-        if (res.data.config.voteEnabled) setVoteState(true); else { setVoteState(false) }
-        if (res.data.config.commentEnabled) setChatState(true); else { setChatState(false) }
-        if (res.data.config.fileEnabled) setFileState(true); else { setFileState(false) }
-        if (res.data.config.aiSummaryEnabled) setAIState(true); else { setAIState(false) }
+        console.log(res.data.config);
+        //[config===기능State]
+        if (res.data.config.voteEnabled === true) setVoteState(true); else { setVoteState(false) }
+        if (res.data.config.commentEnabled === true) setChatState(true); else { setChatState(false) }
+        if (res.data.config.fileEnabled === true) setFileState(true); else { setFileState(false) }
+        if (res.data.config.aiSummaryEnabled === true) setAIState(true); else { setAIState(false) }
       })
       .catch((error) => {
         if (error.status === 500) {
           console.error("500에러:", error);
         }
       });
-  }, [clickedAgendaId]);
+  }, [clickedAgendaId, socketFile, socketComment, socketVote, socketAI]);
 
   const Mode = {
     basic: <>
@@ -125,7 +127,7 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
             id="users"
           >
             <Users
-            socketVoteId={socketVoteId}
+              socketVoteId={socketVoteId}
               socketUser={socketUser}
               token={token}
               roomId={roomId}
@@ -160,6 +162,8 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
       setSocketVoteId={setSocketVoteId}
     />,
     AI: <AI
+      isHost={isHost}
+      AIState={AIState}
       socketAI={socketAI}
       clickedAgendaId={clickedAgendaId}
       token={token}

@@ -250,9 +250,9 @@ function Meet() {
             clickedAgendaId={clickedAgendaId}
           />
           <Right
-            socketVoteId={socketVoteId}
-            setSocketVoteId={setSocketVoteId}
             //웹소켓 반응 state 들
+            socketVoteId={socketVoteId} //투표 결과 웹소켓(해당 ID)
+            setSocketVoteId={setSocketVoteId}
             socketFile={socketFile} //파일
             socketComment={socketComment} //코멘트
             socketVote={socketVote} //투표

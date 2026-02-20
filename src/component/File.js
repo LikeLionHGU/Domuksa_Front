@@ -10,6 +10,9 @@ import fileCenterHoverafter from "../asset/icon-emptyfileHoverafter.png";
 
 function File({ isHost, token, onChange, clickedAgendaId, socketFile }) {
 
+    //파일 아이콘 호버
+    const [iconFile, setIconFile] = useState(false);
+
     const [listModal, setListModal] = useState(false);
     const [Files, setFiles] = useState([]);
     const [FileEmpty, setFileEmpty] = useState(true);
@@ -29,11 +32,15 @@ function File({ isHost, token, onChange, clickedAgendaId, socketFile }) {
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
                     console.log(res.data);
-                    // if (res.data !== null) {
-                    //     setFileEmpty(true);
-                    //     setFiles(res.data);
-                    // }
                     setFiles(res.data);
+                    if (res.data.length === 0) {
+                        setFileEmpty(true);
+                    } else {
+                        setFileEmpty(false);
+                        setIsPdf(res.data[0].isPdf);
+                        setFileChosenUrl(res.data[0].fileUrl);
+                    }
+
                 }
             })
             .catch((error) => {
@@ -71,11 +78,6 @@ function File({ isHost, token, onChange, clickedAgendaId, socketFile }) {
                     Authorization: `Bearer ${token}`
                 }
             })
-            .then(res => {
-                if (res.status === 200 || res.status === 201) {
-                    setFiles(prev => prev.filter(file => file.id !== target.id));
-                }
-            })
             .catch(error => {
                 console.error("파일 업로드 실패:", error);
             });
@@ -86,17 +88,23 @@ function File({ isHost, token, onChange, clickedAgendaId, socketFile }) {
                 <h3>파일</h3>
                 <h2 onClick={() => onChange("basic")} >+</h2>
             </div>
-            {FileEmpty === false ? <>
-                <h1>asda</h1>
+            {FileEmpty === true ? <>
+                <input
+                    style={{ display: "none" }}
+                    id="Newfile"
+                    type="file"
+                    onChange={(e) => addNewfile(e)}
+                />
+                <div className={style.Nofile}>
+                    <label htmlFor="Newfile">
+                        <div className={style.Nofilediv} onMouseEnter={() => setIconFile(true)} onMouseLeave={() => setIconFile(false)}>
+                            <img src={iconFile ? fileCenterHoverafter : fileCenterHoverbefore} />
+                            <h3>여기 눌러서 파일 업로드하세요</h3>
+                        </div>
+                    </label>
+                </div>
             </> : <>
                 <div className={style.Viewer}>
-                    {/* <PDFViewer
-                    config={{ src: "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf" }}
-                    style={{ width: "100%", height: "100%" }}
-                    onReady={(registry) => {
-                        console.log('PDF viewer ready!', registry);
-                    }}
-                /> */}
                     {isPdf ? <iframe
                         src={FileChosenUrl}
                         width="100%"
