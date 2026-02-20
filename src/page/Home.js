@@ -89,17 +89,11 @@ function Home() {
     }
 
     axios
-      .get(
-        `${process.env.REACT_APP_HOST_URL}/user/me/running`,
-        {
-          userId: userId,
+      .get(`${process.env.REACT_APP_HOST_URL}/user/me/running`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
+      })
       .then((res) => {
         setProgressRooms(res.data);
       })
@@ -108,17 +102,11 @@ function Home() {
       });
 
     axios
-      .get(
-        `${process.env.REACT_APP_HOST_URL}/user/me/complete`,
-        {
-          userId: userId,
+      .get(`${process.env.REACT_APP_HOST_URL}/user/me/complete`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      )
+      })
       .then((res) => {
         setCompleteRooms(res.data);
       })
