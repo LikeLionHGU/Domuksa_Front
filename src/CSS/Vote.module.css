@@ -7,6 +7,30 @@
     overflow: hidden;
     position: relative;
 
+    .Novote {
+        height: 540px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        .Novotediv {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                width: 138.99px;
+                height: 142.26px;
+            }
+
+            h3 {
+                margin-top: 30px;
+                font-size: 14px;
+                color: #C5C5C5;
+            }
+        }
+    }
 }
 
 .Maintitle {
