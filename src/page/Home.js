@@ -93,7 +93,6 @@ function Home() {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        userId: userId,
       })
       .then((res) => {
         setProgressRooms(res.data);
@@ -107,7 +106,6 @@ function Home() {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-        userId: userId,
       })
       .then((res) => {
         setCompleteRooms(res.data);
@@ -120,12 +118,17 @@ function Home() {
   useEffect(() => {
     if (code !== null && code.length === 10) {
       axios
-        .get(`${process.env.REACT_APP_HOST_URL}/room/code?code=${code}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        .get(
+          `${process.env.REACT_APP_HOST_URL}/room/code?code=${code}`,
+          {
+            code: code,
           },
-          code: code,
-        })
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        )
         .then((res) => {
           setRoomId(res.data.roomId);
           setIsPassword(res.data.password);
@@ -148,12 +151,7 @@ function Home() {
           ) : null}
 
           <div className={styles.header}>
-            <img
-              className={styles.logo}
-              src={logoImg}
-              alt="이음로고"
-              onClick={(e) => navigate("/")}
-            />
+            <img className={styles.logo} src={logoImg} alt="이음로고" />
 
             <div></div>
             <div className={styles.profile}>
@@ -179,6 +177,7 @@ function Home() {
           {isArchiveOpen === true ? (
             <Archived
               onChange={setIsArchiveOpen}
+              isOpen={isArchiveOpen}
               completeRoomList={completeRooms}
             />
           ) : null}

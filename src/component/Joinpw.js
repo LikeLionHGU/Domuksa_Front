@@ -17,6 +17,8 @@ function Joinpw({ onChange, token, roomId }) {
   const [inputNum, setInputNumber] = useState([]);
   const [password, setPassword] = useState("");
 
+  const [wrongPw, setWrongPw] = useState("pwNomal");
+
   function onDelete(e) {
     if (e.target.value.length === 1) {
       switch (e.target.name) {
@@ -126,10 +128,12 @@ function Joinpw({ onChange, token, roomId }) {
       .post(
         `${process.env.REACT_APP_HOST_URL}/room/${roomId}/member/password`,
         {
+          password: password,
+        },
+        {
           headers: {
             Authorization: `Bearer ${token}`,
           },
-          password: password,
         },
       )
       .then((res) => {
@@ -138,10 +142,21 @@ function Joinpw({ onChange, token, roomId }) {
         localStorage.setItem("roomId", res.data.roomId);
         setInputNumber("");
 
+        if (localStorage.getItem("role") !== "member") {
+          setWrongPw("pwWrong");
+          setTimeout(function () {
+            setWrongPw("pwNomal");
+          }, 300);
+        }
+
         if (localStorage.getItem("role") === "member") navigate("/meet");
       })
       .catch((error) => {
         console.error("참여할 룸 상태 정보 가져오기 실패:", error);
+        setWrongPw("pwWrong");
+        setTimeout(function () {
+          setWrongPw("pwNomal");
+        }, 500);
       });
   }
 
@@ -165,7 +180,7 @@ function Joinpw({ onChange, token, roomId }) {
             </div>
             <div className={styles.pwInput}>
               <input
-                className={styles.pw}
+                className={styles[wrongPw]}
                 name="pw1"
                 type="password"
                 maxLength="1"
@@ -174,7 +189,7 @@ function Joinpw({ onChange, token, roomId }) {
                 onKeyDown={onDelete}
               ></input>
               <input
-                className={styles.pw}
+                className={styles[wrongPw]}
                 name="pw2"
                 type="password"
                 maxLength="1"
@@ -183,7 +198,7 @@ function Joinpw({ onChange, token, roomId }) {
                 onKeyDown={onDelete}
               ></input>
               <input
-                className={styles.pw}
+                className={styles[wrongPw]}
                 name="pw3"
                 type="password"
                 maxLength="1"
@@ -192,7 +207,7 @@ function Joinpw({ onChange, token, roomId }) {
                 onKeyDown={onDelete}
               ></input>
               <input
-                className={styles.pw}
+                className={styles[wrongPw]}
                 name="pw4"
                 type="password"
                 maxLength="1"

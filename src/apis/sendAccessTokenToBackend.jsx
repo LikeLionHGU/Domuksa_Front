@@ -7,14 +7,10 @@ const sendAccessTokenToBackend = async (code) => {
       { code },
     );
 
-    console.log("Login successful with server response:", response.data);
-
-
     if (response.data.accessToken) {
       const accessToken = response.data.accessToken;
 
       localStorage.setItem("accessToken", accessToken);
-      console.log("accessToken 저장 완료!");
 
       axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
     } else {
@@ -23,14 +19,12 @@ const sendAccessTokenToBackend = async (code) => {
 
     if (response.data.user) {
       localStorage.setItem("userInfo", JSON.stringify(response.data.user));
-      console.log("userInfo 저장 완료!");
 
       if (
         response.data.user.id !== undefined &&
         response.data.user.id !== null
       ) {
         localStorage.setItem("memberId", String(response.data.user.id));
-        console.log("memberId 저장 완료!");
       }
     } else {
       console.warn("응답에 user가 없습니다:", response.data);
