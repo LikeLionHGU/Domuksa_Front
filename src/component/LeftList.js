@@ -53,9 +53,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
 
   //리스브 불러오는거
   useEffect(() => {
-    if (roomId === null) {
-      return;
-    }
+    if (!roomId||!token)return;
     axios
       .get(
         `${process.env.REACT_APP_HOST_URL}/room/${roomId}/agenda`,

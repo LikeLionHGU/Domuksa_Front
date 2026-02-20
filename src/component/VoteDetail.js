@@ -25,6 +25,7 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
     const [Editting, setEditting] = useState(true);
 
     useEffect(() => {
+        if(DetailId===null||token===null)return;
         //투표 상태확인
         axios
             .get(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/voteStatus`, {

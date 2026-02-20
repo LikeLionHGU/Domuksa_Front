@@ -12,7 +12,7 @@ function Comment({ now, token, clickedAgendaId, onChange, socketComment }) {
     const [input, setInput] = useState("");
 
     useEffect(() => {
-
+        if(!clickedAgendaId||!token)return;
         axios
             .get(`${process.env.REACT_APP_HOST_URL}/comment/${clickedAgendaId}`, {
                 headers: {
