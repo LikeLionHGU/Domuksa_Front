@@ -21,7 +21,6 @@ function AI({ isHost, token, onChange, clickedAgendaId, AIState }) {
                     })
                     .then((res) => {
                         if (res.status === 200 || res.status === 201) {
-                            console.log(res);
                             setTitle(res.data.title);
                             setSummary(res.data.summaryText);
                         }
@@ -38,7 +37,6 @@ function AI({ isHost, token, onChange, clickedAgendaId, AIState }) {
                     })
                     .then((res) => {
                         if (res.status === 200 || res.status === 201) {
-                            console.log(res);
                             setTitle(res.data.title);
                             setSummary(res.data.summaryText);
                         }
@@ -56,7 +54,6 @@ function AI({ isHost, token, onChange, clickedAgendaId, AIState }) {
                 })
                 .then((res) => {
                     if (res.status === 200 || res.status === 201) {
-                        console.log(res);
                         setTitle(res.data.title);
                         setSummary(res.data.summaryText);
                     }

@@ -67,7 +67,6 @@ function NewVote({ token, setNewvote, Voteobj }) {
                 },
             })
             .then((res) => {
-                console.log(res);
                 if (res.status === 200 || res.status === 201) {
                     setOptions(options.filter((option) => option.voteOption.voteOptionId !== parseInt(target.id)));
                 }
@@ -102,7 +101,6 @@ function NewVote({ token, setNewvote, Voteobj }) {
             });
     }
     function DeleteandOut() {
-        console.log(token);
         axios
             .delete(`${process.env.REACT_APP_HOST_URL}/vote/${Voteobj.vote.voteId}`, {
                 headers: {
@@ -110,7 +108,6 @@ function NewVote({ token, setNewvote, Voteobj }) {
                 },
             })
             .then((res) => {
-                console.log(res);
                 if (res.status === 200 || res.status === 201) {
                     setNewvote(false);
                 }

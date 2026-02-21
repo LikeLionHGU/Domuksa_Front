@@ -208,7 +208,6 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
                     </div>
 
                     <div className={style.Votelist}>
-                        {/* <div onClick={() => console.log(Most.map((item)=>item.id))}>aaaa</div> */}
                         {options.map((option) => {
                             return (
                                 <div id={option.voteOptionId} key={option.voteOptionId} className={Most.map(item => item.id).includes(option.voteOptionId) ? style.ResultVote : style.Vote} onClick={(e) => handleOptionBlock(option.voteOptionId)}>
