@@ -18,7 +18,22 @@ import iconChatColor from "../asset/Mainicon-color-comment.png";
 import iconVoteColor from "../asset/Mainicon-color-vote.png";
 import iconAIColor from "../asset/Mainicon-color-Ai.png";
 
-function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI, socketUser, socketVoteId, setSocketVoteId }) {
+function RightList({
+  now,
+  token,
+  isHost,
+  roomId,
+  clickedAgendaId,
+  socketFile,
+  socketComment,
+  socketVote,
+  socketVoteOption,
+  socketVoteResult,
+  socketAI,
+  socketUser,
+  socketVoteId,
+  setSocketVoteId,
+}) {
   const [mode, setMode] = useState("basic");
   const [hover, setHover] = useState("");
   const [FileState, setFileState] = useState(false);
@@ -27,25 +42,34 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
   const [AIState, setAIState] = useState(false);
 
   useEffect(() => {
-
     if (clickedAgendaId === null || token === null) {
       return;
     }
     axios
-      .get(
-        `${process.env.REACT_APP_HOST_URL}/agenda/${clickedAgendaId}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+      .get(`${process.env.REACT_APP_HOST_URL}/agenda/${clickedAgendaId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then((res) => {
         console.log(res.data.config);
         //[config===기능State]
-        if (res.data.config.voteEnabled === true) setVoteState(true); else { setVoteState(false) }
-        if (res.data.config.commentEnabled === true) setChatState(true); else { setChatState(false) }
-        if (res.data.config.fileEnabled === true) setFileState(true); else { setFileState(false) }
-        if (res.data.config.aiSummaryEnabled === true) setAIState(true); else { setAIState(false) }
+        if (res.data.config.voteEnabled === true) setVoteState(true);
+        else {
+          setVoteState(false);
+        }
+        if (res.data.config.commentEnabled === true) setChatState(true);
+        else {
+          setChatState(false);
+        }
+        if (res.data.config.fileEnabled === true) setFileState(true);
+        else {
+          setFileState(false);
+        }
+        if (res.data.config.aiSummaryEnabled === true) setAIState(true);
+        else {
+          setAIState(false);
+        }
       })
       .catch((error) => {
         if (error.status === 500) {
@@ -55,120 +79,147 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
   }, [clickedAgendaId, socketFile, socketComment, socketVote, socketAI]);
 
   const Mode = {
-    basic: <>
-      <div className={style.Maindiv}>
-        <div className={style.Subdiv}>
-          <div
-            className={style.Block}
-            id="file"
-            onClick={() => {
-              if (clickedAgendaId === null) {
-                alert("안건을 선택해주세요!");
-                return;
-              }
-              setMode("File");
-            }}
-            onMouseEnter={() => setHover("File")}
-            onMouseLeave={() => setHover("")}
-          >
-            <img alt="Mainicon-file" className={style.imgFile} src={FileState || hover === "File" ? iconFileColor : iconFile} />
-            <h3>파일</h3>
+    basic: (
+      <>
+        <div className={style.Maindiv}>
+          <div className={style.Subdiv}>
+            <div
+              className={style.Block}
+              id="file"
+              onClick={() => {
+                if (clickedAgendaId === null) {
+                  alert("안건을 선택해주세요!");
+                  return;
+                }
+                setMode("File");
+              }}
+              onMouseEnter={() => setHover("File")}
+              onMouseLeave={() => setHover("")}
+            >
+              <img
+                alt="Mainicon-file"
+                className={style.imgFile}
+                src={FileState || hover === "File" ? iconFileColor : iconFile}
+              />
+              <h3>파일</h3>
+            </div>
+            <div
+              className={style.Block}
+              id="comment"
+              onClick={() => {
+                if (clickedAgendaId === null) {
+                  alert("안건을 선택해주세요!");
+                  return;
+                }
+                setMode("Comment");
+              }}
+              onMouseEnter={() => setHover("Comment")}
+              onMouseLeave={() => setHover("")}
+            >
+              <img
+                alt="Mainicon-comment"
+                className={style.imgComment}
+                src={
+                  ChatState || hover === "Comment" ? iconChatColor : iconChat
+                }
+              />
+              <h3>코멘트</h3>
+            </div>
+            <div
+              className={style.Block}
+              id="vote"
+              onClick={() => {
+                if (clickedAgendaId === null) {
+                  alert("안건을 선택해주세요!");
+                  return;
+                }
+                setMode("Vote");
+              }}
+              onMouseEnter={() => setHover("Vote")}
+              onMouseLeave={() => setHover("")}
+            >
+              <img
+                alt="Mainicon-vote"
+                className={style.imgVote}
+                src={VoteState || hover === "Vote" ? iconVoteColor : iconVote}
+              />
+              <h3>투표</h3>
+            </div>
           </div>
-          <div
-            className={style.Block}
-            id="comment"
-            onClick={() => {
-              if (clickedAgendaId === null) {
-                alert("안건을 선택해주세요!");
-                return;
-              }
-              setMode("Comment");
-            }}
-            onMouseEnter={() => setHover("Comment")}
-            onMouseLeave={() => setHover("")}>
-            <img alt="Mainicon-comment" className={style.imgComment} src={ChatState || hover === "Comment" ? iconChatColor : iconChat} />
-            <h3>코멘트</h3>
-          </div>
-          <div
-            className={style.Block}
-            id="vote"
-            onClick={() => {
-              if (clickedAgendaId === null) {
-                alert("안건을 선택해주세요!");
-                return;
-              }
-              setMode("Vote");
-            }}
-            onMouseEnter={() => setHover("Vote")}
-            onMouseLeave={() => setHover("")}>
-            <img alt="Mainicon-vote" className={style.imgVote} src={VoteState || hover === "Vote" ? iconVoteColor : iconVote} />
-            <h3>투표</h3>
+          <div className={style.Subdiv}>
+            <div
+              className={style.BigBlock}
+              id="ai"
+              onClick={() => {
+                if (clickedAgendaId === null) {
+                  alert("안건을 선택해주세요!");
+                  return;
+                }
+                setMode("AI");
+              }}
+              onMouseEnter={() => setHover("AI")}
+              onMouseLeave={() => setHover("")}
+            >
+              <img
+                alt="Mainicon-ai"
+                className={style.imgAI}
+                src={AIState || hover === "AI" ? iconAIColor : iconAI}
+              />
+              <h3>AI 요약</h3>
+            </div>
+            <div className={style.SmallBlock} id="users">
+              <Users
+                socketVoteId={socketVoteId}
+                socketUser={socketUser}
+                token={token}
+                roomId={roomId}
+              />
+            </div>
           </div>
         </div>
-        <div
-          className={style.Subdiv}>
-          <div
-            className={style.BigBlock}
-            id="ai"
-            onClick={() => {
-              if (clickedAgendaId === null) {
-                alert("안건을 선택해주세요!");
-                return;
-              }
-              setMode("AI");
-            }}
-            onMouseEnter={() => setHover("AI")}
-            onMouseLeave={() => setHover("")}>
-            <img alt="Mainicon-ai" className={style.imgAI} src={AIState || hover === "AI" ? iconAIColor : iconAI} />
-            <h3>AI 요약</h3>
-          </div>
-          <div
-            className={style.SmallBlock}
-            id="users"
-          >
-            <Users
-              socketVoteId={socketVoteId}
-              socketUser={socketUser}
-              token={token}
-              roomId={roomId}
-            />
-          </div>
-        </div>
-      </div>
-    </>,
-    File: <File
-      socketFile={socketFile}
-      isHost={isHost}
-      clickedAgendaId={clickedAgendaId}
-      token={token}
-      onChange={setMode}
-    />,
-    Comment: <Comment
-      socketComment={socketComment}
-      now={now}
-      token={token}
-      clickedAgendaId={clickedAgendaId}
-      onChange={setMode}
-    />,
-    Vote: <Vote
-      socketVote={socketVote}
-      socketVoteOption={socketVoteOption}
-      socketVoteResult={socketVoteResult}
-      token={token}
-      isHost={isHost}
-      clickedAgendaId={clickedAgendaId}
-      roomId={roomId}
-      onChange={setMode}
-      setSocketVoteId={setSocketVoteId}
-    />,
-    AI: <AI
-      isHost={isHost}
-      AIState={AIState}
-      socketAI={socketAI}
-      clickedAgendaId={clickedAgendaId}
-      token={token}
-      onChange={setMode}
-    />
+      </>
+    ),
+    File: (
+      <File
+        socketFile={socketFile}
+        isHost={isHost}
+        clickedAgendaId={clickedAgendaId}
+        token={token}
+        onChange={setMode}
+      />
+    ),
+    Comment: (
+      <Comment
+        socketComment={socketComment}
+        now={now}
+        token={token}
+        clickedAgendaId={clickedAgendaId}
+        onChange={setMode}
+      />
+    ),
+    Vote: (
+      <Vote
+        socketVote={socketVote}
+        socketVoteOption={socketVoteOption}
+        socketVoteResult={socketVoteResult}
+        token={token}
+        isHost={isHost}
+        clickedAgendaId={clickedAgendaId}
+        roomId={roomId}
+        onChange={setMode}
+        setSocketVoteId={setSocketVoteId}
+      />
+    ),
+    AI: (
+      <AI
+        isHost={isHost}
+        AIState={AIState}
+        socketAI={socketAI}
+        clickedAgendaId={clickedAgendaId}
+        token={token}
+        onChange={setMode}
+      />
+    ),
   };
   return Mode[mode];
 }
