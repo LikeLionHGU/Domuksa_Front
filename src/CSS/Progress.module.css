@@ -1,4 +1,4 @@
-/* .MaindivIn {
+.MaindivIn {
   width: 1440px;
   height: 872px;
   background-color: #fafafa;
@@ -23,14 +23,6 @@
   }
 }
 
-@keyframes fadeout {
-  from {
-    opacity: 1;
-  }
-  to {
-    opacity: 0;
-  }
-} */
 
 .process {
   display: grid;

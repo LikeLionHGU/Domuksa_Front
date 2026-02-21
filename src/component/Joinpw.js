@@ -160,8 +160,6 @@ function Joinpw({ onChange, token, roomId }) {
       });
   }
 
-  console.log(password);
-
   return (
     <div>
       <div className={styles.extradiv}>
