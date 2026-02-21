@@ -77,6 +77,10 @@ function Joinpw({ onChange, token, roomId }) {
           break;
       }
     }
+
+    if (e.key === "Enter") {
+      handleJoin();
+    }
   }
 
   function onInput(e) {
