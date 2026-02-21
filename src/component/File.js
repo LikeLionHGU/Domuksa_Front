@@ -23,6 +23,7 @@ function File({ isHost, token, onChange, clickedAgendaId, socketFile }) {
     const [x, setX] = useState(null);
 
     useEffect(() => {
+        if(token===null||isHost===null||clickedAgendaId===null)return;
         axios
             .get(`${process.env.REACT_APP_HOST_URL}/file/${clickedAgendaId}`, {
                 headers: {
@@ -40,7 +41,6 @@ function File({ isHost, token, onChange, clickedAgendaId, socketFile }) {
                         setIsPdf(res.data[0].isPdf);
                         setFileChosenUrl(res.data[0].fileUrl);
                     }
-
                 }
             })
             .catch((error) => {

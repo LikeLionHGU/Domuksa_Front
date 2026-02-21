@@ -13,7 +13,7 @@ import addBtn from "../asset/icon-addBtn.png";
 import voteCenterHoverbefore from "../asset/icon-emptyVoteHoverbefore.png";
 import voteCenterHoverafter from "../asset/icon-emptyVoteHoverafter.png";
 
-function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVoteOption, socketVoteResult, setSocketVoteId }) {
+function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVoteOption, socketVoteResult, setSocketVoteId, clickedAgendaName }) {
 
     //[아이콘 호버]
     const [iconVote, setIconVote] = useState(false);
@@ -60,6 +60,7 @@ function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVote
 
     //[투표list]
     useEffect(() => {
+        if(clickedAgendaId===null||token===null)return;
         axios
             .get(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`, {
                 headers: {
@@ -170,7 +171,7 @@ function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVote
                 <>
                     <div className={style.Subdiv}>
                         <div className={style.Subtitle}>
-                            <h3>안건 1에 대한 투표</h3>
+                            <h3>{clickedAgendaName}</h3>
                             {isHost && <img
                                 src={addBtn}
                                 onClick={() => {

@@ -11,8 +11,8 @@ import bin from "../asset/icon-trashbin.png";
 import visible from "../asset/icon-visible.png";
 import add from "../asset/icon-add.png";
 
-function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
-  setClickedAgendaId, clickedAgendaId, setRoomName
+function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,socketTimer,
+  setClickedAgendaId, clickedAgendaId, setRoomName, setclickedAgendaName
 }) {
 
   //[안건]
@@ -53,9 +53,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
 
   //리스브 불러오는거
   useEffect(() => {
-    if (roomId === null) {
-      return;
-    }
+    if (!roomId||!token)return;
     axios
       .get(
         `${process.env.REACT_APP_HOST_URL}/room/${roomId}/agenda`,
@@ -66,7 +64,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
         })
       .then((res) => {
         const format = res.data.map(item => ({
-          sequence:item.agenda.sequence,
+          sequence: item.agenda.sequence,
           id: item.agenda.agendaId,
           name: item.agenda.name,
         }));
@@ -79,7 +77,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
   }, [roomId, socketAgendas]);
 
   useEffect(() => {
-    
+
   }, [])
   useEffect(() => {
     //아직 첫 안건 번호가 없다면, 실행하지 않는다, 첫안건 번호 세팅후 실행
@@ -97,8 +95,10 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
     }
   }
   function handleBlock(e) {
+
     setBlockId(parseInt(e.currentTarget.id));
     setClickedAgendaId(parseInt(e.currentTarget.id));
+    setclickedAgendaName((agendas.find(item => item.id === parseInt(e.currentTarget.id))).name);
   }
 
   function handleOption(e, id) {
@@ -349,7 +349,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
                 className={blockId === agenda.id ? style.ChosenBlock : style.Block}
                 onClick={(e) => isHost && handleBlock(e)}
               >
-                <div className={style.Text} onDoubleClick={() => isHost&&setChanged(agenda.id)}>
+                <div className={style.Text} onDoubleClick={() => isHost && setChanged(agenda.id)}>
                   <span>•</span> {Changed === agenda.id ? <input id="newAgendaName" ref={inputRef} onKeyDown={(e) => isHost && EditAgenda(e, agenda.id)} placeholder={agenda.name} /> : <h1>{agenda.name}</h1>}
                 </div>
                 {hover === agenda.id && isHost && <h3 alt="option"
@@ -388,13 +388,16 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
           </div>}
         </div>
       }
-     {!isHost&&<div className={style.space}></div>}
-      <hr/>
+      {!isHost && <div className={style.space}></div>}
+      <hr />
 
-      <Timer 
-      isHost={isHost}
-      roomId={roomId}
-      token={token}
+      <Timer
+        //웹소켓 타이머
+        socketTimer={socketTimer}
+        //
+        isHost={isHost}
+        roomId={roomId}
+        token={token}
       />
     </div >
   );

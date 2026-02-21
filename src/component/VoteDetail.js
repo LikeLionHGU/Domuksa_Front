@@ -25,6 +25,7 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
     const [Editting, setEditting] = useState(true);
 
     useEffect(() => {
+        if(DetailId===null||token===null)return;
         //투표 상태확인
         axios
             .get(`${process.env.REACT_APP_HOST_URL}/vote/${DetailId}/voteStatus`, {
@@ -65,7 +66,7 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
-    }, [socketVoteOption])
+    }, [socketVoteOption,socketVoteResult])
 
     useEffect(() => {
         if (result === false) {

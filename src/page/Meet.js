@@ -52,6 +52,8 @@ function Meet() {
   //안건 선언한거 저장
   const clientRef = useRef(null);
 
+  //선택된 안건 
+  const [clickedAgendaName, setclickedAgendaName] = useState();
 
   //웹소켓의 상태 동작값
 
@@ -61,6 +63,7 @@ function Meet() {
   const [socketComment, setSocketComment] = useState(); //코멘트
   const [socketAI, setSocket] = useState(); //AI
   const [socketDm, setSocketDm] = useState(); //Dm
+  const [socketTimer, setSocketTimer] = useState(); //timer
   const [socketUser, setSocketUser] = useState(); //User
   const [socketVote, setSocketVote] = useState(); //투표
   const [socketVoteOption, setSocketVoteOption] = useState(); //투표
@@ -138,6 +141,12 @@ function Meet() {
       client.subscribe(`/topic/room/online/${roomId}`, (msg) => {
         console.log("사용자 변동");
         setSocketUser(msg.body);
+      });
+
+      //StateUsers 구독
+      client.subscribe(`/topic/timer/${roomId}`, (msg) => {
+        console.log("시간 변동");
+        setSocketTimer(msg.body);
       });
     }
 
@@ -239,9 +248,15 @@ function Meet() {
         </div>
         <div className={style.Component}>
           <Left
+            //웹소켓 타이머
+            socketTimer={socketTimer}
+
+            //
             setRoomName={setRoomName}
             deleteModal={setDeleteModal}
             setClickedAgendaId={setClickedAgendaId}
+            setclickedAgendaName={setclickedAgendaName}
+
             socketAgendas={socketAgendas}
             token={token}
             isHost={isHost}
@@ -261,7 +276,9 @@ function Meet() {
             socketAI={socketAI} //AI
             socketUser={socketUser} //Users
 
-            //
+            //vote에 표시되는 안건 이름
+            clickedAgendaName={clickedAgendaName}
+
             now={now}
             RoomName={RoomName}
             token={token}
