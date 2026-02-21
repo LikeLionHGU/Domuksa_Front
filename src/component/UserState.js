@@ -43,7 +43,7 @@ function UserState({ roomId, token,socketUser,socketVoteId}) {
                 })}
             </div>
             <div className={style.Participants}>
-                <h3 onClick={() => haneldeState()}>참여자({User.filter((item)=>item.role!=="host").length})</h3>
+                <h3 onClick={() => haneldeState()}>참여자({User.filter((item)=>item.role!=="host"&&item.online===true).length})</h3>
                 {User.filter((item)=>item.online===true).map((player) => {
                     if (player.role !== "host") {
                         return (
