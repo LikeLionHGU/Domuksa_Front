@@ -26,6 +26,8 @@ function Meet() {
     return () => clearInterval(Now);
   }, []);
 
+  //웹소켓 다시 연결하는 
+  const [Keepconnect,setKeepconnect]=useState();
   const [clickedAgendaId, setClickedAgendaId] = useState(null);
   const [ActionAgendaChange, setActionAgendaChange] = useState();
 
@@ -38,7 +40,6 @@ function Meet() {
   const [Code, setCode] = useState(null);
   const [state, setState] = useState(null);
   const [token, setToken] = useState(null);
-
 
   //header state
   const [name, setName] = useState(null);
@@ -65,7 +66,7 @@ function Meet() {
   const [socketcurrentAgendas, setSocketcurrentAgendas] = useState([]); //안건
   const [socketFile, setSocketFile] = useState(); //파일
   const [socketComment, setSocketComment] = useState(); //코멘트
-  const [socketAI, setSocket] = useState(); //AI
+  const [socketAI, setSocketAI] = useState(); //AI
   const [socketDm, setSocketDm] = useState(); //Dm
   const [socketTimer, setSocketTimer] = useState(); //timer
   const [socketUser, setSocketUser] = useState(); //User
@@ -127,6 +128,7 @@ function Meet() {
       client.subscribe(`/topic/vote/${clickedAgendaId}`, (msg) => {
         console.log("투표 변동");
         setSocketVote(msg.body);
+        setSocketVoteOption(msg.body);
       });
 
       // //투표 결과 구독
@@ -151,6 +153,12 @@ function Meet() {
       client.subscribe(`/topic/timer/${roomId}`, (msg) => {
         console.log("시간 변동");
         setSocketTimer(msg.body);
+      });
+
+      //AI 구독
+      client.subscribe(`/topic/ai/${roomId}`, (msg) => {
+        console.log("시간 변동");
+        setSocketAI(msg.body);
       });
     }
 
@@ -178,7 +186,7 @@ function Meet() {
     return (() => {
       client.deactivate();
     })
-  }, [token, roomId, clickedAgendaId])
+  }, [token, roomId, clickedAgendaId,Keepconnect])
 
   //투표 결과 구독은 따로,
   useEffect(() => {
@@ -230,6 +238,15 @@ function Meet() {
     }
   }, [roomId, socketcurrentAgendas]);
 
+  function reconnect(){
+    setKeepconnect(Math.random());
+  }
+  document.addEventListener("visibilitychange",()=>{
+    if(document.visibilityState==="visible"){
+      reconnect();
+    }
+  })
+
   return (
     <div className={style.extradiv}>
       <div className={style.Maindiv}>
@@ -274,6 +291,7 @@ function Meet() {
           />
           <Right
             //코멘트 작성하면 새로고침
+            socketComment={socketComment} //코멘트
             setSocketComment={setSocketComment}
             //config 리셋 반응
             configReset={configReset}
@@ -283,7 +301,7 @@ function Meet() {
             socketVoteId={socketVoteId} //투표 결과 웹소켓(해당 ID)
             setSocketVoteId={setSocketVoteId}
             socketFile={socketFile} //파일
-            socketComment={socketComment} //코멘트
+            
             socketVote={socketVote} //투표
             socketVoteOption={socketVoteOption} //투표욥션
             socketVoteResult={socketVoteResult} //투표결과

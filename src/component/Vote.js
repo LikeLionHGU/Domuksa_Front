@@ -120,7 +120,6 @@ function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVote
 
     function EditVote(e, id) {
         if (e.key === "Enter") {
-            console.log(e.target.value);
             axios
                 .patch(`${process.env.REACT_APP_HOST_URL}/vote/${id}`, {
                     headers: {
