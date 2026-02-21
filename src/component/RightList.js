@@ -18,7 +18,7 @@ import iconChatColor from "../asset/Mainicon-color-comment.png";
 import iconVoteColor from "../asset/Mainicon-color-vote.png";
 import iconAIColor from "../asset/Mainicon-color-Ai.png";
 
-function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI, socketUser, socketVoteId, setSocketVoteId, clickedAgendaName,ActionAgendaChange }) {
+function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI, socketUser, socketVoteId, setSocketVoteId, clickedAgendaName, ActionAgendaChange, configReset }) {
   const [mode, setMode] = useState("basic");
   const [hover, setHover] = useState("");
   const [FileState, setFileState] = useState(false);
@@ -54,9 +54,17 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
       });
   }, [clickedAgendaId, socketFile, socketComment, socketVote, socketAI]);
 
-  useEffect(()=>{
+  useEffect(() => {
+    setVoteState(false);
+    setChatState(false);
+    setFileState(false);
+    setAIState(false);
+  }, [configReset])
+  //안건 변경되면 오른쪽 다시 블럭화면으로 돌아오기
+  useEffect(() => {
     setMode("basic");
-  },[ActionAgendaChange])
+  }, [ActionAgendaChange])
+
   const Mode = {
     basic: <>
       <div className={style.Maindiv}>
