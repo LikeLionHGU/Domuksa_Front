@@ -40,7 +40,6 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
           },
         })
       .then((res) => {
-        console.log(res.data.config);
         //[config===기능State]
         if (res.data.config.voteEnabled === true) setVoteState(true); else { setVoteState(false) }
         if (res.data.config.commentEnabled === true) setChatState(true); else { setChatState(false) }

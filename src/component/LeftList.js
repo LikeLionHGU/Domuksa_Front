@@ -131,7 +131,6 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
           },
         })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           setRoomName(newRoomName);
           setSetting(false);
@@ -174,7 +173,6 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
               }));
               if (agendas === null) {
                 setAgendas(format);
-                console.log(agendas);
                 setClickedAgendaId(agendas.id);
               }
               setAgendas(format);
@@ -206,7 +204,6 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
           },
         })
       .then((res) => {
-        console.log(res);
         if (res.status === 200) {
           axios
             .get(
@@ -217,7 +214,6 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
                 },
               })
             .then((res) => {
-              console.log(res);
               const Agendaformat = res.data.map(item => ({
                 id: item.agenda.agendaId,
                 name: item.agenda.name,

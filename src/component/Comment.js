@@ -20,9 +20,7 @@ function Comment({ now, token, clickedAgendaId, onChange, socketComment,setSocke
                 },
             })
             .then((res) => {
-                console.log(res);
                 if (res.status === 200 || res.status === 201) {
-                    console.log(res);
                     setComments(res.data.reverse());
                 }
             })

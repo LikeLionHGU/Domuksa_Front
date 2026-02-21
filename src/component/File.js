@@ -32,7 +32,6 @@ function File({ isHost, token, onChange, clickedAgendaId, socketFile }) {
             })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
-                    console.log(res.data);
                     setFiles(res.data);
                     if (res.data.length === 0) {
                         setFileEmpty(true);

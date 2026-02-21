@@ -30,7 +30,6 @@ function Timer({ isHost, socketTimer, roomId, token }) {
                 }
             )
             .then((res) => {
-                console.log(res);
                 setTotal(res.data.time); //시간 받고
                 setState(res.data.state); //상태값 받기
 
@@ -51,7 +50,6 @@ function Timer({ isHost, socketTimer, roomId, token }) {
                                         }
                                     )
                                     .then((res) => {
-                                        console.log(res.data);
                                     })
                                     .catch((error) => {
                                         console.error("마이페이지 정보 가져오기 실패:", error);
@@ -95,7 +93,6 @@ function Timer({ isHost, socketTimer, roomId, token }) {
                     }
                 )
                 .then((res) => {
-                    console.log(res.data);
                 })
                 .catch((error) => {
                     console.error("마이페이지 정보 가져오기 실패:", error);
@@ -114,7 +111,6 @@ function Timer({ isHost, socketTimer, roomId, token }) {
                     }
                 )
                 .then((res) => {
-                    console.log(res.data);
                 })
                 .catch((error) => {
                     console.error("마이페이지 정보 가져오기 실패:", error);
@@ -140,7 +136,6 @@ function Timer({ isHost, socketTimer, roomId, token }) {
                 }
             )
             .then((res) => {
-                console.log(res.data);
             })
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
@@ -161,7 +156,6 @@ function Timer({ isHost, socketTimer, roomId, token }) {
                 }
             )
             .then((res) => {
-                console.log(res.data);
             })
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
@@ -183,7 +177,6 @@ function Timer({ isHost, socketTimer, roomId, token }) {
                 }
             )
             .then((res) => {
-                console.log(res.data);
             })
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
@@ -207,7 +200,6 @@ function Timer({ isHost, socketTimer, roomId, token }) {
                 }
             )
             .then((res) => {
-                console.log(res.data);
             })
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);

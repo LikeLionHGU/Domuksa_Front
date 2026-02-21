@@ -69,7 +69,6 @@ function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVote
             })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
-                    console.log(res.data);
                     setVotes(res.data);
                     if (res.data.length === 0) {
                         setVoteEmpty(true);

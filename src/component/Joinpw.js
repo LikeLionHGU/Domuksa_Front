@@ -137,7 +137,6 @@ function Joinpw({ onChange, token, roomId }) {
         },
       )
       .then((res) => {
-        console.log("pass", res);
         localStorage.setItem("role", res.data.role);
         localStorage.setItem("roomId", res.data.roomId);
         setInputNumber("");
@@ -159,8 +158,6 @@ function Joinpw({ onChange, token, roomId }) {
         }, 500);
       });
   }
-
-  console.log(password);
 
   return (
     <div>
