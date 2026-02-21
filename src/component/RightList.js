@@ -18,7 +18,7 @@ import iconChatColor from "../asset/Mainicon-color-comment.png";
 import iconVoteColor from "../asset/Mainicon-color-vote.png";
 import iconAIColor from "../asset/Mainicon-color-Ai.png";
 
-function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI, socketUser, socketVoteId, setSocketVoteId, clickedAgendaName }) {
+function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI, socketUser, socketVoteId, setSocketVoteId, clickedAgendaName,ActionAgendaChange }) {
   const [mode, setMode] = useState("basic");
   const [hover, setHover] = useState("");
   const [FileState, setFileState] = useState(false);
@@ -54,6 +54,9 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
       });
   }, [clickedAgendaId, socketFile, socketComment, socketVote, socketAI]);
 
+  useEffect(()=>{
+    setMode("basic");
+  },[ActionAgendaChange])
   const Mode = {
     basic: <>
       <div className={style.Maindiv}>

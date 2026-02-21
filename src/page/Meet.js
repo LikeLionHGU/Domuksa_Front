@@ -27,6 +27,7 @@ function Meet() {
   }, []);
 
   const [clickedAgendaId, setClickedAgendaId] = useState(null);
+  const [ActionAgendaChange, setActionAgendaChange] = useState();
 
   const [roomId, setRoomId] = useState(null);
   const [RoomName, setRoomName] = useState(null);
@@ -174,7 +175,7 @@ function Meet() {
     return (() => {
       client.deactivate();
     })
-  }, [token, roomId])
+  }, [token, roomId, clickedAgendaId])
 
   //투표 결과 구독은 따로,
   useEffect(() => {
@@ -248,6 +249,8 @@ function Meet() {
         </div>
         <div className={style.Component}>
           <Left
+            //새로운 안건 누르면 오늘쪽 다시 바뀌기
+            setActionAgendaChange={setActionAgendaChange}
             //웹소켓 타이머
             socketTimer={socketTimer}
 
@@ -265,6 +268,8 @@ function Meet() {
             clickedAgendaId={clickedAgendaId}
           />
           <Right
+          //새로운 안건 선택 반응
+          ActionAgendaChange={ActionAgendaChange}
             //웹소켓 반응 state 들
             socketVoteId={socketVoteId} //투표 결과 웹소켓(해당 ID)
             setSocketVoteId={setSocketVoteId}
