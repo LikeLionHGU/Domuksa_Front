@@ -12,7 +12,7 @@ import visible from "../asset/icon-visible.png";
 import add from "../asset/icon-add.png";
 
 function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,socketTimer,
-  setClickedAgendaId, clickedAgendaId, setRoomName, setclickedAgendaName
+  setClickedAgendaId, clickedAgendaId, setRoomName, setclickedAgendaName,setActionAgendaChange
 }) {
 
   //[안건]
@@ -96,6 +96,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
   }
   function handleBlock(e) {
 
+    setActionAgendaChange(parseInt(e.currentTarget.id));
     setBlockId(parseInt(e.currentTarget.id));
     setClickedAgendaId(parseInt(e.currentTarget.id));
     setclickedAgendaName((agendas.find(item => item.id === parseInt(e.currentTarget.id))).name);
