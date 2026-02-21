@@ -158,8 +158,8 @@ function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVote
                                 onMouseEnter={() => setIconVote(true)}
                                 onMouseLeave={() => setIconVote(false)}
                                 onClick={() => {
-                                    setNewvote(true);
-                                    addVote();
+                                    isHost&&setNewvote(true);
+                                    isHost&&addVote();
                                 }}>
                                 <img src={iconVote ? voteCenterHoverafter : voteCenterHoverbefore} />
                                 <h3>투표를 추가해 주세요</h3>
