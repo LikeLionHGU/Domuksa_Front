@@ -6,6 +6,10 @@
   border-radius: 30px;
   border: 1px solid #e4e4e4;
   overflow: hidden;
+
+  .space {
+    height: 70px;
+  }
 }
 
 hr {
@@ -275,6 +279,7 @@ hr {
       border: 1px solid #5043e7;
 
       color: 5043e7;
+
       h3 {
         text-align: center;
         margin-left: auto;
@@ -382,8 +387,5 @@ hr {
       width: 14px;
       height: auto;
     }
-}
-.space{
-    height:70px;
-}
+  }
 }

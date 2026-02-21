@@ -29,6 +29,9 @@ function Meet() {
   const [clickedAgendaId, setClickedAgendaId] = useState(null);
   const [ActionAgendaChange, setActionAgendaChange] = useState();
 
+  //config reset 상태값
+  const [configReset, setConfigReset] = useState();
+
   const [roomId, setRoomId] = useState(null);
   const [RoomName, setRoomName] = useState(null);
   const [password, setPassword] = useState(null);
@@ -249,6 +252,8 @@ function Meet() {
         </div>
         <div className={style.Component}>
           <Left
+            //config 리셋 실행값
+            setConfigReset={setConfigReset}
             //새로운 안건 누르면 오늘쪽 다시 바뀌기
             setActionAgendaChange={setActionAgendaChange}
             //웹소켓 타이머
@@ -268,8 +273,10 @@ function Meet() {
             clickedAgendaId={clickedAgendaId}
           />
           <Right
-          //새로운 안건 선택 반응
-          ActionAgendaChange={ActionAgendaChange}
+            //config 리셋 반응
+            configReset={configReset}
+            //새로운 안건 선택 반응
+            ActionAgendaChange={ActionAgendaChange}
             //웹소켓 반응 state 들
             socketVoteId={socketVoteId} //투표 결과 웹소켓(해당 ID)
             setSocketVoteId={setSocketVoteId}

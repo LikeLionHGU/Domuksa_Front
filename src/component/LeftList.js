@@ -11,8 +11,8 @@ import bin from "../asset/icon-trashbin.png";
 import visible from "../asset/icon-visible.png";
 import add from "../asset/icon-add.png";
 
-function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,socketTimer,
-  setClickedAgendaId, clickedAgendaId, setRoomName, setclickedAgendaName,setActionAgendaChange
+function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas, socketTimer,
+  setClickedAgendaId, clickedAgendaId, setRoomName, setclickedAgendaName, setActionAgendaChange,setConfigReset
 }) {
 
   //[안건]
@@ -53,7 +53,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
 
   //리스브 불러오는거
   useEffect(() => {
-    if (!roomId||!token)return;
+    if (!roomId || !token) return;
     axios
       .get(
         `${process.env.REACT_APP_HOST_URL}/room/${roomId}/agenda`,
@@ -191,6 +191,11 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
 
   }
   function deleteAgenda(id) {
+    if (id === clickedAgendaId) {
+      setClickedAgendaId(null);
+      setActionAgendaChange(id + 1);
+      setConfigReset(id+1);
+    }
 
     axios
       .delete(
