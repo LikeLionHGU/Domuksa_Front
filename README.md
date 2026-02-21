@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/imges/POST.png" width="900"/>
+  <img src="public/imges/이음.png" width="900"/>
 </p>
 
 <br/>
