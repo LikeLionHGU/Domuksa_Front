@@ -6,7 +6,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import style from "../CSS/Comment.module.css";
 
-function Comment({ now, token, clickedAgendaId, onChange, socketComment }) {
+function Comment({ now, token, clickedAgendaId, onChange, socketComment,setSocketComment }) {
 
     const [comments, setComments] = useState([]);
     const [input, setInput] = useState("");
@@ -32,6 +32,7 @@ function Comment({ now, token, clickedAgendaId, onChange, socketComment }) {
     }, [socketComment])
 
     function commentWrite() {
+        setSocketComment(Math.random());
         if (input === null) {
             return;
         }

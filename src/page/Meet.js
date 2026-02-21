@@ -273,6 +273,8 @@ function Meet() {
             clickedAgendaId={clickedAgendaId}
           />
           <Right
+            //코멘트 작성하면 새로고침
+            setSocketComment={setSocketComment}
             //config 리셋 반응
             configReset={configReset}
             //새로운 안건 선택 반응
