@@ -18,7 +18,7 @@ import iconChatColor from "../asset/Mainicon-color-comment.png";
 import iconVoteColor from "../asset/Mainicon-color-vote.png";
 import iconAIColor from "../asset/Mainicon-color-Ai.png";
 
-function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI, socketUser, socketVoteId, setSocketVoteId, clickedAgendaName, ActionAgendaChange, configReset,setSocketComment,socketcurrentAgendas }) {
+function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI, socketUser, socketVoteId, setSocketVoteId, clickedAgendaName, ActionAgendaChange, configReset, setSocketComment, socketcurrentAgendas }) {
   const [mode, setMode] = useState("basic");
   const [hover, setHover] = useState("");
   const [FileState, setFileState] = useState(false);
@@ -51,7 +51,7 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
           console.error("500에러:", error);
         }
       });
-  }, [clickedAgendaId, socketFile, socketComment, socketVote, socketAI,token]);
+  }, [clickedAgendaId, socketFile, socketComment, socketVote, socketAI, token]);
 
   useEffect(() => {
     setVoteState(false);
@@ -61,8 +61,10 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
   }, [configReset])
   //안건 변경되면 오른쪽 다시 블럭화면으로 돌아오기
   useEffect(() => {
-    setMode("basic");
-  }, [ActionAgendaChange,socketcurrentAgendas])
+    if (clickedAgendaId === null) {
+      setMode("basic");
+    }
+  }, [ActionAgendaChange, socketcurrentAgendas,clickedAgendaId])
 
   const Mode = {
     basic: <>
@@ -154,7 +156,7 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
       onChange={setMode}
     />,
     Comment: <Comment
-    setSocketComment={setSocketComment}
+      setSocketComment={setSocketComment}
       socketComment={socketComment}
       now={now}
       token={token}
