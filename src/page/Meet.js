@@ -147,7 +147,7 @@ function Meet() {
 
       //AI 구독
       client.subscribe(`/topic/ai/${roomId}`, (msg) => {
-        console.log("시간 변동");
+        console.log("AI 변동");
         setSocketAI(msg.body);
       });
     }
@@ -280,6 +280,8 @@ function Meet() {
             clickedAgendaId={clickedAgendaId}
           />
           <Right
+            //안건변동시 
+            socketcurrentAgendas={socketcurrentAgendas}
             //코멘트 작성하면 새로고침
             socketComment={socketComment} //코멘트
             setSocketComment={setSocketComment}
