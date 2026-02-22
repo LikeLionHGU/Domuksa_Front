@@ -218,6 +218,7 @@ function Meet() {
           },
         })
         .then((res) => {
+          console.log(res);
           setCode(res.data.code);
           setState(res.data.state);
           setRoomId(res.data.roomId);
@@ -237,7 +238,7 @@ function Meet() {
     if (roomId === null) {
       setModalNew(true);
     }
-  }, [roomId, socketcurrentAgendas]);
+  }, [roomId, socketcurrentAgendas,socketAgendas]);
 
   function reconnect() {
     setKeepconnect(Math.random());
