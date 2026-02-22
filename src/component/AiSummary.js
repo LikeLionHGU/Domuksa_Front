@@ -1,4 +1,3 @@
-//ai요약본,gpt/제미나이api불러오기
 import ReactMarkdown from 'react-markdown'
 
 import { useEffect, useState } from "react";
@@ -15,37 +14,43 @@ function AI({ isHost, token, onChange, clickedAgendaId, AIState, socketAI }) {
     const [summary, setSummary] = useState(null);
     const [title, setTitle] = useState(null);
 
-    const [isSummaried, setIsSummaried] = useState(true); //요약 했었는지?
+    const [isSummaried, setIsSummaried] = useState(false); //요약 했었는지?
     const [iconAI, setIconAI] = useState(false); //아이콘 호버
     const [buttonAI, setButtonAI] = useState(false); //버튼 호버
 
     useEffect(() => {
         setIsSummaried(AIState);
-        if (token === null || clickedAgendaId === null || isHost === null) return;
-        axios
-            .get(`${process.env.REACT_APP_HOST_URL}/ai/${clickedAgendaId}`, {
+
+        const interval = setInterval(() => {
+
+            axios.get(`${process.env.REACT_APP_HOST_URL}/ai/${clickedAgendaId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             })
-            .then((res) => {
-                if (res.status === 200 || res.status === 201) {
-                    setTitle(res.data.title);
-                    setSummary(res.data.summaryText);
-                }
-            })
-            .catch((error) => {
-                console.error("마이페이지 정보 가져오기 실패:", error);
-            });
+                .then((res) => {
+                    if (res.data.title && res.data.summaryText) {
+                        setTitle(res.data.title);
+                        setSummary(res.data.summaryText);
+                        clearInterval(interval);
+                    }
+                })
+                .catch(() => {
+                });
 
-    }, [token, clickedAgendaId, isHost, socketAI, AIState])
+        }, 1000);
+
+        return () => clearInterval(interval);
+
+    }, [socketAI]);
 
     function PostAI() {
         setTitle(null);
         setSummary(null);
         setIsSummaried(true);
         axios
-            .post(`${process.env.REACT_APP_HOST_URL}/ai/${clickedAgendaId}`, {
+            .post(`${process.env.REACT_APP_HOST_URL}/ai/${clickedAgendaId}`,
+                {}, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -76,7 +81,7 @@ function AI({ isHost, token, onChange, clickedAgendaId, AIState, socketAI }) {
             <div className={style.Maintitle}>
                 <div className={style.Left}>
                     <h3>AI 요약</h3>
-                    {isSummaried && isHost&&<img onClick={() => PatchAI()} alt="aisummaryBtn" src={buttonAI ? buttonHoverafter : buttonHoverbefore} onMouseEnter={() => setButtonAI(true)} onMouseLeave={() => setButtonAI(false)} />}
+                    {isSummaried && isHost && <img onClick={() => PatchAI()} alt="aisummaryBtn" src={buttonAI ? buttonHoverafter : buttonHoverbefore} onMouseEnter={() => setButtonAI(true)} onMouseLeave={() => setButtonAI(false)} />}
                 </div>
                 <h2 onClick={() => onChange("basic")} >+</h2>
             </div>

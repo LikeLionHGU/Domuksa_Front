@@ -156,7 +156,8 @@ function Meet() {
       });
 
       //AI 구독
-      client.subscribe(`/topic/ai/${roomId}`, (msg) => {
+      client.subscribe(`/topic/ai/${clickedAgendaId}`, (msg) => {
+        console.log(msg.body);
         console.log("AI 변동");
         setSocketAI(msg.body);
       });
