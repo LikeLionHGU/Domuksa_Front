@@ -18,7 +18,7 @@ import iconChatColor from "../asset/Mainicon-color-comment.png";
 import iconVoteColor from "../asset/Mainicon-color-vote.png";
 import iconAIColor from "../asset/Mainicon-color-Ai.png";
 
-function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI, socketUser, socketVoteId, setSocketVoteId, clickedAgendaName, ActionAgendaChange, configReset, setSocketComment, socketcurrentAgendas }) {
+function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, socketComment, socketVote, socketVoteOption, socketVoteResult, socketAI, socketUser, socketVoteId, setSocketVoteId, clickedAgendaName, ActionAgendaChange, configReset, setSocketComment }) {
   const [mode, setMode] = useState("basic");
   const [hover, setHover] = useState("");
   const [FileState, setFileState] = useState(false);
@@ -61,10 +61,8 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
   }, [configReset])
   //안건 변경되면 오른쪽 다시 블럭화면으로 돌아오기
   useEffect(() => {
-    if (clickedAgendaId === null) {
-      setMode("basic");
-    }
-  }, [ActionAgendaChange, socketcurrentAgendas,clickedAgendaId])
+    setMode("basic");
+  }, [ActionAgendaChange]);
 
   const Mode = {
     basic: <>
