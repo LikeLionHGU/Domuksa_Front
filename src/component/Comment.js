@@ -27,7 +27,7 @@ function Comment({ now, token, clickedAgendaId, onChange, socketComment,setSocke
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
-    }, [socketComment])
+    }, [socketComment,clickedAgendaId,token])
 
     function commentWrite() {
         setSocketComment(Math.random());

@@ -15,8 +15,7 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
 
     //결과상태값
     const [result, setResult] = useState(false);
-    //결과목록
-    const [ResultOption, setResultOption] = useState([]);
+
     //1등 항목들
     const [Most, setMost] = useState([]);
 
@@ -41,7 +40,7 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
-    }, [Newvote, DetailId, socketVoteResult])
+    }, [Newvote, DetailId, socketVoteResult,token,])
 
     useEffect(() => {
         //투표 옵션가져오기 (나의 선택포함)
@@ -66,7 +65,7 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
-    }, [socketVoteOption,socketVoteResult])
+    }, [socketVoteOption,socketVoteResult,token,DetailId])
 
     useEffect(() => {
         if (result === false) {
@@ -80,7 +79,6 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
             })
             .then((res) => {
                 if (res.status === 200 || res.status === 201) {
-                    setResultOption(res.data);
                     const HighCount = Math.max(...res.data.map(item => item.selectCount));
                     const HighCounts = res.data.filter(item => item.selectCount === HighCount);
                     const format = HighCounts.map(item => ({
@@ -92,7 +90,7 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
-    }, [result,socketVoteResult])
+    }, [result,socketVoteResult,DetailId,token])
 
     function handleOptionBlock(id) {
         setChosenOption(parseInt(id));
@@ -181,11 +179,6 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
                                 Authorization: `Bearer ${token}`,
                             },
                         })
-                        .then((res) => {
-                            if (res.status === 200 || res.status === 201) {
-                                setResultOption(res.data);
-                            }
-                        })
                         .catch((error) => {
                             console.error("마이페이지 정보 가져오기 실패:", error);
                         });
@@ -214,7 +207,7 @@ function VoteDetail({ token, isHost, setDetail, DetailId, DetailName, Newvote, s
                                     <div className={style.VoteText}>
                                         <h6>{option.content}</h6><h5>{option.selectCount}명 투표</h5>
                                     </div>
-                                    {Most.map(item => item.id).includes(option.voteOptionId) && <img className={style.resultHammer} src={hammer} />}
+                                    {Most.map(item => item.id).includes(option.voteOptionId) && <img alt="resultHammer" className={style.resultHammer} src={hammer} />}
                                 </div>
                             );
                         })}

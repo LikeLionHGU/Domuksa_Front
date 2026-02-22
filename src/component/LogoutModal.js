@@ -1,5 +1,4 @@
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import style from "../CSS/LogoutModal.module.css";
 
 import Logo from "../asset/icon-logo.png";
@@ -19,7 +18,7 @@ function LogoutModal({ setLogoutmodal,setName,setEmail,setPicture }) {
     return (
         <div className={style.DeleteModal}>
             <div className={style.Modal}>
-                <img src={Logo} />
+                <img alt="logo" src={Logo} />
                 <h2>로그아웃 하시겠습니까?</h2>
                 <div className={style.Tip}>
                     오늘 회의는 만족스러우셨나요? <br />

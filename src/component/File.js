@@ -35,7 +35,7 @@ function File({ isHost, token, onChange, clickedAgendaId, socketFile }) {
                     setFiles(res.data);
                     if (res.data.length === 0) {
                         setFileEmpty(true);
-                    } else if(res.data.length>0&&!FileChosenUrl){
+                    } else if (res.data.length > 0 && !FileChosenUrl) {
                         setFileEmpty(false);
                         setIsPdf(res.data[0].isPdf);
                         setFileChosenUrl(res.data[0].fileUrl);
@@ -46,7 +46,7 @@ function File({ isHost, token, onChange, clickedAgendaId, socketFile }) {
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
-    }, [socketFile])
+    }, [socketFile, clickedAgendaId, token, isHost, FileChosenUrl])
     function addNewfile(e) {
         const file = e.target.files[0];
         if (!file) return;
@@ -98,7 +98,7 @@ function File({ isHost, token, onChange, clickedAgendaId, socketFile }) {
                 <div className={style.Nofile}>
                     <label htmlFor="Newfile">
                         <div className={style.Nofilediv} onMouseEnter={() => setIconFile(true)} onMouseLeave={() => setIconFile(false)}>
-                            <img src={iconFile ? fileCenterHoverafter : fileCenterHoverbefore} />
+                            <img alt="Fileicon" src={iconFile ? fileCenterHoverafter : fileCenterHoverbefore} />
                             <h3>여기 눌러서 파일 업로드하세요</h3>
                         </div>
                     </label>
@@ -106,12 +106,13 @@ function File({ isHost, token, onChange, clickedAgendaId, socketFile }) {
             </> : <>
                 <div className={style.Viewer}>
                     {isPdf ? <iframe
+                        title="pdf"
                         src={FileChosenUrl}
                         width="100%"
                         height="100%"
 
                     />
-                        : <img src={FileChosenUrl} />
+                        : <img alt="ChosenFile" src={FileChosenUrl} />
                     }
                 </div></>}
             {listModal && <div className={style.Filelist} onMouseLeave={() => setListModal(false)}>
@@ -135,7 +136,7 @@ function File({ isHost, token, onChange, clickedAgendaId, socketFile }) {
                             onClick={(e) => {
                                 HandleChoise(file)
                             }}>
-                            <img id={file.fileId} src={file.fileUrl} />
+                            <img alt="deleteFile" id={file.fileId} src={file.fileUrl} />
                             {x === file.fileId && isHost && <div id={file.fileId} className={style.Close} onClick={(e) => {
                                 e.stopPropagation();
                                 DeleteFile(file.fileId)

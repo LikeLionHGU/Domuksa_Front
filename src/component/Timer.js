@@ -12,7 +12,7 @@ function Timer({ isHost, socketTimer, roomId, token }) {
 
 
     const [State, setState] = useState("stop");
-    const [total, setTotal] = useState(60);
+    const [total, setTotal] = useState(0);
     const hour = Math.floor(total / 3600);
     const min = Math.floor((total % 3600) / 60);
     const sec = total % 60;
@@ -73,7 +73,7 @@ function Timer({ isHost, socketTimer, roomId, token }) {
             }
         };
 
-    }, [socketTimer, roomId, token])
+    }, [socketTimer, roomId, token,isHost])
 
     //불러와서 작동하기
 
