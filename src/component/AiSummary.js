@@ -76,7 +76,7 @@ function AI({ isHost, token, onChange, clickedAgendaId, AIState, socketAI }) {
             <div className={style.Maintitle}>
                 <div className={style.Left}>
                     <h3>AI 요약</h3>
-                    {isSummaried && <img onClick={() => PatchAI()} alt="aisummaryBtn" src={buttonAI ? buttonHoverafter : buttonHoverbefore} onMouseEnter={() => setButtonAI(true)} onMouseLeave={() => setButtonAI(false)} />}
+                    {isSummaried && isHost&&<img onClick={() => PatchAI()} alt="aisummaryBtn" src={buttonAI ? buttonHoverafter : buttonHoverbefore} onMouseEnter={() => setButtonAI(true)} onMouseLeave={() => setButtonAI(false)} />}
                 </div>
                 <h2 onClick={() => onChange("basic")} >+</h2>
             </div>
