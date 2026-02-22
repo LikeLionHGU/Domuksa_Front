@@ -238,7 +238,7 @@ function Meet() {
     if (roomId === null) {
       setModalNew(true);
     }
-  }, [roomId, socketcurrentAgendas,socketAgendas]);
+  }, [roomId, socketcurrentAgendas]);
 
   function reconnect() {
     setKeepconnect(Math.random());

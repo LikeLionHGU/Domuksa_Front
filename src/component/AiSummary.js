@@ -42,7 +42,7 @@ function AI({ isHost, token, onChange, clickedAgendaId, AIState, socketAI }) {
 
         return () => clearInterval(interval);
 
-    }, [socketAI]);
+    }, [socketAI,clickedAgendaId,token,AIState]);
 
     function PostAI() {
         setTitle(null);
