@@ -107,6 +107,11 @@ function Meet() {
       });
 
       //현제 안건 삭제 하면 안건 구독
+      client.subscribe(`/topic/agenda/current/${roomId}`, (msg) => {
+        setSocketcurrentAgendas(msg.body);
+      });
+
+      //현제 안건 삭제 하면 안건 구독
       client.subscribe(`/topic/agenda/delete/${roomId}`, (msg) => {
         const deletedId = parseInt(msg.body);
 
@@ -218,7 +223,6 @@ function Meet() {
           },
         })
         .then((res) => {
-          console.log(res);
           setCode(res.data.code);
           setState(res.data.state);
           setRoomId(res.data.roomId);
