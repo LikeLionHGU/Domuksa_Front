@@ -75,6 +75,10 @@ function Meet() {
   const [socketVoteResult, setSocketVoteResult] = useState(); //투표
   const [socketVoteId, setSocketVoteId] = useState(null);
 
+  const clickedAgendaRef = useRef(null);
+  useEffect(() => {
+    clickedAgendaRef.current = clickedAgendaId;
+  }, [clickedAgendaId]);
   //웹소켓
   useEffect(() => {
 
@@ -102,10 +106,16 @@ function Meet() {
         setSocketAgendas(msg.body);
       });
 
-      //현재안건 구독
-      client.subscribe(`/topic/agenda/current/${roomId}`, (msg) => {
-        console.log("선택된 변동");
-        setSocketcurrentAgendas(msg.body);
+      //현제 안건 삭제 하면 안건 구독
+      client.subscribe(`/topic/agenda/delete/${roomId}`, (msg) => {
+        const deletedId = parseInt(msg.body);
+
+        setSocketcurrentAgendas(deletedId);
+
+        if (deletedId === clickedAgendaRef.current) {
+          setClickedAgendaId(null);
+          setActionAgendaChange(Date.now());
+        }
       });
 
       //파일 구독
@@ -176,7 +186,7 @@ function Meet() {
     return (() => {
       client.deactivate();
     })
-  }, [token, roomId, clickedAgendaId, Keepconnect, BackWebsocket])
+  }, [token, roomId, Keepconnect, BackWebsocket])
 
   //투표 결과 구독은 따로,
   useEffect(() => {
@@ -280,8 +290,6 @@ function Meet() {
             clickedAgendaId={clickedAgendaId}
           />
           <Right
-            //안건변동시 
-            socketcurrentAgendas={socketcurrentAgendas}
             //코멘트 작성하면 새로고침
             socketComment={socketComment} //코멘트
             setSocketComment={setSocketComment}

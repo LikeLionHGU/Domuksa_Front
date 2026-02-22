@@ -77,9 +77,6 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
   }, [roomId, socketAgendas,token]);
 
   useEffect(() => {
-
-  }, [])
-  useEffect(() => {
     //아직 첫 안건 번호가 없다면, 실행하지 않는다, 첫안건 번호 세팅후 실행
     if (clickedAgendaId === null) {
       return;
@@ -100,6 +97,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
     setBlockId(parseInt(e.currentTarget.id));
     setClickedAgendaId(parseInt(e.currentTarget.id));
     setclickedAgendaName((agendas.find(item => item.id === parseInt(e.currentTarget.id))).name);
+    console.log(clickedAgendaId);
   }
 
   function handleOption(e, id) {
@@ -191,7 +189,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
   function deleteAgenda(id) {
     if (id === clickedAgendaId) {
       setClickedAgendaId(null);
-      setActionAgendaChange(id + 1);
+      setActionAgendaChange(null);
       setConfigReset(id+1);
     }
 
