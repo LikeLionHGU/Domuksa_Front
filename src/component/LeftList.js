@@ -97,7 +97,6 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
     setBlockId(parseInt(e.currentTarget.id));
     setClickedAgendaId(parseInt(e.currentTarget.id));
     setclickedAgendaName((agendas.find(item => item.id === parseInt(e.currentTarget.id))).name);
-    console.log(clickedAgendaId);
   }
 
   function handleOption(e, id) {
