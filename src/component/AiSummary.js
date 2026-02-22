@@ -12,8 +12,8 @@ import iconHoverafter from "../asset/icon-emptyAIHoverafter.png";
 import loading from "../asset/icon-loading.jpg";
 
 function AI({ isHost, token, onChange, clickedAgendaId, AIState, socketAI }) {
-    const [summary, setSummary] = useState();
-    const [title, setTitle] = useState();
+    const [summary, setSummary] = useState(null);
+    const [title, setTitle] = useState(null);
 
     const [isSummaried, setIsSummaried] = useState(true); //요약 했었는지?
     const [iconAI, setIconAI] = useState(false); //아이콘 호버
@@ -22,28 +22,8 @@ function AI({ isHost, token, onChange, clickedAgendaId, AIState, socketAI }) {
     useEffect(() => {
         setIsSummaried(AIState);
         if (token === null || clickedAgendaId === null || isHost === null) return;
-        if (isSummaried === true) {
-            axios
-                .get(`${process.env.REACT_APP_HOST_URL}/ai/${clickedAgendaId}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                })
-                .then((res) => {
-                    if (res.status === 200 || res.status === 201) {
-                        setTitle(res.data.title);
-                        setSummary(res.data.summaryText);
-                    }
-                })
-                .catch((error) => {
-                    console.error("마이페이지 정보 가져오기 실패:", error);
-                });
-        }
-    }, [token, clickedAgendaId, isHost, socketAI, AIState])
-
-    function PostAI() {
         axios
-            .post(`${process.env.REACT_APP_HOST_URL}/ai/${clickedAgendaId}`, {
+            .get(`${process.env.REACT_APP_HOST_URL}/ai/${clickedAgendaId}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -53,6 +33,22 @@ function AI({ isHost, token, onChange, clickedAgendaId, AIState, socketAI }) {
                     setTitle(res.data.title);
                     setSummary(res.data.summaryText);
                 }
+            })
+            .catch((error) => {
+                console.error("마이페이지 정보 가져오기 실패:", error);
+            });
+
+    }, [token, clickedAgendaId, isHost, socketAI, AIState])
+
+    function PostAI() {
+        setTitle(null);
+        setSummary(null);
+        setIsSummaried(true);
+        axios
+            .post(`${process.env.REACT_APP_HOST_URL}/ai/${clickedAgendaId}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
             })
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
@@ -80,23 +76,23 @@ function AI({ isHost, token, onChange, clickedAgendaId, AIState, socketAI }) {
             <div className={style.Maintitle}>
                 <div className={style.Left}>
                     <h3>AI 요약</h3>
-                    {isSummaried && <img onClick={() => PatchAI()} src={buttonAI ? buttonHoverafter : buttonHoverbefore} onMouseEnter={() => setButtonAI(true)} onMouseLeave={() => setButtonAI(false)} />}
+                    {isSummaried && <img onClick={() => PatchAI()} alt="aisummaryBtn" src={buttonAI ? buttonHoverafter : buttonHoverbefore} onMouseEnter={() => setButtonAI(true)} onMouseLeave={() => setButtonAI(false)} />}
                 </div>
                 <h2 onClick={() => onChange("basic")} >+</h2>
             </div>
             {isSummaried ?
                 <div className={style.MarkdownBody}>
-                    {title!==null||summary!==null?<>
+                    {title !== null && summary !== null ? <>
                         <h5>{title}</h5>
                         <ReactMarkdown>
                             {summary}
                         </ReactMarkdown>
-                    </>:
-                    <img className={style.Loading} src={loading} />}
+                    </> :
+                        <img alt="loading" className={style.Loading} src={loading} />}
                 </div> :
                 <div className={style.NoAI}>
-                    <div className={style.NoAIdiv} onClick={() => { PostAI(); setIsSummaried(true); }} onMouseEnter={() => setIconAI(true)} onMouseLeave={() => setIconAI(false)}>
-                        <img src={iconAI ? iconHoverafter : iconHoverbefore} />
+                    <div className={style.NoAIdiv} onClick={() => { PostAI(); }} onMouseEnter={() => setIconAI(true)} onMouseLeave={() => setIconAI(false)}>
+                        <img alt='aiIcon' src={iconAI ? iconHoverafter : iconHoverbefore} />
                         <h3>여기 눌러서 AI 요약을 시작하세요</h3>
                     </div>
                 </div>

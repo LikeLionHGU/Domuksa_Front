@@ -27,7 +27,7 @@ function Meet() {
   }, []);
 
   //웹소켓 다시 연결하는 
-  const [Keepconnect,setKeepconnect]=useState();
+  const [Keepconnect, setKeepconnect] = useState();
   const [clickedAgendaId, setClickedAgendaId] = useState(null);
   const [ActionAgendaChange, setActionAgendaChange] = useState();
 
@@ -84,10 +84,6 @@ function Meet() {
       connectHeaders: {
         Authorization: `Bearer ${token}`,
       },
-
-      // debug: (str) => {
-      //   console.log("STOMP DEBUG:", str);
-      // },
       reconnectDelay: 5000, //연결 안될시, 다시 연결하는 딜레이
     });
     //연결성공시
@@ -130,12 +126,6 @@ function Meet() {
         setSocketVote(msg.body);
         setSocketVoteOption(msg.body);
       });
-
-      // //투표 결과 구독
-      // client.subscribe(`/topic/vote/${socketVoteId}`, (msg) => {
-      //   console.log("투표결과 변동");
-      //   setSocketVoteResult(msg.body);
-      // });
 
       //DM 구독
       client.subscribe(`/topic/dm/${roomId}`, (msg) => {
@@ -186,13 +176,13 @@ function Meet() {
     return (() => {
       client.deactivate();
     })
-  }, [token, roomId, clickedAgendaId,Keepconnect])
+  }, [token, roomId, clickedAgendaId, Keepconnect, BackWebsocket])
 
   //투표 결과 구독은 따로,
   useEffect(() => {
     if (!clientRef.current || !socketVoteId) return;
 
-    const sub = clientRef.current.subscribe(
+    clientRef.current.subscribe(
       `/topic/vote/${socketVoteId}`, (msg) => {
         console.log("구독 작동");
         setSocketVoteResult(msg.body);
@@ -238,11 +228,11 @@ function Meet() {
     }
   }, [roomId, socketcurrentAgendas]);
 
-  function reconnect(){
+  function reconnect() {
     setKeepconnect(Math.random());
   }
-  document.addEventListener("visibilitychange",()=>{
-    if(document.visibilityState==="visible"){
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "visible") {
       reconnect();
     }
   })
@@ -301,7 +291,7 @@ function Meet() {
             socketVoteId={socketVoteId} //투표 결과 웹소켓(해당 ID)
             setSocketVoteId={setSocketVoteId}
             socketFile={socketFile} //파일
-            
+
             socketVote={socketVote} //투표
             socketVoteOption={socketVoteOption} //투표욥션
             socketVoteResult={socketVoteResult} //투표결과

@@ -74,7 +74,7 @@ function LeftList({ token, isHost, roomId, roomName, deleteModal, socketAgendas,
         console.error("마이페이지 정보 가져오기 실패:", error);
       });
 
-  }, [roomId, socketAgendas]);
+  }, [roomId, socketAgendas,token]);
 
   useEffect(() => {
 

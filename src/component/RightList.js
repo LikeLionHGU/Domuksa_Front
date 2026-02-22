@@ -51,7 +51,7 @@ function RightList({ now, token, isHost, roomId, clickedAgendaId, socketFile, so
           console.error("500에러:", error);
         }
       });
-  }, [clickedAgendaId, socketFile, socketComment, socketVote, socketAI]);
+  }, [clickedAgendaId, socketFile, socketComment, socketVote, socketAI,token]);
 
   useEffect(() => {
     setVoteState(false);

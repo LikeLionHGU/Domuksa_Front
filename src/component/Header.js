@@ -29,14 +29,6 @@ function Header({
   const ModalRef = useRef(null);
 
   useEffect(() => {
-    if (state === "running") {
-      setState("running");
-    } else if (state === "completed") {
-      setState("completed");
-    }
-  }, [state]);
-
-  useEffect(() => {
     function HandClickoutsideofModal(e) {
       if (ModalRef.current && !ModalRef.current.contains(e.target)) {
         setProfileOpen(false);
@@ -59,7 +51,7 @@ function Header({
     setName(JSON.parse(user).name);
     setEmail(JSON.parse(user).email);
     setPicture(JSON.parse(user).profileUrl);
-  }, []);
+  }, [token, navigate, setName, setEmail, setPicture]);
 
   function handleButton() {
     if (state === "running") {

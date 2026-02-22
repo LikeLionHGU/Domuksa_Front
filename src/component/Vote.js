@@ -60,7 +60,7 @@ function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVote
 
     //[투표list]
     useEffect(() => {
-        if(clickedAgendaId===null||token===null)return;
+        if (clickedAgendaId === null || token === null) return;
         axios
             .get(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`, {
                 headers: {
@@ -80,7 +80,7 @@ function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVote
             .catch((error) => {
                 console.error("마이페이지 정보 가져오기 실패:", error);
             });
-    }, [socketVote]);
+    }, [socketVote,token,clickedAgendaId]);
     function addVote() {
         axios
             .post(`${process.env.REACT_APP_HOST_URL}/vote/${clickedAgendaId}`,
@@ -156,10 +156,10 @@ function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVote
                                 onMouseEnter={() => setIconVote(true)}
                                 onMouseLeave={() => setIconVote(false)}
                                 onClick={() => {
-                                    isHost&&setNewvote(true);
-                                    isHost&&addVote();
+                                    isHost && setNewvote(true);
+                                    isHost && addVote();
                                 }}>
-                                <img src={iconVote ? voteCenterHoverafter : voteCenterHoverbefore} />
+                                <img alt="Voteicon" src={iconVote ? voteCenterHoverafter : voteCenterHoverbefore} />
                                 <h3>투표를 추가해 주세요</h3>
                             </div>
                         </label>
@@ -171,6 +171,7 @@ function Vote({ token, isHost, onChange, clickedAgendaId, socketVote, socketVote
                         <div className={style.Subtitle}>
                             <h3>{clickedAgendaName}</h3>
                             {isHost && <img
+                                alt="addBtn"
                                 src={addBtn}
                                 onClick={() => {
                                     setNewvote(true);
