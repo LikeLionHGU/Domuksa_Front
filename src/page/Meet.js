@@ -281,7 +281,7 @@ function Meet() {
           />
           <Right
             //안건변동시 
-            socketcurrentAgendas={socketcurrentAgendas}
+            // socketcurrentAgendas={socketcurrentAgendas}
             //코멘트 작성하면 새로고침
             socketComment={socketComment} //코멘트
             setSocketComment={setSocketComment}
