@@ -31,7 +31,7 @@ function Comment({ now, token, clickedAgendaId, onChange, socketComment,setSocke
 
     function commentWrite() {
         setSocketComment(Math.random());
-        if (input === null) {
+        if (input === null || input === "") {
             return;
         }
         axios
